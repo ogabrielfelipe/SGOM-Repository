@@ -1,7 +1,11 @@
-from email.policy import default
-from app import db, ma
 from sqlalchemy.ext.mutable import MutableList
 from .ItemOrcamento import ItemOrcamento
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+
+
+db = SQLAlchemy()
+ma = Marshmallow()
 
 
 class OrdemDeServico(db.Schema):

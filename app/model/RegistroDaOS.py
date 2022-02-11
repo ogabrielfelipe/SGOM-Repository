@@ -1,5 +1,4 @@
-from matplotlib.pyplot import cla
-from app import db, ma
+from .OrdemDeServico import db, ma
 from sqlalchemy import Enum
 from .Status import Status
 

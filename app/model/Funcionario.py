@@ -1,6 +1,4 @@
-from enum import unique
-from os import stat
-from app import db, ma
+from .OrdemDeServico import db, ma
 from .TipoFuncionario import TipoFuncionario
 from sqlalchemy import Enum
 

@@ -1,4 +1,5 @@
-from app import db, ma
+from .OrdemDeServico import db, ma
+
 
 class ItemOrcamento(db.Model):
     __tablename__='itemOrcamente'
