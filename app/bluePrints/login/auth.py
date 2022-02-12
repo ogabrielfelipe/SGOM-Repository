@@ -20,7 +20,7 @@ jwt = JWTManager()
 @aut.route('/Auth/Login', methods=['POST'])
 def login():
     resp = request.get_json()
-    token = funcionarioController.autentica_funcionario(resp['username'], resp['senha'])
+    token = funcionario.autentica_funcionario(resp['username'], resp['senha'])
     if token['access_token']:
         resp = jsonify({"msg": "login successful"})
         set_access_cookies(resp, token['access_token'])
