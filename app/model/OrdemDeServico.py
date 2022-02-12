@@ -1,14 +1,8 @@
 from sqlalchemy.ext.mutable import MutableList
-from .ItemOrcamento import ItemOrcamento
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
+from .ItemOrcamento import ItemOrcamento, db, ma
 
 
-db = SQLAlchemy()
-ma = Marshmallow()
-
-
-class OrdemDeServico(db.Schema):
+class OrdemDeServico(db.Model):
     __tablename__ = 'ordemDeServico'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nomeRequerente = db.Column(db.String(150), nullable=False)
@@ -17,13 +11,16 @@ class OrdemDeServico(db.Schema):
     problema = db.Column(db.String(1024), nullable=False)
     requisicaoOrcamento = db.Column(db.Boolean, nullable=False)
     estadoAtualDoVeiculo = db.Column(db.String(4096), nullable=False)
-    orcamento = db.Column(MutableList.as_mutable(db.ARRAY(ItemOrcamento.id)), default=[])
-    custoMecanico = db.Column(db.FLoat)
+    itemOrcamento = db.Column(db.Integer, db.ForeignKey('itemOrcamento.id'))
+    custoMecanico = db.Column(db.Float)
     valorTodal = db.Column(db.Float)
     respostaCliente = db.Column(db.Boolean)
     carro = db.Column(db.Integer, db.ForeignKey('carro.id'))
     mecanico = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
-    registroDaOS = db.relationship('RegistroDaOS', back_populates='ordemDeServico')
+
+
+    registroDaOS_id = db.Column(db.Integer, db.ForeignKey('registroDaOS.id'))
+    registroDaOS = db.relationship('RegistroDaOS', back_populates="ordemDeServicos")
 
     def __init__(self, nomeR, cpfR, telR, problema, reqOr, estV, orc, cusM, valT, respC, regisDO):
         self.nomeRequerente = nomeR
@@ -56,13 +53,13 @@ class OrdemDeServico(db.Schema):
     def avaliarOrdemServico(self, respC):
         self.respostaCliente = respC
 
-    def atenderServico():
+    def atenderServico(self):
         pass
 
-    def concluirServico():
+    def concluirServico(self):
         pass
 
-    def finalizarServico():
+    def finalizarServico(self):
         pass
 
 

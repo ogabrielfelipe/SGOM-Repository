@@ -1,10 +1,10 @@
-from .OrdemDeServico import db, ma
+from .ItemOrcamento import db, ma
 from .TipoFuncionario import TipoFuncionario
 from sqlalchemy import Enum
 
 
 class Funcionario(db.Model):
-    __tablename__='funcionario'
+    __tablename__ = 'funcionario'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     status = db.Column(db.Boolean, default=True, nullable=False)
     dataDeAdmissao = db.Column(db.Date, nullable=False)
@@ -14,6 +14,8 @@ class Funcionario(db.Model):
     usuario = db.Column(db.String(20), nullable=False, unique=True)
     senha = db.Column(db.String)
     tipoFuncionario = db.Column(Enum(TipoFuncionario))
+
+    #funcionarios = db.relationship('registroDaOS', uselist=False, back_populates='funcionario')
 
     def __init__(self, status, dataA, nome, cpf, tel, user, senha, tFunc):
         self.status = status
@@ -28,7 +30,7 @@ class Funcionario(db.Model):
 
 class FuncionarioSchema(ma.Schema):
     class Meta:
-        fields=('status','nome','dataDeAdmissao','cpf','telefone','usuario','senha','tipoFuncionario')
+        fields = ('status', 'nome', 'dataDeAdmissao', 'cpf', 'telefone', 'usuario', 'senha', 'tipoFuncionario')
 
 
 funcionario_schema = FuncionarioSchema()

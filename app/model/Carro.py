@@ -1,4 +1,4 @@
-from .OrdemDeServico import db, ma
+from .ItemOrcamento import db, ma
 
 
 class Carro(db.Model):

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock%}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/funcionario.css')}}">
+
+</head>
+<body>
+    <header> <h1>Cabeçalho</h1> </header>
+
+    <nav>
+        <a href="{{ url_for('root')}}">Home</a>
+    </nav>
+
+    <section>
+        {% block section %}
+
+        {%endblock%}
+    </section>
+
+
+    <script src="{{url_for('static', filename='js/funcionario.js')}}"></script>
+</body>
+</html>

@@ -1,4 +1,3 @@
-from matplotlib.pyplot import cla
 import enum
 import pydantic
 import typing as t
@@ -16,4 +15,4 @@ class Model(pydantic.BaseModel):
 
 Model(m={TipoFuncionario.GERENTE: 0,
          TipoFuncionario.ATENDENTE: 1,
-         TipoFuncionario.MECANICO: 2}).json()    
+         TipoFuncionario.MECANICO: 2}).json()

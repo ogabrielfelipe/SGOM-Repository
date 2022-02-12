@@ -1,8 +1,13 @@
-from .OrdemDeServico import db, ma
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+
+
+db = SQLAlchemy()
+ma = Marshmallow()
 
 
 class ItemOrcamento(db.Model):
-    __tablename__='itemOrcamente'
+    __tablename__ = 'itemOrcamento'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(150))
     quantidade = db.Column(db.Integer)

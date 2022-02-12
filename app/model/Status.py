@@ -1,7 +1,7 @@
-from matplotlib.pyplot import cla
 import enum
 import pydantic
 import typing as t
+
 
 class Status(int, enum.Enum):
     EMABERTO = 0
@@ -11,6 +11,7 @@ class Status(int, enum.Enum):
     EMATENDIMENTO = 4
     AGUARDANDOPAGAMENTO = 5
     FINALIZADA = 6
+
 
 class Model(pydantic.BaseModel):
     m: t.Dict[Status, int]

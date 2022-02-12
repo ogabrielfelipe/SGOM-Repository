@@ -1,4 +1,4 @@
-from .OrdemDeServico import db, ma
+from .ItemOrcamento import db, ma
 from sqlalchemy import Enum
 from .Status import Status
 
@@ -11,9 +11,13 @@ class RegistroDaOS(db.Model):
     novoStatus = db.Column(Enum(Status))
     valorTotal = db.Column(db.Float)
     problema = db.Column(db.String(1024))
-    mecanico = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
-    ordemDeServico_id = db.Column(db.Integer, db.ForeignKey('ordemDeServico.id'))
-    ordemDeServico = db.relationship('OrdemDeServico', back_populates='registroDaOS')
+
+
+    mecanico_id = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
+
+
+    ordemDeServicos = db.relationship('OrdemDeServico', back_populates='registroDaOS')
+
 
 
     def __init__(self, data, statusA, novoS, valorTotal, problema, mecanico, ordemDeServico):
@@ -25,10 +29,13 @@ class RegistroDaOS(db.Model):
         self.mecanico = mecanico
         self.ordemDeServico_id = ordemDeServico
 
+    def __int__(self):
+        pass
+
 
 class RegistroDaOSSchema(ma.Schema):
     class Meta:
-        fields = ('data', 'statusAnterior', 'novoStatus', 'valorTotal', 'problema', 'mecanico', 'ordemDeServico_id')
+        fields = ('data', 'statusAnterior', 'novoStatus', 'valorTotal', 'problema', 'mecanico', 'ordemDeServicos')
 
 
 registroDaOS_schema = RegistroDaOSSchema()
