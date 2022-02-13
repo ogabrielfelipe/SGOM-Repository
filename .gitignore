@@ -7,3 +7,4 @@ app/bluePrints/__pycache__/
 app/bluePrints/login/__pycache__/
 app/controller/__pycache__/
 app/model/__pycache__/
+.idea/

@@ -6,6 +6,7 @@ from ..model.ItemOrcamento import db
 from flask_jwt_extended import create_access_token, create_refresh_token
 from validate_docbr import CPF
 from sqlalchemy.exc import SQLAlchemyError
+from flask_login import current_user, login_user, logout_user
 
 
 def cad_funcionario():
@@ -82,15 +83,26 @@ def funcionario_username(username):
         return None
 
 
-def autentica_funcionario(username, senha):
-    funcionario = funcionario_username(username)
-    result = funcionario_schema.dump(funcionario)
-    if result and check_password_hash(result['senha'], senha):
-        access_token = create_access_token(identity=funcionario.usuario, fresh=False)
-        refresh_token = create_refresh_token(identity=funcionario.usuario)
-        return {
-            "access_token": access_token,
-            "refresh_token": refresh_token
-        }
-    else:
-        return None
+def autentica_funcionario():
+    resp = request.get_json()
+    username = resp['username']
+    senha =  resp['senha']
+    
+    print(username)
+    if not username or not senha:
+        print(username)
+        return jsonify({'msg': 'Usuario ou senha em branco'}), 401
+    funcionario = funcionario_username(username=username)
+    if not funcionario or not check_password_hash(funcionario.senha, senha):
+        print(funcionario)
+        return jsonify({'msg': 'Usuário Invalido ou Senha Incorreta'}), 401
+    print(funcionario)
+    login_user(funcionario)
+    return jsonify({'msg': 'Login realizado'}), 200
+
+
+def busca_funcionario(id):
+    func = Funcionario.query.get(id)
+    if func:
+        return func
+    return None

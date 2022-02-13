@@ -8,10 +8,10 @@ from .model import (
 )
 from .bluePrints.login import auth
 from .bluePrints.funcionario import func
-from app.bluePrints.login.auth import jwt
 from sqlalchemy.event import listens_for
 from sqlalchemy.engine import Engine
 from sqlite3 import Connection as SQLite3Connection
+from .bluePrints.funcionario import login_manager
 
 
 app = Flask(__name__)
@@ -22,7 +22,8 @@ app.register_blueprint(func)
 
 ItemOrcamento.db.init_app(app)
 ItemOrcamento.ma.init_app(app)
-jwt.init_app(app)
+login_manager.init_app(app)
+
 
 from .bluePrints import initial
 
