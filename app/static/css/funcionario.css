@@ -1,0 +1,27 @@
+*{margin: 0; padding: 0;}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color:  #131418;    
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.menu{
+list-style:none;
+border:1px ;
+float:right;
+}
+.menu li{
+    position:relative;
+    float:left;
+    border-right:1px solid #c0c0c0;
+    }
+.menu li a{color:white; text-decoration:none; padding:5px 10px; display:block;}
+
+.menu li a:hover{
+background:#333;
+color: yellow;
+text-shadow:0px 0px 5px #fff;
+}

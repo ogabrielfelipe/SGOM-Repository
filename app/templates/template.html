@@ -7,12 +7,17 @@
 
 </head>
 <body>
-    <header> <h1>Cabeçalho</h1> </header>
+    <header> 
+        <nav>
+            <ul class="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Ordem de Serviço</a></li>
+                <li><a href="#">Relatorio </a></li>
+                <li><a href="#">Cadastro</a></li>
+        </nav>
+ </header>
 
-    <nav>
-        <a href="{{ url_for('root')}}">Home</a>
-    </nav>
-
+   
     <section>
         {% block section %}
 
