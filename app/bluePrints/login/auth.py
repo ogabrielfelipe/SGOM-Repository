@@ -18,12 +18,12 @@ aut = Blueprint('aut', __name__, template_folder='templates',
     static_folder='static')
 
 
-@aut.route('/Auth/Login', methods=['GET'])
+@aut.route('/', methods=['GET'])
 def login():
     return render_template('index.html')
 
 
-@aut.route('/Auth/Login', methods=['POST'])
+@aut.route('/', methods=['POST'])
 def login_post():
     return funcionarioController.autentica_funcionario()
 
