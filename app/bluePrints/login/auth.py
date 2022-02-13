@@ -33,3 +33,4 @@ def login_post():
 def logout():
     logout_user()
     return jsonify({'msg': 'Logout com sucesso'}), 200
+    
