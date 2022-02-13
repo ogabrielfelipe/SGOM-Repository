@@ -15,6 +15,7 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 .content-login{
     width: 400px;
     height: 350px;
@@ -54,6 +55,7 @@ body{
 
     color: white;
 }
+
 .inp-login:focus{
     outline: none;
 }
@@ -73,9 +75,11 @@ body{
 
     cursor: pointer;
 }
+
 .btn-login:hover{
     box-shadow: 0 0 5px white;
 }
+
 .btn-login:active{
     width: 147px;
     height: 33px;
