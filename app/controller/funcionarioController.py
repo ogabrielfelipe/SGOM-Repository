@@ -16,7 +16,7 @@ def cad_funcionario():
     senha = generate_password_hash(resp['senha'])
     telefone = resp['telefone']
     status = bool(resp['status'])
-    tipoFuncionario = resp['tipoFuncionario']
+    tipoFuncionario = int(resp['tipoFuncionario'])
 
     valid_cpf = CPF()
     cpf = valid_cpf.validate(resp['cpf'])
@@ -24,7 +24,7 @@ def cad_funcionario():
     try:
         dataA = datetime.strptime(resp['dataA'], '%Y-%m-%d').date()
         if cpf:
-            func = Funcionario(nome=nome, user=usuario, senha=senha, cpf=cpf, tel=telefone, dataA=dataA, tFunc=tipoFuncionario,
+            func = Funcionario(nome=nome, user=usuario, senha=senha, cpf=resp['cpf'], tel=telefone, dataA=dataA, tFunc=tipoFuncionario,
                                status=status)
             try:
                 db.session.add(func)
@@ -74,6 +74,12 @@ def atualiza_funcionario(id):
         except Exception as e:
             return jsonify({'msg': 'Data inválido', 'dados': {}, 'error': str(e)}), 401
 
+
+def busca_funcionarios():
+    func = Funcionario.query.all()
+    if func:
+        return jsonify({'msg': 'Busca Efetuada', 'dados': funcionarios_schema.dump(func)}), 200
+    return None
 
 
 def funcionario_username(username):

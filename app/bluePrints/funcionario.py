@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from ..controller.funcionarioController import cad_funcionario, atualiza_funcionario, busca_funcionario
+from ..controller.funcionarioController import cad_funcionario, atualiza_funcionario, busca_funcionario, busca_funcionarios
 from datetime import datetime
 from datetime import timezone, timedelta
 from flask_login import LoginManager, login_required
@@ -28,6 +28,12 @@ def root_funcionario():
 @login_required
 def cadastra_funcionario():
     return cad_funcionario()
+
+
+@func.route('/Funcionario/BuscaFuncionaios', methods=['POST'])
+@login_required
+def busc_funcionaios():
+    return busca_funcionarios()
 
 
 @func.route('/Funcionario/Atualizar/<int:codigo>', methods=['PATCH'])

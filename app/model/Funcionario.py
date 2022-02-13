@@ -31,7 +31,7 @@ class Funcionario(UserMixin, db.Model):
 
 class FuncionarioSchema(ma.Schema):
     class Meta:
-        fields = ('status', 'nome', 'dataDeAdmissao', 'cpf', 'telefone', 'usuario', 'senha', 'tipoFuncionario')
+        fields = ('id', 'status', 'nome', 'dataDeAdmissao', 'cpf', 'telefone', 'usuario', 'senha', 'tipoFuncionario')
 
 
 funcionario_schema = FuncionarioSchema()
