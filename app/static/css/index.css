@@ -1,40 +1,39 @@
 body{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background-color: black;
-    background-image: url('../img/wallpaper.jpg');
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-color: #181f33;
+
+
+    
+    font-family: 'Open Sans', sans-serif;
 }
+
+
 .content-section{
-    width: 500px;
-    height: 100%;
-
-    position: fixed;
-    right: 50px;
-
+    width: 100vw;
+    height: 100vh;
+    background: #131418;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 .content-login{
-    width: 90%;
+    width: 400px;
     height: 350px;
+    background-color: #1b1d22;
 
-    background-color: rgba(109, 109, 109, 0.4);
-    border-radius: 20px;
+    border-radius: 15px;
     box-shadow: 0 0 1em black;
-    font-family: 'Open Sans', sans-serif;
+
+
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
 }
-.img-logo{
-    width: 120px;
-    height: 120px;
-}
+
 .content-input{
     display: flex;
     flex-direction: column;
@@ -42,18 +41,29 @@ body{
     width: calc(100% - 250px);
     color: white;
 }
+
+
 .inp-login{
-    width: 100%;
+    width: 200px;
     height: 25px;
     margin-bottom: 20px;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: bold;
+
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 8px;
+
+    color: white;
 }
 .inp-login:focus{
     outline: none;
+}
 
-
+.img-logo{
+    width: 100px;
+    height: 100px;
 }
 
 .btn-login{
