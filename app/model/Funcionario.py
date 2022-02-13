@@ -1,9 +1,10 @@
 from .ItemOrcamento import db, ma
 from .TipoFuncionario import TipoFuncionario
 from sqlalchemy import Enum
+from flask_login import UserMixin
 
 
-class Funcionario(db.Model):
+class Funcionario(UserMixin, db.Model):
     __tablename__ = 'funcionario'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     status = db.Column(db.Boolean, default=True, nullable=False)

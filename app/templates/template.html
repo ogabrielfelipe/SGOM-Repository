@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock%}</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/funcionario.css')}}">
-
+    <script src="{{url_for('static', filename='js/funcionario.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
 </head>
 <body>
     <header> <h1>Cabeçalho</h1> </header>
 
     <nav>
-        <a href="{{ url_for('root')}}">Home</a>
+        <!--<a href="{{ url_for('func.root_funcionario')}}">Home</a>-->
+        <button onclick="logout()">
+            Logout
+        </button>
     </nav>
 
     <section>

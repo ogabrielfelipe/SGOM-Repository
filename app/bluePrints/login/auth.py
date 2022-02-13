@@ -1,5 +1,5 @@
-from flask import Blueprint, request, jsonify, render_template
-from app.controller import (
+from flask import Blueprint, request, render_template, redirect, url_for, jsonify
+from ...controller import (
     funcionarioController
 )
 from flask_jwt_extended import (
@@ -11,27 +11,25 @@ from flask_jwt_extended import (
     set_access_cookies,
     unset_jwt_cookies
 )
+from flask_login import login_required, logout_user
+
 
 aut = Blueprint('aut', __name__, template_folder='templates',
     static_folder='static')
-jwt = JWTManager()
+
+
+@aut.route('/Auth/Login', methods=['GET'])
+def login():
+    return render_template('index.html')
 
 
 @aut.route('/Auth/Login', methods=['POST'])
-def login():
-    resp = request.get_json()
-    token = funcionarioController.autentica_funcionario(resp['username'], resp['senha'])
-    if token['access_token']:
-        resp = jsonify({"msg": "login successful"})
-        set_access_cookies(resp, token['access_token'])
-        return resp, 200
-    else:
-        return jsonify({'message': 'Token não gerado', 'Token': {}}), 500
+def login_post():
+    return funcionarioController.autentica_funcionario()
 
 
 @aut.route('/Auth/Logout', methods=['DELETE'])
-@jwt_required()
+@login_required
 def logout():
-    response = jsonify({"msg": "logout successful"})
-    unset_jwt_cookies(response)
-    return response
+    logout_user()
+    return jsonify({'msg': 'Logout com sucesso'}), 200
