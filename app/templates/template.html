@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock%}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/funcionario.css')}}">
 
 </head>
+
 <body>
-    <header> 
-        <nav>
+    <header>
+        <div class="content-nav">
             <ul class="menu">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Ordem de Serviço</a></li>
                 <li><a href="#">Relatorio </a></li>
                 <li><a href="#">Cadastro</a></li>
-        </nav>
- </header>
+        </div>
 
-   
+    </header>
+    <div class="content-opcoes">
+        <ul class="opcoes">
+            <li><a href="#">Novo</a></li>
+            <li><a href="#">Alterar</a></li>
+            <li><a href="#">Excluir</a></li>
+        </ul>
+    </div>
+
+
     <section>
         {% block section %}
 
@@ -27,4 +37,5 @@
 
     <script src="{{url_for('static', filename='js/funcionario.js')}}"></script>
 </body>
+
 </html>
