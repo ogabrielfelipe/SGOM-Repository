@@ -3,7 +3,7 @@ function logout(){
     Envia(entry, '/Auth/Logout', 'DELETE')
     .then((response) => {
         if (response['msg'] === 'Logout com sucesso'){
-            window.location.href = "/Auth/Login"
+            window.location.href = "/"
         }
     })
     .catch((error) => {
