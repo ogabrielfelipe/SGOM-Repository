@@ -16,6 +16,19 @@ function login(usuario, senha){
 }
 
 
+function logout(){
+    const entry = {}
+    Envia(entry, '/Auth/Logout', 'DELETE')
+    .then((response) => {
+        if (response['msg'] === 'Logout com sucesso'){
+            window.location.href = "/"
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
 function Envia(entry, url, method){
     return new Promise((resolve, reject)=>{
         $.ajax({

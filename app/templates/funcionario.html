@@ -1,8 +1,25 @@
 {% extends "template.html"%}
 
 {%block title%}
+Funcionario
 {%endblock%}
 
+
+{% block styles%}
+
+<script src="{{url_for('static', filename='js/funcionario.js')}}"></script>
+{% endblock %}
+
 {%block section%}
-    
+<div class="content-opcoes">
+    <ul class="opcoes">
+        <li><a href="#">Novo</a></li>
+        <li><a href="#">Alterar</a></li>
+        <li><a href="#">Excluir</a></li>
+    </ul>
+</div>
+
+<div>
+
+</div>
 {%endblock%}

@@ -5,7 +5,6 @@ body{
     font-family: 'Open Sans', sans-serif;
 }
 
-
 .content-section{
     width: 100vw;
     height: 100vh;
@@ -15,6 +14,7 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 .content-login{
     width: 400px;
     height: 350px;
@@ -28,7 +28,6 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .content-input{
@@ -38,7 +37,6 @@ body{
     width: calc(100% - 250px);
     color: white;
 }
-
 
 .inp-login{
     width: 200px;
@@ -54,6 +52,7 @@ body{
 
     color: white;
 }
+
 .inp-login:focus{
     outline: none;
 }
@@ -73,9 +72,11 @@ body{
 
     cursor: pointer;
 }
+
 .btn-login:hover{
     box-shadow: 0 0 5px white;
 }
+
 .btn-login:active{
     width: 147px;
     height: 33px;

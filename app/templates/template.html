@@ -5,42 +5,31 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock%}</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/funcionario.css')}}">
-    <script src="{{url_for('static', filename='js/funcionario.js')}}"></script>
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css')}}">
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>    
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>    
+    {% block styles%}
+    {% endblock %}
+
 </head>
 
 <body>
     <header>
         <div class="content-nav">
-            <!--<nav>
-                <a href="{{ url_for('func.root_funcionario')}}">Home</a>
-                <button onclick="logout()">
-                    Logout
-                </button>
-            </nav>-->
             <ul class="menu">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Ordem de Serviço</a></li>
                 <li><a href="#">Relatorio </a></li>
                 <li><a href="#">Cadastro</a></li>
+            </ul>
         </div>
-
     </header>
-    <div class="content-opcoes">
-        <ul class="opcoes">
-            <li><a href="#">Novo</a></li>
-            <li><a href="#">Alterar</a></li>
-            <li><a href="#">Excluir</a></li>
-        </ul>
-    </div>
 
     <section>
         {% block section %}
 
         {%endblock%}
     </section>
-
 
     <script src="{{url_for('static', filename='js/funcionario.js')}}"></script>
 </body>
