@@ -1,12 +1,10 @@
 {% extends "template.html"%}
 
 {%block title%}
-Funcionario
+Funcionário
 {%endblock%}
 
-
 {% block styles%}
-
 <script src="{{url_for('static', filename='js/funcionario.js')}}"></script>
 {% endblock %}
 
@@ -19,7 +17,53 @@ Funcionario
     </ul>
 </div>
 
-<div>
+<div class="cadastro-usuario">
+    <label for="nome">Nome: </label>
+    <input type="text" name="nome" id="nome">
 
+    <label for="username">Username: </label>
+    <input type="text" name="username" id="username">
+
+    <label for="senha">Senha: </label>
+    <input type="password" name="senha" id="senha">
+
+    <label for="dataA">Data de Admissão: </label>
+    <input type="date" name="dataA" id="dataA">
+
+    <label for="cpf">CPF: </label>
+    <input type="text" name="cpf" id="cpf">
+
+    <label for="telefone">Telefone: </label>
+    <input type="tel" name="telefone" id="telefone">
+
+    <label for="tFuncionario">Cargo: </label>
+    <select name="tFuncionario" id="tFuncionario">
+        <option value="0">Gerente</option>
+        <option value="1">Atendente</option>
+        <option value="2">Mecânico</option>
+    </select>
+
+    <label for="status">Ativo: </label>
+    <input type="checkbox" name="status" checked id="status">
+
+    <button id="btnSalvar" onclick="salvaFuncionario()">
+        Salvar
+    </button>
 </div>
+
+<table class="tableFunc">
+    <thead class="tableFuncThead">
+        <th>Código</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Data de Admissão</th>
+        <th>Status</th>
+    </thead>
+    <tbody id="tableFuncTbody">
+    </tbody>
+</table>
+
+<script>
+    carregaTable();
+</script>
 {%endblock%}

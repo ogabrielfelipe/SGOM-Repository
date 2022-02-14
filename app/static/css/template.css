@@ -4,56 +4,65 @@
 }
 
 body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 0;
     padding: 0;
     background-color:  #131418;    
     font-family: 'Open Sans', sans-serif;
 }
 
+ul{
+    padding: 0px;
+    margin: 0px;
+}
+
+.content-nav{
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 1em black;
+    min-width: 100vmax;
+}
+
 .menu{
-    list-style:none;
-    border:1px ;
-    float:right;
-
-    background-color: #2a2b33;
+    display: flex;
+    list-style: none;
+    border: 1px;
+    float: right;
     margin: 5px;
-
-
 }
 
 .menu li{
-    position:relative;
-    float:left; 
+    position: relative;
+    float: left; 
 }
 
 .menu li a{
-    color:white; 
-    text-decoration:none; 
-    padding:5px 10px; 
-
+    color: white; 
+    text-decoration: none; 
+    padding: 5px 10px; 
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
-
-
 }
 
 .menu li a:hover{
-    background:#333;
+    background: #333;
     color: yellow;
-    
 }
 
-.content-nav{
-    height: 35px;
+.section{
     display: flex;
-    justify-content: flex-end;
-    box-shadow: 0 0 1em black;
+    flex-direction: column;
+    width: 100%;
 }
 
 .content-opcoes{
     display: flex;
+    justify-content: space-around;
 }
 
 .opcoes{
@@ -64,7 +73,53 @@ body{
 }
 
 .opcoes li a{
-    text-decoration:none;
-    padding:5px 10px; 
-    display:block;
+    display: flex;
+    text-decoration: none;
+    color: #131418;
+    margin: 12px;
+    padding: 5px 10px; 
+    background: goldenrod;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.opcoes li a:hover{
+    background: gold;
+}
+
+.cadastro-usuario{
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 20px;
+}
+
+#btnSalvar{
+    text-decoration: none;
+    background: goldenrod;
+    font-weight: bold;
+    font-size: larger;
+    height: 50px;
+    border: 0px;
+    margin-top: 20px;
+}
+
+#btnSalvar:hover{
+    background: gold;
+}
+
+.tableFunc{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.tableFuncThead{
+    color: #131418;
+    background: goldenrod;
+    text-align: center;
+}
+
+#tableFuncTbody{
+    text-align: center;
 }
