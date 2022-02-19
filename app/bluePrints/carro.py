@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Blueprint, render_template
 from ..controller.carroController import (
     cad_carro,
