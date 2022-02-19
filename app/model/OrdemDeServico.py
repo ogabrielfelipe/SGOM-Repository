@@ -17,7 +17,7 @@ class OrdemDeServico(db.Model):
     carro = db.Column(db.Integer, db.ForeignKey('carro.id'))
     mecanico = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
 
-    itens = db.relationship('ItemOrcamento', secondary='servico', back_populates='ordemDeServico')
+    itens = db.relationship('ItemOrcamento', secondary='servicos', back_populates='ordemDeServico')
 
     registroDaOS_id = db.Column(db.Integer, db.ForeignKey('registroDaOS.id'))
     registroDaOS = db.relationship('RegistroDaOS', back_populates="ordemDeServicos")

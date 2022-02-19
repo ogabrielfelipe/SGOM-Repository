@@ -11,7 +11,7 @@ class ItemOrcamento(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(150))
     valor = db.Column(db.Float)
-    ordens = db.relationship('OrdemDeServico', secondary='servico', back_populates="itemOrcamento")
+    ordens = db.relationship('OrdemDeServico', secondary='servicos', back_populates="itemOrcamento")
 
     def __init__(self, nome, valor):
         self.nome = nome
