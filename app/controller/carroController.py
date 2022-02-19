@@ -1,8 +1,6 @@
-from flask import request
 from ..model.Carro import Carro, carro_schema, carros_schema
 from ..model.ItemOrcamento import db
 from flask import request, jsonify
-from sqlalchemy.exc import SQLAlchemyError
 
 
 def cad_carro():

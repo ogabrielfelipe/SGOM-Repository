@@ -10,17 +10,17 @@ class ItemOrcamento(db.Model):
     __tablename__ = 'itemOrcamento'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(150))
-    quantidade = db.Column(db.Integer)
     valor = db.Column(db.Float)
+    ordens = db.relationship('OrdemDeServico', secondary='servico', back_populates="itemOrcamento")
 
-    def __init__(self, nome, quantidade, valor):
+    def __init__(self, nome, valor):
         self.nome = nome
-        self.quantidade = quantidade
         self.valor = valor
 
 class ItemOrcamentoSchema(ma.Schema):
     class Meta:
-        fields = ('nome', 'quantidade', 'valor')
+        fields = ('nome', 'valor')
+
 
 itemOrcamento_schema = ItemOrcamentoSchema()
 itemOrcamentos_schema = ItemOrcamentoSchema(many=True)

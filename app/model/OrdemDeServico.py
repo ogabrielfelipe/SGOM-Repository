@@ -11,13 +11,13 @@ class OrdemDeServico(db.Model):
     problema = db.Column(db.String(1024), nullable=False)
     requisicaoOrcamento = db.Column(db.Boolean, nullable=False)
     estadoAtualDoVeiculo = db.Column(db.String(4096), nullable=False)
-    itemOrcamento = db.Column(db.Integer, db.ForeignKey('itemOrcamento.id'))
     custoMecanico = db.Column(db.Float)
     valorTodal = db.Column(db.Float)
     respostaCliente = db.Column(db.Boolean)
     carro = db.Column(db.Integer, db.ForeignKey('carro.id'))
     mecanico = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
 
+    itens = db.relationship('ItemOrcamento', secondary='servico', back_populates='ordemDeServico')
 
     registroDaOS_id = db.Column(db.Integer, db.ForeignKey('registroDaOS.id'))
     registroDaOS = db.relationship('RegistroDaOS', back_populates="ordemDeServicos")
