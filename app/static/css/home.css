@@ -1,0 +1,134 @@
+#data-idFiltro{
+    position: relative;
+    width: 95px;
+    height: 29px;
+
+    background: #31333C;
+    border-radius: 5px;
+    color: #31333C;
+}
+
+#btn-filtro{
+    position: relative;
+    width: 80px;
+    height: 14px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #FFFFFF;
+}
+
+#btn-filtro{
+    position: relative;
+    width: 123px;
+    height: 29px;
+
+    background: #31333C;
+    border-radius: 5px;
+}
+
+#dashboard{
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.aguardando-aprovacao{
+    position: relative;
+    width: 351px;
+    height: 224px;
+
+    background: #31333C;
+    border-radius: 15px;
+
+    min-width: 351px;
+    min-height: 224px;
+
+    margin: 50px;
+    display: flex;
+
+    flex-direction: column;
+
+    padding-top: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.contador{
+    font-style: normal;
+    font-weight: bold;
+
+    font-size: 144px;
+    line-height: 169px;
+    color: rgba(255, 255, 255, 0.56);
+}
+
+.finalizadas{
+    position: relative;
+    width: 351px;
+    height: 224px;
+
+    background: #31333C;
+    border-radius: 15px;
+    min-width: 351px;
+    min-height: 224px;
+    
+    margin: 50px;
+    display: flex;
+    
+    flex-direction: column;
+
+    padding-top: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.aguardando-atendimento{
+    position: relative;
+    width: 351px;
+    height: 224px;
+
+    background: #31333C;
+    border-radius: 15px;
+    min-width: 351px;
+    min-height: 224px;
+    
+    margin: 50px;
+    display: flex;
+    
+    flex-direction: column;
+
+    padding-top: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.aguardando-pagamento{
+    position: relative;
+    width: 351px;
+    height: 224px;
+
+    background: #31333C;
+    border-radius: 15px;
+    min-width: 351px;
+    min-height: 224px;
+    
+    margin: 50px;
+    display: flex;
+    
+    flex-direction: column;
+
+    padding-top: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
