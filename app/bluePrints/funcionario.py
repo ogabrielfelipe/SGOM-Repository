@@ -41,7 +41,7 @@ def busc_funcionaios():
     return busca_funcionarios()
 
 
-@func.route('/Funcionario/BuscaFuncionaio/<int:codigo>', methods=['POST'])
+@func.route('/Funcionario/Busca/<int:codigo>', methods=['POST'])
 #@login_required
 def busc_funcionaio(codigo):
     return busca_funcionario_route(codigo)
