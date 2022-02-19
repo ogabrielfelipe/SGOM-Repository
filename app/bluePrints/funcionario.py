@@ -3,7 +3,8 @@ from ..controller.funcionarioController import (
     cad_funcionario,
     atualiza_funcionario,
     busca_funcionario_route,
-    busca_funcionarios
+    busca_funcionarios,
+    busca_funcionario
 )
 from datetime import datetime
 from datetime import timezone, timedelta
