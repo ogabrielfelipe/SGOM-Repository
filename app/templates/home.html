@@ -1,0 +1,62 @@
+{% extends "template.html"%}
+
+{%block title%}
+Home
+{%endblock%}
+
+{% block styles%}
+<!-- <script src="{{url_for('static', filename='js/home.js')}}"></script> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
+{% endblock %}
+
+{%block section%}
+
+<div class="pesquisa">
+   <input type="date" name="data-filtro" id="data-idFiltro">
+
+   <button type="submit" id="btn-filtro">Filtro Pesquisa</button>
+</div>
+
+<div id="dashboard">
+    <div class="aguardando-aprovacao">
+        <span>
+            Aguardando Aprovação
+        </span>
+        <span class="contador" id="cont-aguardando-aprovacao">
+            00
+        </span>
+    </div>
+    <div class="finalizadas">
+        <span>
+            Finalizadas
+        </span>
+        <span class="contador" id="cont-finalizadas">
+            00
+        </span>
+    </div>
+    <div class="aguardando-pagamento">
+        <span>
+            Aguardando Pagamento
+        </span>
+        <span class="contador" id="cont-aguardando-pagamento">
+            00
+        </span>
+    </div>
+    <div class="aguardando-atendimento">
+        <span>
+            Aguardando Atendimento
+        </span>
+        <span class="contador" id="cont-aguardandoa-atendimento">
+            00
+        </span>
+    </div>
+</div>
+
+<script>
+    carregaTable();
+</script>
+{%endblock%}
