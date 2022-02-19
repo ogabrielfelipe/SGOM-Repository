@@ -1,10 +1,11 @@
+from enum import unique
 from .ItemOrcamento import db, ma
 
 
 class Carro(db.Model):
     __tablename__ = 'carro'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    placa = db.Column(db.String(7))
+    placa = db.Column(db.String(7), unique=True)
     telefone = db.Column(db.String(14))
 
     def __init__(self, placa, telefone):

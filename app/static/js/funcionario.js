@@ -5,9 +5,9 @@ function salvaFuncionario(){
     let data = document.getElementById("dataA").value;
     let cpf = document.getElementById("cpf").value;
     let telefone = document.getElementById("telefone").value;
-    let st = document.getElementById("status").value;
+    let st = document.getElementById("status");
     let status;
-    if (st.checked){
+    if (st.checked == true){
         status = true;
     }else{
         status = false;

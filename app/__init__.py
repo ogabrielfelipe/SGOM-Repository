@@ -1,4 +1,7 @@
 from flask import Flask
+from sqlalchemy.event import listens_for
+from sqlalchemy.engine import Engine
+from sqlite3 import Connection as SQLite3Connection
 from .model import (
     Carro,
     Funcionario,
@@ -6,23 +9,24 @@ from .model import (
     RegistroDaOS,
     ItemOrcamento
 )
+from .bluePrints import (
+    login,
+    funcionario,
+    carro
+)
 from .bluePrints.login import auth
-from .bluePrints.funcionario import func
-from sqlalchemy.event import listens_for
-from sqlalchemy.engine import Engine
-from sqlite3 import Connection as SQLite3Connection
-from .bluePrints.funcionario import login_manager
 
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.register_blueprint(auth.aut)
-app.register_blueprint(func)
+app.register_blueprint(funcionario.func)
+app.register_blueprint(carro.car)
 
 
 ItemOrcamento.db.init_app(app)
 ItemOrcamento.ma.init_app(app)
-login_manager.init_app(app)
+funcionario.login_manager.init_app(app)
 
 
 from .bluePrints import initial

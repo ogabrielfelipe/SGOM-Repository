@@ -16,7 +16,6 @@ def cad_funcionario():
     senha = generate_password_hash(resp['senha'])
     telefone = resp['telefone']
     status = bool(resp['status'])
-    print(status)
     tipoFuncionario = int(resp['tipoFuncionario'])
 
     valid_cpf = CPF()
@@ -42,7 +41,7 @@ def cad_funcionario():
 
 
 def atualiza_funcionario(id):
-    funcionario = Funcionario.query.get(id)
+    funcionario = busca_funcionario(id)
     if funcionario:
         resp = request.get_json()
         nome = resp['nome']
@@ -80,7 +79,7 @@ def busca_funcionarios():
     func = Funcionario.query.all()
     if func:
         return jsonify({'msg': 'Busca Efetuada', 'dados': funcionarios_schema.dump(func)}), 200
-    return None
+    return jsonify({'msg': 'Sem Resultados', 'dados': {}}), 404
 
 
 def funcionario_username(username):
@@ -96,15 +95,16 @@ def autentica_funcionario():
     senha =  resp['senha']
     
     print(username)
-    if not username or not senha:
-        print(username)
+    if not username or not senha: #Verifica se o usuário digitou a senha ou o username
         return jsonify({'msg': 'Usuario ou senha em branco'}), 401
     funcionario = funcionario_username(username=username)
-    if not funcionario or not check_password_hash(funcionario.senha, senha):
-        print(funcionario)
-        return jsonify({'msg': 'Usuário Invalido ou Senha Incorreta'}), 401
-    print(funcionario)
-    login_user(funcionario)
+    
+    if not funcionario or funcionario.status == 0: #Verifica se o status do profissional está desativado
+        return jsonify({'msg': 'Usuário Inativado'}), 403
+
+    if not funcionario or not check_password_hash(funcionario.senha, senha): #Verficia se a senha digitada é a mesma da que consta bo banco
+        return jsonify({'msg': 'Usuário Invalido ou Senha Incorreta'}), 401            
+    login_user(funcionario) #Cria o login
     return jsonify({'msg': 'Login realizado'}), 200
 
 
@@ -113,3 +113,10 @@ def busca_funcionario(id):
     if func:
         return func
     return None
+
+
+def busca_funcionario_route(id):
+    func = Funcionario.query.get(id)
+    if func:
+        return jsonify({'msg': 'Busca Efetuada', 'dados': funcionario_schema.dump(func)}), 200
+    return jsonify({'msg': 'Sem Resultados', 'dados': {}}), 404
