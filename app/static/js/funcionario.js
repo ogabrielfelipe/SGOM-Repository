@@ -13,6 +13,9 @@ function salvaFuncionario(){
         status = false;
     }
 
+    console.log("st ", st);
+    console.log("status ", status)
+
     let funcionario = document.getElementById("tFuncionario");
     const entry = {
         "nome": nome,

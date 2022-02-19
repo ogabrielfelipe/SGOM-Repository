@@ -19,24 +19,24 @@ def load_user(func_id):
 
 
 @func.route('/Funcionario', methods=['GET'])
-@login_required
+#@login_required
 def root_funcionario():
     return render_template('funcionario.html')
 
 
 @func.route('/Funcionario/Cadastrar', methods=['POST'])
-@login_required
+#@login_required
 def cadastra_funcionario():
     return cad_funcionario()
 
 
 @func.route('/Funcionario/BuscaFuncionaios', methods=['POST'])
-@login_required
+#@login_required
 def busc_funcionaios():
     return busca_funcionarios()
 
 
 @func.route('/Funcionario/Atualizar/<int:codigo>', methods=['PATCH'])
-@login_required
+#@login_required
 def alter_funcionario(codigo):
     return atualiza_funcionario(codigo)

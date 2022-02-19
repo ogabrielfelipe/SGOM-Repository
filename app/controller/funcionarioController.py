@@ -16,6 +16,7 @@ def cad_funcionario():
     senha = generate_password_hash(resp['senha'])
     telefone = resp['telefone']
     status = bool(resp['status'])
+    print(status)
     tipoFuncionario = int(resp['tipoFuncionario'])
 
     valid_cpf = CPF()
