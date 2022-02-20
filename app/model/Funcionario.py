@@ -16,7 +16,6 @@ class Funcionario(UserMixin, db.Model):
     senha = db.Column(db.String)
     tipoFuncionario = db.Column(Enum(TipoFuncionario))
 
-    #funcionarios = db.relationship('registroDaOS', uselist=False, back_populates='funcionario')
 
     def __init__(self, status, dataA, nome, cpf, tel, user, senha, tFunc):
         self.status = status
