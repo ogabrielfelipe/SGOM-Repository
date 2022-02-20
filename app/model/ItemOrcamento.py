@@ -11,7 +11,7 @@ class ItemOrcamento(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(150))
     valor = db.Column(db.Float)
-    ordens = db.relationship('OrdemDeServico', secondary='servicos', back_populates="itemOrcamento")
+    ordemDeServico = db.relationship('OrdemDeServico', secondary='servicos', back_populates="itemOrcamento")
 
     def __init__(self, nome, valor):
         self.nome = nome
@@ -19,7 +19,7 @@ class ItemOrcamento(db.Model):
 
 class ItemOrcamentoSchema(ma.Schema):
     class Meta:
-        fields = ('nome', 'valor')
+        fields = ('id', 'nome', 'valor')
 
 
 itemOrcamento_schema = ItemOrcamentoSchema()

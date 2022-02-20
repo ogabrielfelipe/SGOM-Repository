@@ -1,12 +1,12 @@
-from .ItemOrcamento import db, ma
+from app.model.OrdemDeServico import OrdemDeServico
+from .ItemOrcamento import ItemOrcamento, db, ma
 
 
 class Servicos(db.Model):
     __tablename__ = 'servicos'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    ordemDeServico = db.Column(db.Integer, db.ForeignKey('itens.id'), nullable=False)
-    itemOrcamento = db.Column(db.Integer, db.ForeignKey('ordens.id'), nullable=False)
-    quantidade = db.Column(db.Float, nullable=False)
+    itemOrcamento = db.Column(db.ForeignKey("itemOrcamento.id"), nullable=False, primary_key=True)
+    ordemDeServico= db.Column(db.Integer, db.ForeignKey("ordemDeServico.id"), nullable=False)
+    quantidade = db.Column(db.Float)
 
     def __init__(self, ordem, item, quant):
         self.ordemDeServico = ordem

@@ -9,13 +9,15 @@ from .model import (
     Funcionario,
     OrdemDeServico,
     RegistroDaOS,
-    ItemOrcamento
+    ItemOrcamento,
+    Servicos
 )
 from .bluePrints import (
     login,
     funcionario,
     carro,
-    ordemDeServico
+    ordemDeServico,
+    itemOrcamento
 )
 from .bluePrints.login import auth
 
@@ -26,6 +28,7 @@ app.register_blueprint(auth.aut)
 app.register_blueprint(funcionario.func)
 app.register_blueprint(carro.car)
 app.register_blueprint(ordemDeServico.ordem)
+app.register_blueprint(itemOrcamento.item)
 
 
 ItemOrcamento.db.init_app(app)

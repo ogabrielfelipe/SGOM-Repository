@@ -17,7 +17,7 @@ class OrdemDeServico(db.Model):
     carro = db.Column(db.Integer, db.ForeignKey('carro.id'))
     mecanico = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
 
-    itens = db.relationship('ItemOrcamento', secondary='servicos', back_populates='ordemDeServico')
+    itemOrcamento = db.relationship('ItemOrcamento', secondary='servicos', back_populates='ordemDeServico')
 
     registroDaOS_id = db.Column(db.Integer, db.ForeignKey('registroDaOS.id'))
     registroDaOS = db.relationship('RegistroDaOS', back_populates="ordemDeServicos")
@@ -34,21 +34,24 @@ class OrdemDeServico(db.Model):
         self.valorTodal = valT
         self.respostaCliente = respC
         self.registroDaOS = regisDO
-
-    def abrirOrdemDeServico(self, carro, cpfR, telR, problema, reqOr, estadoA):
-        self.carro = carro
-        self.cpfDoRequerente = cpfR
-        self.telefoneRequerente = telR
-        self.problema = problema
-        self.requisicaoOrcamento = reqOr
-        self.estadoAtualDoVeiculo = estadoA
+        
+    @classmethod
+    def abrirOrdemDeServico(cls, carro, nomeR, cpfR, telR, problema, reqOr, estadoA):
+        cls.carro = carro
+        cls.nomeRequerente = nomeR
+        cls.cpfDoRequerente = cpfR
+        cls.telefoneRequerente = telR
+        cls.problema = problema
+        cls.requisicaoOrcamento = reqOr
+        cls.estadoAtualDoVeiculo = estadoA
     
     def aceitarServico(self, mecanico):
         self.mecanico = mecanico
 
-    def registraOrcamento(self, problema, custoMec):
+    def registraOrcamento(self, problema, custoMec, itens):
         self.problema = problema
         self.custoMecanico = custoMec
+        self.itemOrcamento = itens
 
     def avaliarOrdemServico(self, respC):
         self.respostaCliente = respC
@@ -65,9 +68,9 @@ class OrdemDeServico(db.Model):
 
 class OrdemDeServicoSchema(ma.Schema):
     class Meta:
-        fields = ('nomeRequerente', 'cpfDoRequerente', 'telefoneRequerente', 'problema', 'requisicaoOrcamento',
+        fields = ('id', 'nomeRequerente', 'cpfDoRequerente', 'telefoneRequerente', 'problema', 'requisicaoOrcamento',
                 'estadoAtualDoVeiculo', 'orcamento', 'custoMecanico', 'valorTodal', 'respostaCliente', 'registroDaOS')
 
 
-OrdemDeServico_schema = OrdemDeServicoSchema()
-OrdemDeServicos_schema = OrdemDeServicoSchema(many=True)
+ordemDeServico_schema = OrdemDeServicoSchema()
+ordemDeServicos_schema = OrdemDeServicoSchema(many=True)
