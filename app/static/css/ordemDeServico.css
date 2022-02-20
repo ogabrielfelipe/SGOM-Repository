@@ -43,9 +43,10 @@
     Conceito de Abas para a tela de ordemDeServico
 */
 .nav_tabs{
-    width: 1315px;
-    height: 400px;
-    margin: 100px auto;
+    left: 13px;
+    position: relative;
+    width: 98%;
+    height: 534px;
 }
 .nav_tabs ul {
     list-style: none;
@@ -55,22 +56,27 @@
 }
 .nav_tabs label{
     width: 100px;
-    padding: 25px;
-    background-color: #363b48;
+    margin-right: 8px;
+    padding-top: 5px;
+    height: 30px;
+    border-radius: 10px 10px 0 0;
+    /*background-color: #333;*/
+    /*background-color: #363b48;*/
+    background-color: #232c3d;
     display: block;
     cursor: pointer;
     text-align: center;
 }
 
 .rb_tabs:checked ~ label{
-    background: #e54e43;
+    background-color: #363b48;
+    color: yellow;
 }
 .rb_tabs{
     display:none;
 }
 .content{
-    border-top: 5px solid #e54e43;
-    background-color: #fff;
+    background-color: #363b48;
     display: none;
     position: absolute;
     height: 320px;
