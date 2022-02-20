@@ -37,6 +37,15 @@
     text-decoration: none;
 }
 
+.content_btn{
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+    margin: 20px;
+    background: #232c3d;
+    border: 0;
+}
+
 
 /*
     FEITO NAS COCHAS, SOMENTE PARA TESTE SE FAZ NECESSÁRIO REVISÃO
@@ -44,9 +53,9 @@
 */
 .nav_tabs{
     left: 13px;
+    
     position: relative;
     width: 98%;
-    height: 534px;
 }
 .nav_tabs ul {
     list-style: none;
@@ -79,8 +88,8 @@
     background-color: #363b48;
     display: none;
     position: absolute;
-    height: 320px;
     width: 100%;
+    height: auto;
     left: 0;
 }
 .rb_tabs:checked ~ .content{

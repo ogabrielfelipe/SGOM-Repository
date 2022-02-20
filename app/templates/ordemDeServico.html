@@ -22,7 +22,7 @@ Ordem de Serviço
         <li><a href="#">Excluir</a></li>
     </ul>
 </div>
-
+<div>
 <nav class="nav_tabs">
     <ul>
         <li>
@@ -38,14 +38,18 @@ Ordem de Serviço
             <label for="tab2"> Visualizar</label>
             <div class="content">
                 <form action="/action_page.php">
-                    <input type="" name="tabs" value="Gabriel pai de todos">               
+                    <input type="" name="tabs" value="Gabriel pai de todos">   
+                    <br>            
+                    <input type="" name="tabs" value="Lukinhas gay">   
                 </form>
             </div>
         </li>
     </ul>
 </nav>
-
-
-
-
+</div>
 {%endblock%}
+
+{% block footer %}
+    <button class="content_btn"> Cancelar</button>
+    <button class="content_btn"> Salvar</button>
+ {%endblock%}
