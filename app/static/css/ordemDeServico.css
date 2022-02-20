@@ -49,6 +49,7 @@
     margin: 20px;
     background: #232c3d;
     border: 0;
+    color: white;
 }
 
 
@@ -70,12 +71,15 @@
 
     min-height: 80vh;
 }
+
 .nav_tabs ul {
     list-style: none;
 }
+
 .nav_tabs ul li{
     float: left;
 }
+
 .nav_tabs label{
     width: 100px;
     margin-right: 8px;
@@ -86,7 +90,6 @@
     /*background-color: #363b48;*/
     background-color: #232c3d;
     display: block;
-    cursor: pointer;
     text-align: center;
 }
 
@@ -94,18 +97,55 @@
     background-color: #363b48;
     color: yellow;
 }
+
 .rb_tabs{
     display:none;
 }
+
 .content{
     background-color: #363b48;
+    cursor: auto;
     display: none;
     position: absolute;
     width: 100%;
     height: auto;
     left: 0;
     min-height: 75vh;
+<<<<<<< HEAD
+=======
 }
+
+.content-cadastro{
+    /* display: flex;
+    flex-direction: column; */
+    
+}
+
+.content label {
+    background-color: #363b48;
+    border-radius: 0%;
+    display: inline;
+    text-align:right;
+}
+
+.content input{
+    border: 0;
+    border-bottom: 2px solid black;
+    outline: 0;
+    background: transparent;
+    color: #FFFFFF;
+>>>>>>> 6b250ffa6360369739a27832ae4c1ec5c3552bea
+}
+
 .rb_tabs:checked ~ .content{
     display: block;
+}
+
+.linha{
+    display: flex;
+    flex-direction: row;
+}
+
+#orcamento{
+    margin-top: 10px;
 }
