@@ -123,6 +123,7 @@
     background-color: #363b48;
     border-radius: 0%;
     display: inline;
+    text-align:right;
 }
 
 .content input{

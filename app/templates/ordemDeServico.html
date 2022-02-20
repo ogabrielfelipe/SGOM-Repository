@@ -26,13 +26,13 @@ Ordem de Serviço
     <nav class="nav_tabs">
         <ul>
             <li>
-                <input type="radio" name="tabs" class="rb_tabs" id="tab1" >
+                <input type="radio" name="tabs" class="rb_tabs" id="tab1">
                 <label for="tab1"> Cadastro</label>
-                
+
                 <div class="content">
                     <div class="content-cadastro">
-                        
-                        <div class="linha">
+
+                        <div class="linha" id="buscar-veiculo">
                             <label for="veiculo">Buscar veiculo:</label>
                             <input type="text" name="inp-busc-veiculo" id="busc-veiculo">
                         </div>
@@ -56,23 +56,23 @@ Ordem de Serviço
                             <label for="telefone">Telefone: </label>
                             <input type="tel" name="telefone" id="telefone">
                         </div>
-                        
+
                         <div class="linha">
                             <label for="orcamento">Orçamento: </label>
                             <input type="checkbox" name="orcamento" checked id="orcamento" value="true">
                         </div>
                         <button class="btn-estado-veiculo">Estado do Veículo</button>
                     </div>
-                    
+
                 </div>
             </li>
             <li>
                 <input type="radio" name="tabs" class="rb_tabs" id="tab2" checked>
                 <label for="tab2"> Visualizar</label>
                 <div class="content">
-                    <input type="" name="tabs" value="Campo1">   
-                    <br>            
-                    <input type="" name="tabs" value="Campo2">   
+                    <input type="" name="tabs" value="Campo1">
+                    <br>
+                    <input type="" name="tabs" value="Campo2">
                 </div>
             </li>
         </ul>
@@ -85,5 +85,5 @@ Ordem de Serviço
 {%endblock%}
 
 {% block footer %}
-    
- {%endblock%}
+<script src="{{url_for('static', filename='js/ordemDeServico.js')}}"></script>
+{%endblock%}
