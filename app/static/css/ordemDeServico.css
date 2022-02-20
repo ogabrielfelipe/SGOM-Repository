@@ -122,6 +122,7 @@
 .content label {
     background-color: #363b48;
     border-radius: 0%;
+    display: inline;
 }
 
 .content input{
@@ -134,4 +135,13 @@
 
 .rb_tabs:checked ~ .content{
     display: block;
+}
+
+.linha{
+    display: flex;
+    flex-direction: row;
+}
+
+#orcamento{
+    margin-top: 10px;
 }

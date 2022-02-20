@@ -28,24 +28,39 @@ Ordem de Serviço
             <li>
                 <input type="radio" name="tabs" class="rb_tabs" id="tab1" >
                 <label for="tab1"> Cadastro</label>
+                
                 <div class="content">
                     <div class="content-cadastro">
-                        <button class="btn-registrar-veiculo">Registrar Veículo</button>
-                        <label for="problema">Problema: </label>
-                        <input type="text" name="problema" id="problema">
+                        
+                        <div class="linha">
+                            <label for="veiculo">Buscar veiculo:</label>
+                            <input type="text" name="inp-busc-veiculo" id="busc-veiculo">
+                        </div>
+                        <!--<button class="btn-registrar-veiculo">Registrar Veículo</button> -->
+                        <div class="linha">
+                            <label for="problema">Problema: </label>
+                            <input type="text" name="problema" id="problema">
+                        </div>
 
-                        <label for="cpf">CPF: </label>
-                        <input type="text" name="cpf" id="cpf">
+                        <div class="linha">
+                            <label for="cpf">CPF: </label>
+                            <input type="text" name="cpf" id="cpf">
+                        </div>
 
-                        <label for="nome">Nome: </label>
-                        <input type="text" name="nome" id="nome">
+                        <div class="linha">
+                            <label for="nome">Nome: </label>
+                            <input type="text" name="nome" id="nome">
+                        </div>
 
-                        <label for="telefone">Telefone: </label>
-                        <input type="tel" name="telefone" id="telefone">
-
-                        <label for="orcamento">Orçamento: </label>
-                        <input type="checkbox" name="orcamento" checked id="orcamento" value="true">
-                            
+                        <div class="linha">
+                            <label for="telefone">Telefone: </label>
+                            <input type="tel" name="telefone" id="telefone">
+                        </div>
+                        
+                        <div class="linha">
+                            <label for="orcamento">Orçamento: </label>
+                            <input type="checkbox" name="orcamento" checked id="orcamento" value="true">
+                        </div>
                         <button class="btn-estado-veiculo">Estado do Veículo</button>
                     </div>
                     
