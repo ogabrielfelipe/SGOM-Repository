@@ -1,3 +1,4 @@
+from sqlalchemy import false
 from ..model.Funcionario import Funcionario, funcionario_schema, funcionarios_schema
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -84,8 +85,9 @@ def busca_funcionarios():
 
 def funcionario_username(username):
     try:
-        return Funcionario.query.filter(Funcionario.usuario == username).one()
-    except:
+        return Funcionario.query.filter(Funcionario.usuario == username).one()        
+    except Exception as e:
+        print(e)
         return None
 
 
@@ -93,13 +95,13 @@ def autentica_funcionario():
     resp = request.get_json()
     username = resp['username']
     senha =  resp['senha']
-    
-    print(username)
+
     if not username or not senha: #Verifica se o usuário digitou a senha ou o username
         return jsonify({'msg': 'Usuario ou senha em branco'}), 401
+        
     funcionario = funcionario_username(username=username)
-    
-    if not funcionario or funcionario.status == 0: #Verifica se o status do profissional está desativado
+
+    if not funcionario or funcionario.status == false: #Verifica se o status do profissional está desativado
         return jsonify({'msg': 'Usuário Inativado'}), 403
 
     if not funcionario or not check_password_hash(funcionario.senha, senha): #Verficia se a senha digitada é a mesma da que consta bo banco

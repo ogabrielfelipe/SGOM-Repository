@@ -38,6 +38,7 @@ funcionario.login_manager.init_app(app)
 
 from .bluePrints import initial
 
+
 @listens_for(Engine, "connect")
 def my_on_connect(dbapi_con, connection_record):
     if isinstance(dbapi_con, SQLite3Connection):

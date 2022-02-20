@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from flask_login import current_user
+from flask_login import login_required, current_user
 from ..controller.ordemDeServicoController import (
     abertura_OrdemDeServico,
     registra_orcamento,
@@ -14,15 +14,15 @@ def root_ordemDeServico():
     return render_template('.html')
 
 
-
 @ordem.route('/OrdemDeServico/Abertura', methods=['POST'])
+@login_required
 def abre_ordemDeServico():
     return abertura_OrdemDeServico()
 
 
 @ordem.route('/OrdemDeServico/Aceita/<int:codigo>', methods=['POST'])
 def aceit_ordemDeServico(codigo):
-    return aceita_ordemDeServico(1, 1)
+    return aceita_ordemDeServico(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/RegistraOrcamento/<int:codigo>', methods=['POST'])

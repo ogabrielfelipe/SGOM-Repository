@@ -1,5 +1,6 @@
-from sqlalchemy.ext.mutable import MutableList
 from .ItemOrcamento import ItemOrcamento, db, ma
+from sqlalchemy import Enum
+from .Status import Status
 
 
 class OrdemDeServico(db.Model):
@@ -16,13 +17,10 @@ class OrdemDeServico(db.Model):
     respostaCliente = db.Column(db.Boolean)
     carro = db.Column(db.Integer, db.ForeignKey('carro.id'))
     mecanico = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
-
     itemOrcamento = db.relationship('ItemOrcamento', secondary='servicos', back_populates='ordemDeServico')
+    status = db.Column(Enum(Status))
 
-    registroDaOS_id = db.Column(db.Integer, db.ForeignKey('registroDaOS.id'))
-    registroDaOS = db.relationship('RegistroDaOS', back_populates="ordemDeServicos")
-
-    def __init__(self, nomeR, cpfR, telR, problema, reqOr, estV, orc, cusM, valT, respC, regisDO):
+    def __init__(self, nomeR, cpfR, telR, problema, reqOr, estV, orc, cusM, valT, respC, regisDO, carro, status):
         self.nomeRequerente = nomeR
         self.cpfDoRequerente = cpfR
         self.telefoneRequerente = telR
@@ -34,19 +32,37 @@ class OrdemDeServico(db.Model):
         self.valorTodal = valT
         self.respostaCliente = respC
         self.registroDaOS = regisDO
+        self.carro = carro
+        self.status = status
         
+    def __init__(self, nomeR, cpfR, telR, problema, reqOr, estV, carro, status):
+        self.nomeRequerente = nomeR
+        self.cpfDoRequerente = cpfR
+        self.telefoneRequerente = telR
+        self.problema = problema
+        self.requisicaoOrcamento = reqOr
+        self.estadoAtualDoVeiculo = estV
+        self.carro = carro
+        self.status = status
+
     @classmethod
-    def abrirOrdemDeServico(cls, carro, nomeR, cpfR, telR, problema, reqOr, estadoA):
-        cls.carro = carro
-        cls.nomeRequerente = nomeR
-        cls.cpfDoRequerente = cpfR
-        cls.telefoneRequerente = telR
-        cls.problema = problema
-        cls.requisicaoOrcamento = reqOr
-        cls.estadoAtualDoVeiculo = estadoA
-    
-    def aceitarServico(self, mecanico):
+    def abrirOrdemDeServico(cls, carro, nomeR, cpfR, telR, problema, reqOr, estadoA, status):
+        return cls(
+            nomeR = nomeR, 
+            carro = carro, 
+            cpfR = cpfR,
+            telR = telR,
+            problema = problema,
+            reqOr = reqOr,
+            estV = estadoA,
+            status = status
+        )
+
+    @staticmethod
+    def aceitarServico(mecanico, status):
         self.mecanico = mecanico
+        self.status = status
+
 
     def registraOrcamento(self, problema, custoMec, itens):
         self.problema = problema

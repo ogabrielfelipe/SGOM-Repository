@@ -4,8 +4,8 @@ from .ItemOrcamento import ItemOrcamento, db, ma
 
 class Servicos(db.Model):
     __tablename__ = 'servicos'
-    itemOrcamento = db.Column(db.ForeignKey("itemOrcamento.id"), nullable=False, primary_key=True)
-    ordemDeServico= db.Column(db.Integer, db.ForeignKey("ordemDeServico.id"), nullable=False)
+    ordemDeServico = db.Column(db.Integer, db.ForeignKey("ordemDeServico.id"), nullable=False, primary_key=True)
+    itemOrcamento = db.Column(db.ForeignKey("itemOrcamento.id"), nullable=False)
     quantidade = db.Column(db.Float)
 
     def __init__(self, ordem, item, quant):
@@ -16,7 +16,7 @@ class Servicos(db.Model):
 
 class ServicosScheme(ma.Schema):
     class Meta:
-        fields = 'id', 'ordemDeServico', 'itemOrcamento', 'quantidade'
+        fields = ('id', 'ordemDeServico', 'itemOrcamento', 'quantidade')
 
 
 servico_schema = ServicosScheme()
