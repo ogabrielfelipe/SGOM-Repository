@@ -36,3 +36,47 @@
     color: #FFFFFF;
     text-decoration: none;
 }
+
+
+/*
+    FEITO NAS COCHAS, SOMENTE PARA TESTE SE FAZ NECESSÁRIO REVISÃO
+    Conceito de Abas para a tela de ordemDeServico
+*/
+.nav_tabs{
+    width: 1315px;
+    height: 400px;
+    margin: 100px auto;
+}
+.nav_tabs ul {
+    list-style: none;
+}
+.nav_tabs ul li{
+    float: left;
+}
+.nav_tabs label{
+    width: 100px;
+    padding: 25px;
+    background-color: #363b48;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+}
+
+.rb_tabs:checked ~ label{
+    background: #e54e43;
+}
+.rb_tabs{
+    display:none;
+}
+.content{
+    border-top: 5px solid #e54e43;
+    background-color: #fff;
+    display: none;
+    position: absolute;
+    height: 320px;
+    width: 100%;
+    left: 0;
+}
+.rb_tabs:checked ~ .content{
+    display: block;
+}
