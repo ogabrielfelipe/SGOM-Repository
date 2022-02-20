@@ -111,9 +111,8 @@
     height: auto;
     left: 0;
     min-height: 75vh;
-<<<<<<< HEAD
-=======
 }
+
 
 .content-cadastro{
     /* display: flex;
@@ -134,7 +133,6 @@
     outline: 0;
     background: transparent;
     color: #FFFFFF;
->>>>>>> 6b250ffa6360369739a27832ae4c1ec5c3552bea
 }
 
 .rb_tabs:checked ~ .content{
