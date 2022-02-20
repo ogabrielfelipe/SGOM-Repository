@@ -49,6 +49,7 @@
     margin: 20px;
     background: #232c3d;
     border: 0;
+    color: white;
 }
 
 
@@ -68,14 +69,17 @@
     position: relative;
     width: 98%;
 
-    min-height: 75vh;
+    min-height: 80vh;
 }
+
 .nav_tabs ul {
     list-style: none;
 }
+
 .nav_tabs ul li{
     float: left;
 }
+
 .nav_tabs label{
     width: 100px;
     margin-right: 8px;
@@ -86,7 +90,6 @@
     /*background-color: #363b48;*/
     background-color: #232c3d;
     display: block;
-    cursor: pointer;
     text-align: center;
 }
 
@@ -94,18 +97,27 @@
     background-color: #363b48;
     color: yellow;
 }
+
 .rb_tabs{
     display:none;
 }
+
 .content{
     background-color: #363b48;
+    cursor: auto;
     display: none;
     position: absolute;
     width: 100%;
     height: auto;
     left: 0;
-    min-height: 70vh;
+    min-height: 75vh;
 }
+
+.content label {
+    background-color: #363b48;
+    border-radius: 0%; 
+}
+
 .rb_tabs:checked ~ .content{
     display: block;
 }
