@@ -20,21 +20,10 @@ class OrdemDeServico(db.Model):
     itemOrcamento = db.relationship('ItemOrcamento', secondary='servicos', back_populates='ordemDeServico')
     status = db.Column(Enum(Status))
 
-    def __init__(self, nomeR, cpfR, telR, problema, reqOr, estV, orc, cusM, valT, respC, regisDO, carro, status):
-        self.nomeRequerente = nomeR
-        self.cpfDoRequerente = cpfR
-        self.telefoneRequerente = telR
-        self.problema = problema
-        self.requisicaoOrcamento = reqOr
-        self.estadoAtualDoVeiculo = estV
-        self.orcamento = orc
-        self.custoMecanico = cusM
-        self.valorTodal = valT
-        self.respostaCliente = respC
-        self.registroDaOS = regisDO
-        self.carro = carro
-        self.status = status
-        
+    '''def __init__(self, mecanico, status):
+        self.mecanico = mecanico
+        self.status = status'''
+    
     def __init__(self, nomeR, cpfR, telR, problema, reqOr, estV, carro, status):
         self.nomeRequerente = nomeR
         self.cpfDoRequerente = cpfR
@@ -45,11 +34,13 @@ class OrdemDeServico(db.Model):
         self.carro = carro
         self.status = status
 
+    
+
     @classmethod
     def abrirOrdemDeServico(cls, carro, nomeR, cpfR, telR, problema, reqOr, estadoA, status):
         return cls(
-            nomeR = nomeR, 
-            carro = carro, 
+            nomeR = nomeR,
+            carro = carro,
             cpfR = cpfR,
             telR = telR,
             problema = problema,
@@ -58,34 +49,41 @@ class OrdemDeServico(db.Model):
             status = status
         )
 
-    @staticmethod
-    def aceitarServico(mecanico, status):
-        self.mecanico = mecanico
-        self.status = status
+    
+    def aceitarServico(self, mecanico, stas):
+        self.mecanico=mecanico
+        self.status=stas
+        
 
-
-    def registraOrcamento(self, problema, custoMec, itens):
+    
+    def registraOrcamento(self, problema, custoMec, valTodal):
         self.problema = problema
         self.custoMecanico = custoMec
-        self.itemOrcamento = itens
+        self.valorTodal = valTodal
 
-    def avaliarOrdemServico(self, respC):
-        self.respostaCliente = respC
+    @classmethod
+    def avaliarOrdemServico(cls, respC, status):
+        cls.respostaCliente = respC
+        cls.status = status
 
-    def atenderServico(self):
-        pass
+    @classmethod
+    def atenderServico(cls, mecanico, status):
+        cls.mecanico = mecanico
+        cls.status = status
 
-    def concluirServico(self):
-        pass
+    @classmethod
+    def concluirServico(cls, status):
+        cls.status = status
 
-    def finalizarServico(self):
-        pass
+    @classmethod
+    def finalizarServico(cls, status):
+        cls.status = status
 
 
 class OrdemDeServicoSchema(ma.Schema):
     class Meta:
         fields = ('id', 'nomeRequerente', 'cpfDoRequerente', 'telefoneRequerente', 'problema', 'requisicaoOrcamento',
-                'estadoAtualDoVeiculo', 'orcamento', 'custoMecanico', 'valorTodal', 'respostaCliente', 'registroDaOS')
+                'estadoAtualDoVeiculo', 'orcamento', 'custoMecanico', 'valorTodal', 'respostaCliente', 'registroDaOS', 'status')
 
 
 ordemDeServico_schema = OrdemDeServicoSchema()

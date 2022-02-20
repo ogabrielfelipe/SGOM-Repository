@@ -26,9 +26,6 @@ class RegistroDaOS(db.Model):
         self.mecanico = mecanico
         self.ordemServico = ordemDeServico
 
-    def __int__(self):
-        pass
-
 
 class RegistroDaOSSchema(ma.Schema):
     class Meta:
