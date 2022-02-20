@@ -70,3 +70,12 @@ ul{
     flex-direction: column;
     width: 100%;
 }
+
+.content_footer{
+    display: flex;
+    justify-content: end;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
