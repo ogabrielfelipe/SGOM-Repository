@@ -37,6 +37,11 @@
     text-decoration: none;
 }
 
+.area-content-btn{
+    display: flex;
+    justify-content: flex-end;
+}
+
 .content_btn{
     width: 100px;
     height: 40px;
@@ -51,11 +56,19 @@
     FEITO NAS COCHAS, SOMENTE PARA TESTE SE FAZ NECESSÁRIO REVISÃO
     Conceito de Abas para a tela de ordemDeServico
 */
+
+.content-nav-tabs{
+    display: flex;
+    flex-direction: column;
+}
+
 .nav_tabs{
     left: 13px;
     
     position: relative;
     width: 98%;
+
+    min-height: 75vh;
 }
 .nav_tabs ul {
     list-style: none;
@@ -91,6 +104,7 @@
     width: 100%;
     height: auto;
     left: 0;
+    min-height: 70vh;
 }
 .rb_tabs:checked ~ .content{
     display: block;

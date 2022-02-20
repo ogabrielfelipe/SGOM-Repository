@@ -22,34 +22,37 @@ Ordem de Serviço
         <li><a href="#">Excluir</a></li>
     </ul>
 </div>
-<div>
-<nav class="nav_tabs">
-    <ul>
-        <li>
-            <input type="radio" name="tabs" class="rb_tabs" id="tab1" >
-            <label for="tab1"> Cadastro</label>
-            <div class="content">
-                <form action="/action_page.php">
-                </form>
-            </div>
-        </li>
-        <li>
-            <input type="radio" name="tabs" class="rb_tabs" id="tab2" checked>
-            <label for="tab2"> Visualizar</label>
-            <div class="content">
-                <form action="/action_page.php">
-                    <input type="" name="tabs" value="Gabriel pai de todos">   
-                    <br>            
-                    <input type="" name="tabs" value="Lukinhas gay">   
-                </form>
-            </div>
-        </li>
-    </ul>
-</nav>
+<div class="content-nav-tabs">
+    <nav class="nav_tabs">
+        <ul>
+            <li>
+                <input type="radio" name="tabs" class="rb_tabs" id="tab1" >
+                <label for="tab1"> Cadastro</label>
+                <div class="content">
+                    <form action="/action_page.php">
+                    </form>
+                </div>
+            </li>
+            <li>
+                <input type="radio" name="tabs" class="rb_tabs" id="tab2" checked>
+                <label for="tab2"> Visualizar</label>
+                <div class="content">
+                    <form action="/action_page.php">
+                        <input type="" name="tabs" value="Gabriel pai de todos">   
+                        <br>            
+                        <input type="" name="tabs" value="Lukinhas gay">   
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="area-content-btn">
+        <button class="content_btn"> Cancelar</button>
+        <button class="content_btn"> Salvar</button>
+    </div>
 </div>
 {%endblock%}
 
 {% block footer %}
-    <button class="content_btn"> Cancelar</button>
-    <button class="content_btn"> Salvar</button>
+    
  {%endblock%}
