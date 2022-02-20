@@ -4,7 +4,8 @@ from .ItemOrcamento import ItemOrcamento, db, ma
 
 class Servicos(db.Model):
     __tablename__ = 'servicos'
-    ordemDeServico = db.Column(db.Integer, db.ForeignKey("ordemDeServico.id"), nullable=False, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ordemDeServico = db.Column(db.Integer, db.ForeignKey("ordemDeServico.id"), nullable=False)
     itemOrcamento = db.Column(db.ForeignKey("itemOrcamento.id"), nullable=False)
     quantidade = db.Column(db.Float)
 

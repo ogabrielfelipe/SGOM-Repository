@@ -26,5 +26,5 @@ def aceit_ordemDeServico(codigo):
 
 
 @ordem.route('/OrdemDeServico/RegistraOrcamento/<int:codigo>', methods=['POST'])
-def registra_ordemDeServico(codigo):
+def regis_ordemDeServico(codigo):
     return registra_orcamento(codigo)
