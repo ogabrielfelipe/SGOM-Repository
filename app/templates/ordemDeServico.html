@@ -1,0 +1,36 @@
+{% extends "template.html"%}
+
+{%block title%}
+Ordem de Serviço
+{%endblock%}
+
+{% block styles%}
+<!-- <script src="{{url_for('static', filename='js/ordemDeServico.js')}}"></script> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/ordemDeServico.css')}}">
+{% endblock %}
+
+{%block section%}
+
+<div class="content-opcoes-ordemServico">
+    <ul class="opcoes-ordemServico">
+        <li><a href="#">Novo</a></li>
+        <li><a href="#">Alterar</a></li>
+        <li><a href="#">Excluir</a></li>
+    </ul>
+</div>
+
+<div class="registrar">
+
+</div>
+
+<div class="visualizar">
+    
+</div>
+
+
+
+{%endblock%}

@@ -1,0 +1,38 @@
+.content-opcoes-ordemServico{
+    display: flex;
+    flex-direction: row;
+    margin: 14px;
+}
+
+.opcoes-ordemServico{
+    display: flex;
+    list-style: none;
+    position: relative;
+    text-align: center;
+}
+
+.opcoes-ordemServico li{
+    position: relative;
+    width: 64px;
+    height: 28px;
+
+    margin-right: 17px;
+    background: #31333C;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.opcoes-ordemServico li a{
+    position: relative;
+    width: 28px;
+    height: 14px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #FFFFFF;
+    text-decoration: none;
+}
