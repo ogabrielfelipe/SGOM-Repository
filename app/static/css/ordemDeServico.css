@@ -113,9 +113,23 @@
     min-height: 75vh;
 }
 
+.content-cadastro{
+    /* display: flex;
+    flex-direction: column; */
+    
+}
+
 .content label {
     background-color: #363b48;
-    border-radius: 0%; 
+    border-radius: 0%;
+}
+
+.content input{
+    border: 0;
+    border-bottom: 2px solid black;
+    outline: 0;
+    background: transparent;
+    color: #FFFFFF;
 }
 
 .rb_tabs:checked ~ .content{
