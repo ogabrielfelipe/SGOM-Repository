@@ -1,0 +1,50 @@
+{% extends "template.html"%}
+
+{%block title%}
+Ordem de Serviço
+{%endblock%}
+
+{% block styles%}
+<!-- <script src="{{url_for('static', filename='js/ordemDeServico.js')}}"></script> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/ordemDeServico.css')}}">
+{% endblock %}
+
+{%block section%}
+
+<div class="content-opcoes-ordemServico">
+    <ul class="opcoes-ordemServico">
+        <li><a href="#">Novo</a></li>
+        <li><a href="#">Alterar</a></li>
+        <li><a href="#">Excluir</a></li>
+    </ul>
+</div>
+
+<nav class="nav_tabs">
+    <ul>
+        <li>
+            <input type="radio" name="tabs" class="rb_tabs" id="tab1" checked>
+            <label for="tab1"> Cadastro</label>
+            <div class="content">
+                <form action="/action_page.php">
+                </form>
+            </div>
+        </li>
+        <li>
+            <input type="radio" name="tabs" class="rb_tabs" id="tab2" >
+            <label for="tab2"> Visualizar</label>
+            <div class="content">
+                <form action="/action_page.php">
+                </form>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+
+
+
+{%endblock%}

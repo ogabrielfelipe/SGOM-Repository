@@ -1,3 +1,7 @@
+.pesquisa{
+    margin: 15px;
+}
+
 #data-idFiltro{
     position: relative;
     width: 95px;
@@ -6,6 +10,8 @@
     background: #31333C;
     border-radius: 5px;
     color: #31333C;
+
+    margin: 7px;
 }
 
 #btn-filtro{
