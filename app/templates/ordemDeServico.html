@@ -14,70 +14,49 @@ Ordem de Serviço
 {% endblock %}
 
 {%block section%}
-
-<div class="content-opcoes-ordemServico">
-    <ul class="opcoes-ordemServico">
-        <li><a href="#">Novo</a></li>
-        <li><a href="#">Alterar</a></li>
-        <li><a href="#">Excluir</a></li>
-    </ul>
-</div>
-<div class="content-nav-tabs">
-    <nav class="nav_tabs">
-        <ul>
-            <li>
-                <input type="radio" name="tabs" class="rb_tabs" id="tab1">
-                <label for="tab1"> Cadastro</label>
-
-                <div class="content">
-                    <div class="content-cadastro">
-
-                        <div class="linha" id="buscar-veiculo">
-                            <label for="veiculo">Buscar veiculo:</label>
-                            <input type="text" name="inp-busc-veiculo" id="busc-veiculo">
-                        </div>
-
-                        <div class="linha">
-                            <label for="cpf">CPF: </label>
-                            <input type="text" name="cpf" id="cpf">
-                        </div>
-
-                        <div class="linha">
-                            <label for="nome">Nome: </label>
-                            <input type="text" name="nome" id="nome">
-                        </div>
-
-                        <div class="linha">
-                            <label for="telefone">Telefone: </label>
-                            <input type="tel" name="telefone" id="telefone">
-                        </div>
-
-                        <div class="linha">
-                            <label for="orcamento">Orçamento: </label>
-                            <input type="checkbox" name="orcamento" checked id="orcamento" value="true">
-                        </div>
-
-                        <div class="linha">
-                            <label for="problema">Problema: </label>
-                            <textarea type="text" name="problema" id="problema">
-                        </div>
-
-                        <button class="btn-estado-veiculo">Estado do Veículo</button>
-                    </div>
-
-                </div>
-            </li>
-            <li>
-                <input type="radio" name="tabs" class="rb_tabs" id="tab2" checked>
-                <label for="tab2"> Visualizar</label>
-                <div class="content">
-                    <input type="" name="tabs" value="Campo1">
-                    <br>
-                    <input type="" name="tabs" value="Campo2">
-                </div>
-            </li>
+<div class="content">
+    <div class="content-opcoes-ordemServico">
+        <ul class="opcoes-ordemServico">
+            <li><a href="#">Novo</a></li>
+            <li><a href="#">Alterar</a></li>
+            <li><a href="#">Localizar</a></li>
         </ul>
-    </nav>
+    </div>
+
+    <div class="content-cadastro">
+        <div class="cadastro-part-1">
+            <div class="linha" id="buscar-veiculo">
+                <label for="veiculo">Buscar placa: </label>
+                <input type="text" name="inp-busc-veiculo" id="busc-veiculo">
+            </div>
+
+            <div class="linha">
+                <label for="cpf">CPF: </label>
+                <input type="text" name="cpf" id="cpf">
+            </div>
+
+            <div class="linha">
+                <label for="nome">Nome: </label>
+                <input type="text" name="nome" id="nome">
+            </div>
+
+            <div class="linha">
+                <label for="telefone">Telefone: </label>
+                <input type="tel" name="telefone" id="telefone">
+            </div>
+        </div>
+        <div class="cadastro-part-2">
+            <label for="problema">Problema: </label>
+            <textarea type="text" name="problema" id="problema"></textarea>
+
+            <button class="btn-estado-veiculo">Estado do Veículo</button>
+
+            <div class="linha">
+                <label for="orcamento">Orçamento: </label>
+                <input type="checkbox" name="orcamento" checked id="orcamento" value="true">
+            </div>
+        </div>
+    </div>
     <div class="area-content-btn">
         <button class="content_btn"> Cancelar</button>
         <button class="content_btn"> Salvar</button>

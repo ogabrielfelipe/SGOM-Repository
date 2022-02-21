@@ -1,7 +1,12 @@
+.content{
+    display: flex;
+    flex-direction: column;
+}
+
 .content-opcoes-ordemServico{
     display: flex;
     flex-direction: row;
-    margin: 14px;
+    margin: 20px;
 }
 
 .opcoes-ordemServico{
@@ -13,13 +18,14 @@
 
 .opcoes-ordemServico li{
     position: relative;
-    width: 64px;
-    height: 28px;
+    width: 90px;
+    height: 34px;
 
     margin-right: 17px;
     background: #31333C;
     border-radius: 5px;
     text-decoration: none;
+    padding-top: 5px;
 }
 
 .opcoes-ordemServico li a{
@@ -30,11 +36,91 @@
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 14px;
 
     color: #FFFFFF;
     text-decoration: none;
+}
+
+.content-cadastro{
+    background-color: #363b48;
+    cursor: auto;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    margin-left: 20px;
+    height: auto;
+    min-height: 78vh;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    font-size: 20px;
+}
+
+.content-cadastro label{
+    text-align: left;
+}
+
+.content-cadastro input{
+    border: 0;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    outline: 0;
+    background: transparent;
+    color: #FFFFFF;
+    margin-left: 10px;
+}
+
+.cadastro-part-1{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.linha{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin-bottom: 20px;
+}
+
+.cadastro-part-2{
+    display: flex;
+    flex-direction: column;
+    min-width: 374px;
+}
+
+.cadastro-part-2 .linha{
+    justify-content: left;
+
+}
+
+.cadastro-part-2 #problema{
+    margin-bottom: 20px;
+}
+
+.btn-estado-veiculo{
+    position: relative;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+
+    color: #FFFFFF;
+    text-decoration: none;
+    background: #31333C;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.cadastro-part-2 .btn-estado-veiculo{
+    margin-bottom: 20px;
+}
+
+#orcamento{
+    margin-top: 10px;
 }
 
 .area-content-btn{
@@ -50,99 +136,4 @@
     background: #232c3d;
     border: 0;
     color: white;
-}
-
-
-/*
-    FEITO NAS COCHAS, SOMENTE PARA TESTE SE FAZ NECESSÁRIO REVISÃO
-    Conceito de Abas para a tela de ordemDeServico
-*/
-
-.content-nav-tabs{
-    display: flex;
-    flex-direction: column;
-}
-
-.nav_tabs{
-    left: 13px;
-    
-    position: relative;
-    width: 98%;
-
-    min-height: 80vh;
-}
-
-.nav_tabs ul {
-    list-style: none;
-}
-
-.nav_tabs ul li{
-    float: left;
-}
-
-.nav_tabs label{
-    width: 100px;
-    margin-right: 8px;
-    padding-top: 5px;
-    height: 30px;
-    border-radius: 10px 10px 0 0;
-    /*background-color: #333;*/
-    /*background-color: #363b48;*/
-    background-color: #232c3d;
-    display: block;
-    text-align: center;
-}
-
-.rb_tabs:checked ~ label{
-    background-color: #363b48;
-    color: yellow;
-}
-
-.rb_tabs{
-    display:none;
-}
-
-.content{
-    background-color: #363b48;
-    cursor: auto;
-    display: none;
-    position: absolute;
-    width: 100%;
-    height: auto;
-    left: 0;
-    min-height: 75vh;
-}
-
-
-.content-cadastro{
-    /* display: flex;
-    flex-direction: column; */
-}
-
-.content label {
-    background-color: #363b48;
-    border-radius: 0%;
-    display: inline;
-    text-align:right;
-}
-
-.content input{
-    border: 0;
-    border-bottom: 2px solid black;
-    outline: 0;
-    background: transparent;
-    color: #FFFFFF;
-}
-
-.rb_tabs:checked ~ .content{
-    display: block;
-}
-
-.linha{
-    display: flex;
-    flex-direction: row;
-}
-
-#orcamento{
-    margin-top: 10px;
 }
