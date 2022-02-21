@@ -15,3 +15,5 @@ function buscarVeiculo() {
         btn.setAttribute('style', 'display:block');
     }
 }
+
+buscarVeiculo();
