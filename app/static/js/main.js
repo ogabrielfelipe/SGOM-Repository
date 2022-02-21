@@ -6,7 +6,7 @@ function login(usuario, senha){
     Envia(entry, '/', 'POST')
         .then((response)=>{
             if (response['msg']  === 'Login realizado'){
-                window.location.href = "/Funcionario"
+                window.location.href = "/Home"
             }
         })
         .catch((error) => {
