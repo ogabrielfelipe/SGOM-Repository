@@ -2,6 +2,8 @@
 /SQLite - SGOMDADOS.png
 /DataBase/SGOMDADOS.db
 CONFIG.ini
+Consulta_OS.sql
+Consulta_Registros.sql
 __pycache__/
 app/__pycache__/
 app/bluePrints/__pycache__/
