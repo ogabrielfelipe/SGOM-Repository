@@ -100,9 +100,12 @@ def autentica_funcionario():
         return jsonify({'msg': 'Usuario ou senha em branco'}), 401
         
     funcionario = funcionario_username(username=username)
+    if not funcionario:
+            return jsonify({'msg': 'Usuário não encontrado'}), 404
 
-    if not funcionario or funcionario.status == false: #Verifica se o status do profissional está desativado
+    if funcionario.status == false: #Verifica se o status do profissional está desativado
         return jsonify({'msg': 'Usuário Inativado'}), 403
+  
 
     if not funcionario or not check_password_hash(funcionario.senha, senha): #Verficia se a senha digitada é a mesma da que consta bo banco
         return jsonify({'msg': 'Usuário Invalido ou Senha Incorreta'}), 401            

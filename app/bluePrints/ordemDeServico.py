@@ -13,11 +13,6 @@ from ..controller.ordemDeServicoController import (
 ordem = Blueprint('ordem', __name__)
 
 
-@ordem.route('/OrdemDeServico', methods=['GET'])
-def root_ordemDeServico():
-    return render_template('ordemDeServico.html')
-
-
 @ordem.route('/OrdemDeServico/Abertura', methods=['POST'])
 @login_required
 def abre_ordemDeServico():
@@ -25,31 +20,37 @@ def abre_ordemDeServico():
 
 
 @ordem.route('/OrdemDeServico/Aceita/<int:codigo>', methods=['POST'])
+@login_required
 def aceit_ordemDeServico(codigo):
     return aceita_ordemDeServico(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/RegistraOrcamento/<int:codigo>', methods=['POST'])
+@login_required
 def regis_ordemDeServico(codigo):
     return registra_orcamento(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/Avaliar/<int:codigo>', methods=['POST'])
+@login_required
 def avalia_ordemDeServico(codigo):
     return avaliar_ordemServico(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/Atender/<int:codigo>', methods=['POST'])
+@login_required
 def atende_ordemDeServico(codigo):
     return atender_ordemDeServico(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/Concluir/<int:codigo>', methods=['POST'])
+@login_required
 def conclui_ordemDeServico(codigo):
     return concluir_ordemDeServico(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/Finalizar/<int:codigo>', methods=['POST'])
+@login_required
 def finaliza_ordemDeServico(codigo):
     return finalizar_ordemDeServico(codigo, current_user.id) 
     

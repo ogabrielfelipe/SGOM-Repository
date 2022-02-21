@@ -84,7 +84,8 @@ class OrdemDeServico(db.Model):
 class OrdemDeServicoSchema(ma.Schema):
     class Meta:
         fields = ('id', 'nomeRequerente', 'cpfDoRequerente', 'telefoneRequerente', 'problema', 'requisicaoOrcamento',
-                'estadoAtualDoVeiculo', 'orcamento', 'custoMecanico', 'valorTodal', 'respostaCliente', 'registroDaOS', 'status')
+                'estadoAtualDoVeiculo', 'orcamento', 'custoMecanico', 'valorTodal', 'respostaCliente', 'registroDaOS', 'status',
+                'placa', 'nome')
 
 
 ordemDeServico_schema = OrdemDeServicoSchema()

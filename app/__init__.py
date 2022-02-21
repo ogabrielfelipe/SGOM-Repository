@@ -3,6 +3,7 @@ from sqlalchemy.event import listens_for
 from sqlalchemy.engine import Engine
 from sqlite3 import Connection as SQLite3Connection
 
+
 from app.bluePrints import ordemDeServico
 from .model import (
     Carro,
@@ -20,6 +21,9 @@ from .bluePrints import (
     itemOrcamento
 )
 from .bluePrints.login import auth
+from werkzeug.security import generate_password_hash
+from datetime import datetime
+
 
 
 app = Flask(__name__)
@@ -49,3 +53,10 @@ def my_on_connect(dbapi_con, connection_record):
 
 with app.app_context():
     ItemOrcamento.db.create_all()
+    try:
+        func = Funcionario.Funcionario(nome='Master', user='master', senha=  generate_password_hash('master1'), cpf='0', tel='0', 
+                        dataA=datetime.strptime('1900-01-01', '%Y-%m-%d').date(), tFunc=0,status=False)
+        ItemOrcamento.db.session.add(func)
+        ItemOrcamento.db.session.commit()
+    except Exception as e:
+        pass

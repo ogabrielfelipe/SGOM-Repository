@@ -1,12 +1,16 @@
 import random
 import string
+import configparser
+
+config = configparser.ConfigParser()
+config.read('CONFIG.ini')
 
 
 stringKey = string.ascii_letters + string.ascii_lowercase + string.ascii_uppercase
 chave = ''.join(random.choice(stringKey) for i in range(12))
 
 DEBUG = True
-SQLALCHEMY_DATABASE_URI = f"sqlite:///SGOMDADOS.db"
+SQLALCHEMY_DATABASE_URI = f"sqlite:///{config.get('DATABASE', 'DB')}"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = chave
 

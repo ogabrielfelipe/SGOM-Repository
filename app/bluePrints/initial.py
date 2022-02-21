@@ -10,7 +10,6 @@ def root():
     return render_template('home.html')
 
 
-@app.route('/Servico', methods=['POST'])
-def servicos():
-    result = cad_servicos()
-    return jsonify({'msg': result})
+@app.route('/OrdemDeServico', methods=['GET'])
+def root_ordemDeServico():
+    return render_template('ordemDeServico.html')

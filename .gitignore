@@ -1,6 +1,7 @@
 /venv/
 /SQLite - SGOMDADOS.png
-/app/SGOMDADOS.db
+/DataBase/SGOMDADOS.db
+CONFIG.ini
 __pycache__/
 app/__pycache__/
 app/bluePrints/__pycache__/

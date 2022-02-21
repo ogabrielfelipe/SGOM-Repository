@@ -2,13 +2,14 @@ import datetime
 from unittest import result
 from flask import request, jsonify, session
 from itsdangerous import json
-
+from sqlalchemy import text
 from app.model.Status import Status
 from ..model.OrdemDeServico import OrdemDeServico, ordemDeServico_schema, ordemDeServicos_schema
 from ..model.ItemOrcamento import ItemOrcamento, itemOrcamento_schema, itemOrcamentos_schema
 from ..model.Servicos import Servicos, servico_schema,servicos_schema
 from ..model.RegistroDaOS import RegistroDaOS, registroDaOS_schema, registroDaOSs_schema
 from ..model.ItemOrcamento import db
+
 
 def abertura_OrdemDeServico():
     resp = request.get_json()
@@ -77,9 +78,7 @@ def registra_orcamento(id, mecanico):
         try:
             itens = ItemOrcamento.query.filter(ItemOrcamento.id.in_(auxItem))
         except Exception as e:
-            itens = None
-        
-
+            itens = None 
         if itens:
             cont = 0
             valorTotal = 0
@@ -90,13 +89,9 @@ def registra_orcamento(id, mecanico):
                 auxQuant.append(quant_item['quantidade'][cont])
                 servicos.append(Servicos(ordem.id, i.id, quant_item['quantidade'][cont]))
                 cont+=1
-
             valorTotal += custoMecanico                
             statusAterior = ordem.status
-
-
             if ordem.requisicaoOrcamento == False:
-
                 try:
                     ordem.registraOrcamento(problema=problema, custoMec=custoMecanico, valTodal=valorTotal, status=4)
                     db.session.add_all(servicos)
@@ -109,7 +104,6 @@ def registra_orcamento(id, mecanico):
                     return jsonify({'msg': 'Registro Efetuado com sucesso', 'dados': {"Servicos": resul1, "Ordem_de_Servico": result2}}), 200
                 except Exception as e:
                     return jsonify({'msg': 'Não foi possível incluir o resgistro', 'dados': str(e)}), 500
-            
             else:
                 try:
                     ordem.registraOrcamento(problema=problema, custoMec=custoMecanico, valTodal=valorTotal, status=2)
@@ -213,12 +207,54 @@ def finalizar_ordemDeServico(id, funcionario):
                         statusA=statusAterior, novoS=6, valorTotal=ordem.valorTodal, problema=ordem.problema, mecanico=funcionario, ordemDeServico=id)      
                 db.session.add(regis)
                 db.session.commit()
-                result1 = ordemDeServico_schema.dump(ordem)
-                result2 = registroDaOS_schema.dump(regis)
-                return jsonify({'msg': 'Ordem de Serviço Finalizada', 'dados': {"Ordem": result1, "Registro": result2}}), 200
+
+                sql_ordemDeServico = text(f'SELECT d.nomeRequerente, d.cpfDoRequerente, d.telefoneRequerente, d.problema,\
+                                                d.requisicaoOrcamento, d.estadoAtualDoVeiculo, d.custoMecanico, d.valorTodal,\
+                                                d.respostaCliente, c.placa as placa_veiculo, f.nome as mecanico\
+                                            FROM ordemDeServico AS d\
+                                            INNER JOIN carro c on c.id = d.id\
+                                            INNER JOIN funcionario f on f.id = d.mecanico\
+                                            WHERE\
+                                                D.id = {id} \
+                                            ')
+
+                sql_registroDaOS = text(f'SELECT strftime("%d/%m/%Y %H:%M",r.data) as data_alteracao, r.novoStatus as status, f.nome as funcionario, r.problema  FROM ordemDeServico AS o\
+                                            INNER JOIN registroDaOS r ON r.ordemServico = o.id\
+                                            INNER JOIN funcionario AS f ON f.id = o.mecanico\
+                                        WHERE\
+                                            o.id = {id}\
+                                        ')
+
+                consultaOrdemDeServico = db.session.execute(sql_ordemDeServico)
+                consultaRegistrosDaOS = db.session.execute(sql_registroDaOS).fetchall()
+
+                consultaOrdemDeServico_dict = {}
+                for it in consultaOrdemDeServico:
+                    consultaOrdemDeServico_dict = dict(it)
+
+                consultaRegistrosDaOS_dict = [dict(u) for u in consultaRegistrosDaOS]
+                
+                return jsonify({'msg': 'Ordem de Serviço Finalizada', 'dados': {"Ordem": consultaOrdemDeServico_dict, "Registro": consultaRegistrosDaOS_dict}}), 200
             except Exception as e:
-                return jsonify({'msg': 'Não foi possível finalizar', 'dados': {}}), 500
+                return jsonify({'msg': 'Não foi possível finalizar', 'dados': str(e)}), 500
         else:
             return jsonify({'msg': 'A Ordem de Serviço não está aguardando pagamento', 'dados': {}}), 401
     return jsonify({'msg': 'Ordem de Serviço não encontrada'}), 404
     
+
+
+def populate_dict(cursor, schema):
+    for i in schema.keys():
+        cursor.execute("select * from {table};".format(table=i))
+
+        for row in cursor.fetchall():
+            colindex = 0
+
+            for col in schema[i]['scheme']:
+                if not 'data' in schema[i]:
+                    schema[i]['data']=[]
+
+                schema[i]['data'].append(row[colindex])
+                colindex += 1
+
+    return schema
