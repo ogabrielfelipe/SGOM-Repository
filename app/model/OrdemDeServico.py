@@ -56,28 +56,29 @@ class OrdemDeServico(db.Model):
         
 
     
-    def registraOrcamento(self, problema, custoMec, valTodal):
+    def registraOrcamento(self, problema, custoMec, valTodal, status):
         self.problema = problema
         self.custoMecanico = custoMec
         self.valorTodal = valTodal
+        self.status = status
 
-    @classmethod
-    def avaliarOrdemServico(cls, respC, status):
-        cls.respostaCliente = respC
-        cls.status = status
+    
+    def avaliarOrdemServico(self, respC, status):
+        self.respostaCliente = respC
+        self.status = status
 
-    @classmethod
-    def atenderServico(cls, mecanico, status):
-        cls.mecanico = mecanico
-        cls.status = status
+    
+    def atenderServico(self, mecanico, status):
+        self.mecanico = mecanico
+        self.status = status
 
-    @classmethod
-    def concluirServico(cls, status):
-        cls.status = status
+    
+    def concluirServico(self, status):
+        self.status = status
 
-    @classmethod
-    def finalizarServico(cls, status):
-        cls.status = status
+    
+    def finalizarServico(self, status):
+        self.status = status
 
 
 class OrdemDeServicoSchema(ma.Schema):

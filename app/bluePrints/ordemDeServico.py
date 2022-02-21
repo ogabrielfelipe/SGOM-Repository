@@ -3,7 +3,11 @@ from flask_login import login_required, current_user
 from ..controller.ordemDeServicoController import (
     abertura_OrdemDeServico,
     registra_orcamento,
-    aceita_ordemDeServico
+    aceita_ordemDeServico,
+    avaliar_ordemServico,
+    atender_ordemDeServico,
+    concluir_ordemDeServico,
+    finalizar_ordemDeServico
 )
 
 ordem = Blueprint('ordem', __name__)
@@ -27,4 +31,25 @@ def aceit_ordemDeServico(codigo):
 
 @ordem.route('/OrdemDeServico/RegistraOrcamento/<int:codigo>', methods=['POST'])
 def regis_ordemDeServico(codigo):
-    return registra_orcamento(codigo)
+    return registra_orcamento(codigo, current_user.id)
+
+
+@ordem.route('/OrdemDeServico/Avaliar/<int:codigo>', methods=['POST'])
+def avalia_ordemDeServico(codigo):
+    return avaliar_ordemServico(codigo, current_user.id)
+
+
+@ordem.route('/OrdemDeServico/Atender/<int:codigo>', methods=['POST'])
+def atende_ordemDeServico(codigo):
+    return atender_ordemDeServico(codigo, current_user.id)
+
+
+@ordem.route('/OrdemDeServico/Concluir/<int:codigo>', methods=['POST'])
+def conclui_ordemDeServico(codigo):
+    return concluir_ordemDeServico(codigo, current_user.id)
+
+
+@ordem.route('/OrdemDeServico/Finalizar/<int:codigo>', methods=['POST'])
+def finaliza_ordemDeServico(codigo):
+    return finalizar_ordemDeServico(codigo, current_user.id) 
+    
