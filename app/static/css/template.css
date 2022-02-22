@@ -18,25 +18,33 @@ ul{
     margin: 0px;
 }
 
+
+
+
 .content-nav{
     height: 50px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     box-shadow: 0 0 1em black;
     min-width: 100vmax;
+    
+
+    
 }
 
 .usuario{
     border-radius: 50%;
     width: 32px;
     height: 32px;
-    background: #FFFFFF;
-    padding: 2px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    
     margin-top: 7px;
-    margin-right: 12px;
+    margin-right: 50px;
+    padding-left: 60px;
     cursor: pointer;
 }
-
 .menu{
     display: flex;
     list-style: none;
@@ -64,6 +72,37 @@ ul{
     background: #333;
     color: yellow;
 }
+
+.menu-perfil{
+    width: 90px;
+    height: auto;
+    margin-right: 50px;
+    list-style:none;
+}
+.menu-perfil-icon{   
+    text-align:center;
+}
+.controle-menu-perfil{
+    display: block;
+}
+.sub-menu-perfil{
+    list-style:none;
+    width: 80px;
+    margin-top: 20px;
+    text-align:center;
+    background-color: #22232b;
+    display: block;
+    padding: 0 10px;
+    display: none;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.534);
+}
+.sub-menu-perfil li a{
+    width: 100%;
+    text-decoration: none;
+    color: white;
+}
+
+
 
 .section{
     display: flex;

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css')}}">
     <script src="{{url_for('static', filename='js/main.js')}}"></script>    
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>    
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
     {% block styles%}
     {% endblock %}
 
@@ -29,6 +31,14 @@
                 </li>
             </ul>
             <div class="usuario">
+                <ul class="menu-perfil">  
+                    <li class="menu-perfil-icon" id="perfilMenu"><img src="{{url_for('static', filename='img/perfil_home.svg')}}" alt="" srcset="">
+                        <ul class="sub-menu-perfil" id="menuRetratil">
+                            <li style="padding: 10px;" onclick="console.log('Cliquei')"><a href="#">Sair</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
                 
             </div>
         </div>

@@ -2,22 +2,28 @@
     margin: 15px;
 }
 
-#data-idFiltro{
+#dataIdFiltroHome{
     position: relative;
-    width: 95px;
+    width: 70px;
     height: 29px;
 
     background: #31333C;
     border-radius: 5px;
-    color: #31333C;
+    color: #ffffff;
 
+    border: none;
     margin: 7px;
+    padding: 5px;
 }
+#dataIdFiltroHome:focus{
+    outline: none;
+}
+
 
 #btn-filtro{
     position: relative;
-    width: 80px;
-    height: 14px;
+    width: 123px;
+    height: 29px;
 
     font-family: Roboto;
     font-style: normal;
@@ -25,15 +31,15 @@
     font-size: 12px;
     line-height: 14px;
     color: #FFFFFF;
-}
-
-#btn-filtro{
-    position: relative;
-    width: 123px;
-    height: 29px;
-
+    border: none;
     background: #31333C;
     border-radius: 5px;
+}
+
+#btn-filtro:active{
+    position: relative;
+    width: 120px;
+    height: 25px;
 }
 
 #dashboard{
@@ -51,16 +57,16 @@
 
 .aguardando-aprovacao{
     position: relative;
-    width: 351px;
-    height: 224px;
+    width: 300px;
+    height: 200px;
 
     background: #31333C;
     border-radius: 15px;
 
-    min-width: 351px;
-    min-height: 224px;
+    min-width: 300px;
+    min-height: 200px;
 
-    margin: 50px;
+    margin: 25px;
     display: flex;
 
     flex-direction: column;
@@ -83,15 +89,15 @@
 
 .finalizadas{
     position: relative;
-    width: 351px;
-    height: 224px;
+    width: 300px;
+    height: 200px;
 
     background: #31333C;
     border-radius: 15px;
-    min-width: 351px;
-    min-height: 224px;
-    
-    margin: 50px;
+
+    min-width: 300px;
+    min-height: 200px;
+    margin: 25px;
     display: flex;
     
     flex-direction: column;
@@ -104,15 +110,16 @@
 
 .aguardando-atendimento{
     position: relative;
-    width: 351px;
-    height: 224px;
+    width: 300px;
+    height: 200px;
 
     background: #31333C;
     border-radius: 15px;
-    min-width: 351px;
-    min-height: 224px;
     
-    margin: 50px;
+    min-width: 300px;
+    min-height: 200px;
+    
+    margin: 25px;
     display: flex;
     
     flex-direction: column;
@@ -125,15 +132,16 @@
 
 .aguardando-pagamento{
     position: relative;
-    width: 351px;
-    height: 224px;
+    width: 300px;
+    height: 200px;
 
     background: #31333C;
     border-radius: 15px;
-    min-width: 351px;
-    min-height: 224px;
     
-    margin: 50px;
+    min-width: 300px;
+    min-height: 200px;
+    
+    margin: 25px;
     display: flex;
     
     flex-direction: column;

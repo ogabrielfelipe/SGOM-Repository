@@ -1,6 +1,7 @@
 /venv/
 /SQLite - SGOMDADOS.png
 /DataBase/SGOMDADOS.db
+/app/SGOMDADOS.db
 CONFIG.ini
 Consulta_OS.sql
 Consulta_Registros.sql

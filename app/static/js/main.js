@@ -1,3 +1,24 @@
+var data = new Date();
+var mes = String(data.getMonth() + 1).padStart(2, '0');
+var ano = data.getFullYear();
+
+console.log(mes+'/'+ano);
+$(document).ready(function () {
+    $('#dataIdFiltroHome').mask('99/9999');
+    $('#dataIdFiltroHome').val(mes+'/'+ano);
+
+    $('#perfilMenu').click(() => {
+        $('#menuRetratil').toggle( 'controle-menu-perfil');
+        
+    });
+
+
+
+    return false;
+});
+
+
+
 function login(usuario, senha){
     const entry = {
         "username": usuario,
