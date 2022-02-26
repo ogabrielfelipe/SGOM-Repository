@@ -4,45 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock%}</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css')}}">
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>    
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>    
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }} template.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script src="url_for('static', filename='js/template.js')"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
     {% block styles%}
     {% endblock %}
 
 </head>
-
-<body>
-    <header>
-        <div class="content-nav">
-            <ul class="menu">
-                <li><a href="{{url_for('root')}}">Home</a></li>
-                <li><a href="{{url_for('root_ordemDeServico')}}">Ordem de Serviço</a></li>
-                <li><a href="#">Relatorio </a></li>
-                <li><a href="#">Cadastro</a>
-                    <!-- <ul>
-                        <li><a href="#">Carro</a></li>
-                        <li><a href="#">Funcionário</a></li>
-                    </ul> -->
-                </li>
-            </ul>
-            <div class="usuario">
-                <ul class="menu-perfil">  
-                    <li class="menu-perfil-icon" id="perfilMenu"><img src="{{url_for('static', filename='img/perfil_home.svg')}}" alt="" srcset="">
-                        <ul class="sub-menu-perfil" id="menuRetratil">
-                            <li style="padding: 10px;" onclick="console.log('Cliquei')"><a href="#">Sair</a></li>
+<!--
+   ( ͡ಠ ͜ʖ ͡ಠ)
+-->
+<body style="background-color: #131418;">
+    <header class="d-flex justify-content-end complete-container" style="z-index: 10;">      
+        <nav class="navbar navbar-expand-lg navbar-dark complete-nav">
+            <div class="container-fluid">
+                <ul class="navbar-nav me-auto navbar-nav-scroll my-2 my-lg-0">
+                    <li class="nav-item">
+                        <a href="{{url_for('root')}}" class="nav-link active">Home</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('root_ordemDeServico')}}">Ordem de Serviço</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Mecânico</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="downMenuPrincipal" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cadastro
+                        </a>
+                        <ul class="dropdown-menu bg-dark" id="downMenu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-light" href="#">Funcionário</a></li>
+                            <li><hr class="dropdown-divider text-light"></li>                            
+                            <li><a class="dropdown-item text-light" href="#">Veículo</a></li>
+                            <li><hr class="dropdown-divider text-light"></li>                            
+                            <li><a class="dropdown-item text-light" href="#">Itens de Orçamento</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Relatório</a>
+                    </li>                    
                 </ul>
-
-                
+                <div class="dropdown" style="margin-right: 30px; margin-left: 15px; cursor: pointer;" >
+                    <a id="perfil" data-bs-toggle="dropdown" id="imageDropdownUl" aria-expanded="false">
+                        <img src=" {{url_for('static', filename='img/account_circle_white_24dp.svg')}} "/>
+                    </a>
+                    <ul class="dropdown-menu bg-dark " role="menu" style="min-width: 70px" aria-labelledby="imageDropdownUl">
+                        <li><a class="dropdown-item text-light" style="max-width: 70px; cursor: pointer;" href="#">Sair</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </header> 
+          </nav>         
+    </header>
+
 
     <section class="section" style="color: white;">
         {% block section %}

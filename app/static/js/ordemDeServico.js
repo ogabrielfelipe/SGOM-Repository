@@ -14,6 +14,7 @@ function buscarVeiculo() {
     if (opc == 1) {
         btn.setAttribute('style', 'display:block');
     }
+
 }
 
 buscarVeiculo();
