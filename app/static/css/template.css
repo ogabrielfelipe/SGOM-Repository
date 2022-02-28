@@ -43,6 +43,41 @@ section{
 }
 .complete-input:focus{
     background-color: transparent;
+    color: var(--color-font);
+}
+
+.complete-textarea{
+    background-color: var(--color-background2);
+    border: 1px solid var(--color-font);
+}
+.complete-textarea:focus{
+    
+    background-color: var(--color-background2);
+    border: 1px solid var(--color-font);
+}
+.focus-table{
+    background-color: var(--color-font);
+}
+
+
+.section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.complete-modal{
+    background-color: var(--color-background);
+}
+
+.complete-input{
+    background-color: var(--color-background);
+    border: none;
+    border-bottom: 1px solid wheat;
+    color: var(--color-font);
+}
+.complete-input:focus{
+    background-color: transparent;
 }
 
 .complete-textarea{

@@ -11,7 +11,7 @@ class Status(int, enum.Enum):
     EMATENDIMENTO = 4
     AGUARDANDOPAGAMENTO = 5
     FINALIZADA = 6
-
+    CANCELADO = 7
 
 class Model(pydantic.BaseModel):
     m: t.Dict[Status, int]

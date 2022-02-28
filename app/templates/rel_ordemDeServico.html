@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: rgb(255, 255, 255); 
+        }
+        page[size="A4"] {
+            background: white;
+            width: 21cm;
+            height: 29.7cm;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+        }
+        @media print {
+            body, page[size="A4"] {
+                margin: 0;
+                box-shadow: 0;
+            }
+        }
+    </style>
+    
+    <title>Relatório - Ordem de Serviço</title>
+</head>
+<body">
+    <page size="A4" style="page-break-after: always;">
+        <div style="position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            cursor: pointer;
+        " onclick="printPage();">
+        <img src="print_white_24dp.svg" alt="">
+        </div>
+        <article style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        ">
+            <img style="
+            max-width: 150px; 
+            height: auto; 
+             " src="mecanismo.svg" alt="">
+
+            <h1 style="
+            font-family: 'Open Sans', sans-serif;
+            font-size: 30pt;
+            font-weight: 900;
+            margin-left: 150px;
+            ">Ordem de Serviço</h1>
+        </article>
+        <hr>
+
+
+        <section style="font-family: 'Open Sans', sans-serif;">
+            <div style="
+            padding: 5px;             
+            color: rgb(0, 0, 0);
+            font-family:    'Open Sans', sans-serif;
+            font-weight: 600;
+            margin-bottom: 10px;
+            ">
+                <label for="OS">Ordem de Serviço - Nº&nbsp;</label>             
+                <span id="OS"> 00 </span>
+            </div>
+
+            <div>
+                <h1 style="
+                font-size: 18pt;
+                display: flex;
+                justify-content: center;
+                " >Informações do Requerente</h1>
+                <div style="margin-bottom: 5px;">
+                    <label for="nomeR" style="font-weight: 800;">Nome do Requerente: </label>
+                    <span id="nomeR" style="font-weight: 400;">{{nomeR}}</span>
+                </div>            
+                <div style="margin-bottom: 5px;">
+                    <label for="cpfR" style="font-weight: 800;">CPF do Requerente: </label>
+                    <span id="cpfR" style="font-weight: 400;">{{cpfR}}</span>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <label for="telR" style="font-weight: 800;">Telefone do Requerente: </label>
+                    <span id="telR" style="font-weight: 400;">telR</span>
+                </div>
+            </div>
+            
+            <div>
+                <h1 style="
+                font-size: 18pt;
+                display: flex;
+                justify-content: center;
+                " >Informações do Veículo</h1>
+                <div style="margin-bottom: 5px;">
+                    <label for="Placa" style="font-weight: 800;">Placa: </label>
+                    <span id="Placa" style="font-weight: 400;">ABC0D00</span>
+                    
+                    <label for="telCarro" style="font-weight: 800; margin-left: 390px;">Telefone: </label>
+                    <span id="telCarro" style="font-weight: 400;">(00) 00000-0000</span>
+                </div>  
+            </div>
+            <div>
+                <h1 style="
+                font-size: 18pt;
+                display: flex;
+                justify-content: center;
+                " >Serviço realizado</h1>
+                <div style="margin-bottom: 5px;">
+                    <label for="dataA" style="font-weight: 800;">Data de Abertura: </label>
+                    <span id="dataA" style="font-weight: 400;">00/00/0000</span>
+                    
+                    <label for="ValMeca" style="font-weight: 800; margin-left: 240px;">Custo Mecânico: </label>
+                    <span id="" style="font-weight: 400;">R$&nbsp;</span>
+                    <span id="ValMeca" style="font-weight: 400;">00,00</span>
+                </div>  
+                <div style="margin-bottom: 5px; margin-top:10px;">
+                    <label for="problemaOS" style="font-weight: 800;">Problema informado: </label>
+                    <p id="problemaOS" style="font-weight: 400;">
+                        Este artigo o ensinará a inserir espaços e quebras de linha em páginas HTML. Não adianta pressionar a tecla da barra de espaço mais de uma vez, porque só aparecerá um espaço em branco. É preciso usar marcações específicas.
+                    </p>
+                </div>
+                <div style="margin-bottom: 15px; margin-top:10px;">
+                    <label for="dataF" style="font-weight: 800;">Data de Fechamento: </label>
+                    <span id="dataF" style="font-weight: 400;">00/00/0000</span>
+                </div>
+
+                <div style="margin-bottom: 5px; margin-top: 5px;">
+                    <span style="font-weight: 800;">Serviço(s) Realizado(s):</span>
+                    <table id="tableItensServico" style="border-collapse: collapse; border: 1px solid black;
+                    ">
+                        <thead>
+                            <th style="
+                            width: 300px;
+                            ">Serviço</th>
+                            <th style="width: 60px; border: 1px solid black;">Quantidade</th>                            
+                            <th style="width: 150px; border: 1px solid black;">Valor Unitário</th>                        
+                            <th style="margin: 25px; border: 1px solid black;">Valor Total</th>
+                        </thead>
+                        <tbody style="text-align: center;" id="tBodyitensServicos">
+                            <tr style="border: 1px solid black;
+                            ">
+                                <td style="border: 1px solid black;">Troca de Óleo</td>
+                                <td style="border: 1px solid black;">1</td>
+                                <td style="border: 1px solid black;">15</td>
+                                <td>
+                                    <span>R$</span>
+                                    <span id="valTotal">15</span>
+                                </td>
+                            </tr>                                                         
+                        </tbody>
+                    </table>
+                </div> 
+                
+                <hr>
+                <div style="display: flex; justify-content: center;">
+                    <div style="border: 1px solid black; width: 200px; padding: 15px;">
+                        <label for="">Valor Total:&nbsp;</label>
+                        <span>R$</span>
+                        <span id="valTotal">000,00</span>
+                    </div>
+                </div>                
+            </div>
+        </section>
+    </page>    
+    <div style="page-break-after: always;"></div>
+
+    <script>
+        function printPage(){
+            console.log('cliquei')
+            window.print();
+        }
+    </script>
+</body>
+</html>

@@ -8,11 +8,8 @@ $(document).ready(function () {
     $('#dataIdFiltroHome').val(mes+'/'+ano);
 
     $('#perfilMenu').click(() => {
-        $('#menuRetratil').toggle( 'controle-menu-perfil');
-        
-    });
-
-
+        $('#menuRetratil').toggle( 'controle-menu-perfil');        
+    });   
 
     return false;
 });
@@ -67,3 +64,4 @@ function Envia(entry, url, method){
         });
     });
 }
+

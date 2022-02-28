@@ -4,7 +4,8 @@ from ..controller.funcionarioController import (
     atualiza_funcionario,
     busca_funcionario_route,
     busca_funcionarios,
-    busca_funcionario
+    busca_funcionario,
+    funcionario_username_like
 )
 from datetime import datetime
 from datetime import timezone, timedelta
@@ -46,6 +47,12 @@ def busc_funcionaios():
 #@login_required
 def busc_funcionaio(codigo):
     return busca_funcionario_route(codigo)
+
+
+@func.route('/Funcionario/BuscaUsername/<string:nome>', methods=['POST'])
+#@login_required
+def busc_username_funcionaio(nome):
+    return funcionario_username_like(nome)
 
 
 @func.route('/Funcionario/Atualizar/<int:codigo>', methods=['PATCH'])

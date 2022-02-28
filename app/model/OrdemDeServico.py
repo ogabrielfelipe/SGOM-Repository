@@ -85,7 +85,7 @@ class OrdemDeServicoSchema(ma.Schema):
     class Meta:
         fields = ('id', 'nomeRequerente', 'cpfDoRequerente', 'telefoneRequerente', 'problema', 'requisicaoOrcamento',
                 'estadoAtualDoVeiculo', 'orcamento', 'custoMecanico', 'valorTodal', 'respostaCliente', 'registroDaOS', 'status',
-                'placa', 'nome')
+                'carro', 'mecanico')
 
 
 ordemDeServico_schema = OrdemDeServicoSchema()
