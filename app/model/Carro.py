@@ -15,7 +15,7 @@ class Carro(db.Model):
 
 class CarroSchema(ma.Schema):
     class Meta:
-        fields = ('placa', 'telefone')
+        fields = ('id', 'placa', 'telefone')
 
 
 carro_schema = CarroSchema()

@@ -29,10 +29,10 @@ def alter_carro(codigo):
     return atualiza_carro(codigo) 
 
 
-@car.route('/Carro/Busca/<int:codigo>', methods=['POST'])
+@car.route('/Carro/Busca/<string:placa>', methods=['POST'])
 #@login_required
-def busc_carro(codigo):
-    return busca_carro_route(codigo) 
+def busc_carro(placa):
+    return busca_carro_route(placa) 
 
 
 @car.route('/Carro/BuscaCarros', methods=['POST'])

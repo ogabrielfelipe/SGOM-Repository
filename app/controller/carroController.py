@@ -42,9 +42,10 @@ def busca_carro(id):
         return None
 
 
-def busca_carro_route(id):
-    carro = Carro.query.get(id)
+def busca_carro_route(id):    
     try:
+        carro = Carro.query.filter(Carro.placa == id).one() 
+        print(carro_schema.dump(carro))
         return jsonify({'msg': 'Busca Efetuada', 'dados': carro_schema.dump(carro)}), 200
     except:
         return jsonify({'msg': 'Sem Resultados', 'dados': {}}), 404

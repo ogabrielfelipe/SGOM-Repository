@@ -64,3 +64,4 @@ function Envia(entry, url, method){
         });
     });
 }
+

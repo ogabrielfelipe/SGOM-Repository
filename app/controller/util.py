@@ -52,18 +52,3 @@ def convertPesquisa(operadores, dict):
         resultFinal = ''
 
     return resultFinal
-
-
-
-
-entry = {
-    "nomeRequerente": "Fulano",
-    "cpfDoRequerente": "11111111101",
-    "telefoneRequerente": "(99) 99999-9999",
-    "problema": "Teste problema",
-    "requisicaoOrcamento": True,
-    "estadoAtualDoVeiculo": "Muito Bom!",
-    "carro": 1
-}
-
-print("SELECT * FROM ordemDeServico ", convertPesquisa('=', entry))

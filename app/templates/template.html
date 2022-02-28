@@ -3,26 +3,30 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock%}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }} template.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-    <script src="url_for('static', filename='js/template.js')"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
+    <script src="{{ url_for('static', filename='js/template.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
     {% block styles%}
     {% endblock %}
-
 </head>
 <!--
    ( ͡ಠ ͜ʖ ͡ಠ)
 -->
-<body style="background-color: #131418;">
-    <header class="d-flex justify-content-end complete-container" style="z-index: 10;">      
+<body style="background-color: #131418; align-items: end;">   
+    <header class="d-flex justify-content-end complete-container " style="z-index: 10; align-items: flex-end;">      
         <nav class="navbar navbar-expand-lg navbar-dark complete-nav">
             <div class="container-fluid">
                 <ul class="navbar-nav me-auto navbar-nav-scroll my-2 my-lg-0">
@@ -39,16 +43,23 @@
                         <a class="nav-link dropdown-toggle" href="#" id="downMenuPrincipal" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cadastro
                         </a>
-                        <ul class="dropdown-menu bg-dark" id="downMenu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu bg-dark" id="downMenuCadastro" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item text-light" href="#">Funcionário</a></li>
                             <li><hr class="dropdown-divider text-light"></li>                            
                             <li><a class="dropdown-item text-light" href="#">Veículo</a></li>
                             <li><hr class="dropdown-divider text-light"></li>                            
                             <li><a class="dropdown-item text-light" href="#">Itens de Orçamento</a></li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Relatório</a>
+                    </li> 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="downMenuPrincipal" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Relatórios
+                        </a>
+                        <ul class="dropdown-menu bg-dark" id="downMenuCadastro" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-light" data-bs-toggle="modal" data-bs-target="#RelatorioOS" id="btnChamaOS">Ordem de Serviço</a></li>
+                            <li><hr class="dropdown-divider text-light"></li>                            
+                            <li><a class="dropdown-item text-light" href="#">Financeiro</a></li>
+                        </ul>
                     </li>                    
                 </ul>
                 <div class="dropdown" style="margin-right: 30px; margin-left: 15px; cursor: pointer;" >
@@ -60,7 +71,7 @@
                     </ul>
                 </div>
             </div>
-          </nav>         
+          </nav>     
     </header>
 
 
@@ -75,6 +86,258 @@
         {%endblock%}
 
     </footer>
-</body>
 
+
+
+    <div class="modal fade" id="RelatorioOS">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
+          <div class="modal-content complete-modal text-white" style="background-color: #131418;">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Relatório OS</h4>
+              <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">                
+                    <div class="col">
+                        <div class="input-group mb-3" style="max-width: 160px;">
+                            <input type="text" class="form-control complete-input text-white" placeholder="Placa" id="PlacaOSRelatorio" aria-label="" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                <img data-bs-target="#ModalLocalizarPlacaRelatorio" data-bs-toggle="modal" src="{{url_for('static', filename='img/search_white_24dp.svg')}}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">                
+                    <div class="col">
+                        <div class="input-group mb-3" style="max-width: 200px;">
+                            <input type="text" class="form-control complete-input text-white" placeholder="Funcionário" id="FuncionarioOSRelatorio" aria-label="" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                <img data-bs-target="#ModalLocalizarFuncionarioRelatorio" data-bs-toggle="modal" src="{{url_for('static', filename='img/search_white_24dp.svg')}}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-floating" style="max-width: 200px;">
+                        <select class="form-select complete-input" id="SelectStatusOS" aria-label="select label">
+                            <option value="EMABERTO" style="background-color: #131418; color: white">Em Aberto</option>
+                            <option value="ACEITA" style="background-color: #131418; color: white">Aceita</option>
+                            <option value="AGUARDANDOAPROVACAO" style="background-color: #131418; color: white">Aguardando Aprovação</option>
+                            <option value="APROVADA" style="background-color: #131418; color: white">Aprovada</option>
+                            <option value="EMATENDIMENTO" style="background-color: #131418; color: white">Em Atendimento</option>
+                            <option value="AGUARDANDOPAGAMENTO" style="background-color: #131418; color: white">Aguardando Pagamento</option>
+                            <option value="FINALIZADA" style="background-color: #131418; color: white">Finalizada</option>
+                            <option value="CANCELADO" style="background-color: #131418; color: white">Cancelado</option>
+                        </select>
+                        <label for="SelectStatusOS" style="margin-left: 10px;">Status:</label>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-dark" id="btnImprimirOSRelatorio" data-bs-dismiss="modal">Imprimir</button>
+            </div>
+      
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalLocalizarPlacaRelatorio">
+        <div class="modal-dialog  modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content bg-dark complete-modal text-white">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Localizar Veículo</h4>
+              <button type="button" class="btn-close bg-light" data-bs-target="#RelatorioOS" data-bs-toggle="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="max-width: 350px">
+                    <div class="col">
+                        <input type="text" class="form-control complete-input bg-dark text-white" id="CampoPlacaPesquisa" placeholder="Placa" aria-label="First name"> 
+                    </div>
+                    <input type="hidden" id="idVeiculo" value="">
+                    <input type="hidden" id="placaAux" value="">
+                    <div class="col">
+                        <button type="button" class="btn btn-dark" id="btnPesquisarPlaca" style="margin-right: 10px;">Pesquisar</button> 
+                    </div>                    
+                </div>
+                <table class="table table-dark " id="tableBuscaPlacaRelatorio" style="margin-top: 15px; cursor: pointer;">
+                    <thead>
+                      <tr>
+                        <th scope="col">Placa</th>
+                        <th scope="col">Telefone</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyBuscaPlacaRelatorio">
+                                      
+                    </tbody>
+                  </table>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Close</button>
+              <button type="button" class="btn btn-dark" id="btnSelecionarPlacaRelatorio" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Selecionar</button>
+            </div>
+      
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalLocalizarFuncionarioRelatorio">
+        <div class="modal-dialog  modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content bg-dark complete-modal text-white">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Localizar Funcionário</h4>
+              <button type="button" class="btn-close bg-light" data-bs-target="#RelatorioOS" data-bs-toggle="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="max-width: 400px">
+                    <div class="col">
+                        <input type="text" class="form-control complete-input bg-dark text-white" id="CampoFuncionarioPesquisa" placeholder="Nome do Funcionário" aria-label="First name"> 
+                    </div>
+                    <input type="hidden" id="idFuncionario" value="">
+                    <input type="hidden" id="FuncionarioAux" value="">
+                    <div class="col">
+                        <button type="button" class="btn btn-dark" id="btnPesquisarFuncionario" style="margin-right: 10px;">Pesquisar</button> 
+                    </div>                    
+                </div>
+                <table class="table table-dark " id="tableBuscaFuncionarioRelatorio" style="margin-top: 15px; cursor: pointer;">
+                    <thead>
+                      <tr>
+                        <th scope="col">Código</th>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">Nome</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyBuscaFuncionarioRelatorio">
+                                      
+                    </tbody>
+                  </table>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Close</button>
+              <button type="button" class="btn btn-dark" id="btnSelecionarFuncionarioRelatorio" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Selecionar</button>
+            </div>
+      
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalResultadoRelatorioOs">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content bg-dark complete-modal text-white">      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title"></h4>
+              <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-black" style="font-family: 'Open Sans', sans-serif;">                
+                <div style="margin: 5px; background-color: white;">
+                    <div style="display: flex; justify-content: center; border-bottom: 1px solid black;">
+                        <label for="NOS" style="font-weight: 800;" >Ordem de Serviço - Nº&nbsp;</label>
+                        <span id="NOS" style="font-weight: 800;" ></span>
+                    </div>
+                    <div style="display: flex; justify-content: center; margin-top: 10px; background-color: rgb(151, 151, 151);">
+                        <span style="font-weight: 800;">Informações do Requerente</span>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-left: 15px;">
+                        <label for="nomeR" style="font-weight: 600;" >Nome do Requerente: </label>
+                        <span id="nomeR"></span>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-left: 15px;">
+                        <label for="cpfR" style="font-weight: 600;" >CPF do Requerente: </label>
+                        <span id="cpfR"></span>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-left: 15px;">
+                        <label for="telR" style="font-weight: 600;" >Telefone do Requerente: </label>
+                        <span id="telR"></span>
+                    </div>
+                    <div style="display: flex; justify-content: center; margin-top: 10px; background-color: rgb(151, 151, 151);">
+                        <span style="font-weight: 800;">Informações do Veículo</span>
+                    </div>                    
+                    <div style="margin-bottom: 5px; margin-top: 10x; display: flex; justify-content: space-between; margin-left: 15px; margin-right: 15px;">
+                        <div>
+                            <label for="placaCarroRel" style="font-weight: 600;" >Placa do Veículo: </label>
+                            <span id="placaCarroRel" style="font-weight: 400;"></span>
+                        </div>
+                        <div>
+                            <label for="telPlacaRel" style="font-weight: 600;" >Telefone: </label>
+                            <span id="telPlacaRel" style="font-weight: 400;"></span>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; margin-top: 10px; background-color: rgb(151, 151, 151);">
+                        <span style="font-weight: 800;">Informações do Serviço</span>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-top: 10x; display: flex; justify-content: space-between; margin-left: 15px; margin-right: 15px;">
+                        <div>
+                            <label for="dataA" style="font-weight: 600;" >Data Abertura: </label>
+                            <span id="dataA" style="font-weight: 400;"></span>
+                        </div>
+                        <div>
+                            <label for="mecanicoRel" style="font-weight: 600;" >Mecânico: </label>
+                            <span id="mecanicoRel" style="font-weight: 400;"></span>
+                        </div>
+                        <div>
+                            <label for="custoM" style="font-weight: 600;" >Custo Mecânico: </label>
+                            <span style="font-weight: 800;">R$&nbsp;</span>
+                            <span id="custoM" style="font-weight: 400;"></span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-left: 15px;">
+                        <label for="problema" style="font-weight: 600;" >Problema: </label>
+                        <p id="problema"></p>
+                    </div>  
+                    <div style="margin-bottom: 5px; margin-left: 15px;">
+                        <label for="dataF" style="font-weight: 600;" >Data de Encerramento: </label>
+                        <span id="dataF"></span>
+                    </div>
+
+                    <div style="margin-bottom: 5px;">
+                        <label for="dataF" style="font-weight: 600;" >Serviço(s) Efetuado(s): </label>
+                        <table style="width: 100%; border: 1px solid black; text-align: center;" id="tableRelServicos">
+                            <thead>
+                                <th>Serviço</th>
+                                <th>Quantidade</th>
+                                <th>Valor Unitário</th>
+                                <th>Valor Total</th>
+                            </thead>
+                            <tbody style="border: 1px solid black;" id="tbodytableRelServicos">
+                                <tr style="border: 1px solid black;">
+                                    <td style="border: 1px solid black;">Item Orçamento</td>
+                                    <td style="border: 1px solid black;">1</td>
+                                    <td style="border: 1px solid black;">15</td>
+                                    <td style="border: 1px solid black;">
+                                        <span>R$&nbsp;</span>
+                                        <span id="valorTotalTable"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="margin: 15px; display: flex; justify-content: center; font-size: 22pt;">
+                        <label for="valT" style="font-weight: 600;">Valor Total: </label>
+                        <span>R$&nbsp;</span>
+                        <span id="valT" style="font-weight: 400;"></span>
+                    </div>
+                    
+
+                </div>
+            </div>      
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Close</button>
+              <button type="button" class="btn btn-dark" id="btnSelecionarFuncionarioRelatorio" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Selecionar</button>
+            </div> -->      
+          </div>
+        </div>
+    </div>
+
+
+</body>
 </html>

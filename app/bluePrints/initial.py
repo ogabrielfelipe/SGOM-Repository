@@ -13,3 +13,5 @@ def root():
 @app.route('/OrdemDeServico', methods=['GET'])
 def root_ordemDeServico():
     return render_template('ordemDeServico.html')
+
+

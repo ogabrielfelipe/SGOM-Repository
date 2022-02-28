@@ -9,9 +9,11 @@ from ..model.ItemOrcamento import ItemOrcamento, itemOrcamento_schema, itemOrcam
 from ..model.Servicos import Servicos, servico_schema,servicos_schema
 from ..model.RegistroDaOS import RegistroDaOS, registroDaOS_schema, registroDaOSs_schema
 from ..model.ItemOrcamento import db
+from .util import convertPesquisa
 
 
-def abertura_OrdemDeServico():
+
+def abertura_OrdemDeServico(id):
     resp = request.get_json()
     nomeRequerente = resp['nomeRequerente']
     cpfDoRequerente = resp['cpfDoRequerente']
@@ -26,6 +28,10 @@ def abertura_OrdemDeServico():
 
     try:
         db.session.add(ordem)
+        db.session.commit()
+        regis = RegistroDaOS(data=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))), 
+                                statusA='', novoS=0, valorTotal=0, problema=ordem.problema, mecanico=id, ordemDeServico=ordem.id)      
+        db.session.add(regis) 
         db.session.commit()
         return jsonify({'msg': 'Registri efetuado com sucesso'}), 201
     except Exception as e:
@@ -241,6 +247,74 @@ def finalizar_ordemDeServico(id, funcionario):
             return jsonify({'msg': 'A Ordem de Serviço não está aguardando pagamento', 'dados': {}}), 401
     return jsonify({'msg': 'Ordem de Serviço não encontrada'}), 404
     
+
+def relatorio_ordemDeServico():
+    resp = request.get_json()
+    entry = {
+        'o.carro': resp['placa'],
+        'o.mecanico': resp['mecanico'],
+        'o.status': str(resp['status'])
+    }
+    whereSQL = convertPesquisa(['='], entry)
+
+    sql_ordemDeServico = text('SELECT o.id ,o.nomeRequerente, o.cpfDoRequerente, o.telefoneRequerente, o.problema,\
+                                                o.requisicaoOrcamento, o.estadoAtualDoVeiculo, o.custoMecanico, o.valorTodal,\
+                                                o.respostaCliente, c.placa as placa_veiculo, c.telefone as telefone_veiculo ,f.nome as mecanico\
+                                            FROM ordemDeServico AS o\
+                                            INNER JOIN carro c on c.id = o.id\
+                                            INNER JOIN funcionario f on f.id = o.mecanico \
+                                            '+ whereSQL)
+
+    sql_registroDaOS = text('SELECT strftime("%d/%m/%Y %H:%M",r.data) as data_alteracao, r.novoStatus as status, f.nome as funcionario, r.problema  FROM ordemDeServico AS o\
+                                INNER JOIN registroDaOS r ON r.ordemServico = o.id\
+                                INNER JOIN funcionario AS f ON f.id = o.mecanico \
+                            '+ whereSQL)
+
+    sql_servicos = text('SELECT i.nome as nome_item, s.quantidade as quant_item, i.valor as valor_item FROM ordemDeServico as o \
+                            INNER JOIN servicos as s on s.ordemDeServico = o.id\
+                            INNER JOIN itemOrcamento i on i.id = s.itemOrcamento \
+                            '+ whereSQL)
+
+    try:
+
+        consultaOrdemDeServico = db.session.execute(sql_ordemDeServico)
+        consultaRegistrosDaOS = db.session.execute(sql_registroDaOS).fetchall()
+        consultaSqlServico = db.session.execute(sql_servicos).fetchall()
+
+        consultaOrdemDeServico_dict = {}
+        for it in consultaOrdemDeServico:
+            consultaOrdemDeServico_dict = dict(it)
+
+        consultaRegistrosDaOS_dict = [dict(u) for u in consultaRegistrosDaOS]
+        consultaSqlServico_dict = [dict(u) for u in consultaSqlServico]
+
+        return jsonify({'msg': 'Busca efetuada com sucesso', 'dados':{
+            "OrdemDeServico": consultaOrdemDeServico_dict, 
+            "RegistroOS": consultaRegistrosDaOS_dict,
+            "Servicos": consultaSqlServico_dict
+            }}), 200
+    except Exception as e:
+        return jsonify({'msg': 'Não foi encontrado', 'dados': {}}), 500
+
+
+
+def busca_personalizada_ordemDeServico():
+    resp = request.get_json()
+    entry = {
+        "id": resp['id'],
+        "carro": resp['placa'],
+        "status": resp['status']
+    }   
+    sql = text('SELECT * FROM ordemDeServico '+convertPesquisa(['='], entry))
+    try:        
+        os = db.session.execute(sql).fetchall()
+        os_dict = [dict(u) for u in os]
+        return jsonify({'msg': 'Busca Efetuada com sucesso', 'dados': os_dict}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'msg': 'Busca não efetuada', 'dados': str(e)}), 500
+
+
 
 
 def populate_dict(cursor, schema):

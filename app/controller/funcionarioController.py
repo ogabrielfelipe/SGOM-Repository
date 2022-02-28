@@ -90,6 +90,13 @@ def funcionario_username(username):
         print(e)
         return None
 
+def funcionario_username_like(nome):
+    try:
+        funcionario  = Funcionario.query.filter(Funcionario.nome.like(nome)).all()
+        return jsonify({'msg': 'Busca Efetuada com sucesso', 'dados': funcionarios_schema.dump(funcionario)}), 200
+    except:
+        return jsonify({'msg': 'Sem Resultados', 'dados': {}}), 404
+
 
 def autentica_funcionario():
     resp = request.get_json()
