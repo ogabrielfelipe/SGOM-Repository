@@ -20,7 +20,7 @@ $(document).ready(() => {
     $('#tableBuscaPlaca #tbodyBuscaPlaca tr').dblclick(function () {
         valSelect = $(this).children('th')
         console.log(valSelect[0]['innerHTML'])
-        $('#PlacaOS').val(valSelect[0]['innerHTML']);
+        $('#PlacaOSf').val(valSelect[0]['innerHTML']);
         $('#ModalLocalizarPlaca').modal('hide');
     });
 
@@ -40,9 +40,9 @@ $(document).ready(() => {
         $('#formulario select ').val(0);
     });
     
-    $('#btnSelecionar').click(() =>{
+    $('#btnSelecionarf').click(() =>{
         $('#CampoPlacaPesquisa').val($('#placaAux').val());
-        $('#PlacaOS').val($('#placaAux').val());           
+        $('#PlacaOSf').val($('#placaAux').val());           
     });
 
     //Funcionalidade de busca Veículo
@@ -124,7 +124,7 @@ return new Promise((resolve, reject)=>{
 
 
 function salvarOrdemDeServico() {
-var placa = document.getElementById("PlacaOS").value;
+var placa = document.getElementById("PlacaOSf").value;
 var nomerequerente = document.getElementById("nomeRequerente").value;
 var cpfRequerente = document.getElementById("CPFR").value;
 var telRequerente = document.getElementById("TELR").value;
@@ -145,8 +145,7 @@ dados = {
     "estadoAtualDoVeiculo": "Muito Bom!",
     "carro": 1
 }
-console.log(reqOrcamento)
-console.log("pegou dados")
+console.log( dados)
 Envia(dados,'/OrdemDeServico/Abertura','POST');
 
 }

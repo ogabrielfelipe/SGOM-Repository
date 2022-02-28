@@ -18,7 +18,7 @@ ordem = Blueprint('ordem', __name__)
 
 
 @ordem.route('/OrdemDeServico/Abertura', methods=['POST'])
-#@login_required
+@login_required
 def abre_ordemDeServico():
     return abertura_OrdemDeServico(current_user.id)
 
