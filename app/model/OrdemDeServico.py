@@ -11,7 +11,7 @@ class OrdemDeServico(db.Model):
     telefoneRequerente = db.Column(db.String(14), nullable=False)
     problema = db.Column(db.String(1024), nullable=False)
     requisicaoOrcamento = db.Column(db.Boolean, nullable=False)
-    estadoAtualDoVeiculo = db.Column(db.String(4096), nullable=False)
+    estadoAtualDoVeiculo = db.Column(db.String(4096), nullable=True)
     custoMecanico = db.Column(db.Float)
     valorTodal = db.Column(db.Float)
     respostaCliente = db.Column(db.Boolean)

@@ -21,13 +21,14 @@ def abertura_OrdemDeServico():
     estadoAtualDoVeiculo = resp['estadoAtualDoVeiculo']
     carro = resp['carro']
 
+
     ordem = OrdemDeServico.abrirOrdemDeServico(carro=carro, nomeR=nomeRequerente, cpfR=cpfDoRequerente, telR=telefoneRequerente,
     problema=problema, reqOr=requisicaoOrcamento, estadoA=estadoAtualDoVeiculo, status=0)
 
     try:
         db.session.add(ordem)
         db.session.commit()
-        return jsonify({'msg': 'Registri efetuado com sucesso'}), 201
+        return jsonify({'msg': 'Registro efetuado com sucesso'}), 201
     except Exception as e:
         db.session.rollback()
         print(e)
