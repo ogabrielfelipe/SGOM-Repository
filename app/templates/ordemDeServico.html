@@ -141,31 +141,37 @@ ORDEM DE SERVIÇO
             </div>
             <div class="modal-body">
                 <div class="row">
+
+                    <input type="hidden" id="osAux" valur="">
+                    <input type="hidden" id="nomeRequerenteAux" valur="">
+                    <input type="hidden" id="PlacaAux" valur="">
+                    <input type="hidden" id="statusAux" valur="">
+
+
                     <div class="col" style="max-width: 100px">
-                        <input type="text" class="form-control complete-input" placeholder="OS" aria-label="First name">
+                        <input type="text" class="form-control complete-input" placeholder="OS" id="os" aria-label="First name">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input" placeholder="Nome do Requerente"
+                        <input type="text" class="form-control complete-input" placeholder="Nome do Requerente" id="nomeRequerenteOs"
                             aria-label="First name">
                     </div>
                     <div class="col" style="max-width: 350px">
                         <div class="form-floating" style="max-width: 200px;">
-                            <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                                <option value="0" style="background-color: #131418;">Em aberto</option>
-                                <option value="1" style="background-color: #131418;">Cancelado</option>
-                                <option value="2" style="background-color: #131418;">Aguardando aprovação</option>
-                                <option value="3" style="background-color: #131418;">Aprovado</option>
-                                <option value="4" style="background-color: #131418;">Em atendimento</option>
-                                <option value="5" style="background-color: #131418;">Aguardando pagamento</option>
-                                <option value="6" style="background-color: #131418;">Aceita</option>
-                                <option value="7" style="background-color: #131418;">Finalizada</option>
-
+                            <select class="form-select complete-input" id="SelectStatusOS" aria-label="select label">
+                                <option value="EMABERTO" style="background-color: #131418; color: white">Em Aberto</option>
+                                <option value="ACEITA" style="background-color: #131418; color: white">Aceita</option>
+                                <option value="AGUARDANDOAPROVACAO" style="background-color: #131418; color: white">Aguardando Aprovação</option>
+                                <option value="APROVADA" style="background-color: #131418; color: white">Aprovada</option>
+                                <option value="EMATENDIMENTO" style="background-color: #131418; color: white">Em Atendimento</option>
+                                <option value="AGUARDANDOPAGAMENTO" style="background-color: #131418; color: white">Aguardando Pagamento</option>
+                                <option value="FINALIZADA" style="background-color: #131418; color: white">Finalizada</option>
+                                <option value="CANCELADO" style="background-color: #131418; color: white">Cancelado</option>
                             </select>
                             <label for="floatingSelect" class="text-white" style="margin-left: 10px;">Status:</label>
                         </div>
                     </div>
                     <div class="col">
-                        <button type="button" class="btn btn-dark" style="margin-right: 10px;">Pesquisar</button>
+                        <button type="button" id ="btn-pesquisarOs"class="btn btn-dark" style="margin-right: 10px;">Pesquisar</button>
                     </div>
                 </div>
                 <table class="table table-dark " id="tableBuscaPlaca" style="margin-top: 15px; cursor: pointer;">
@@ -177,19 +183,8 @@ ORDEM DE SERVIÇO
                             <th scope="col">Status</th>
                         </tr>
                     </thead>
-                    <tbody id="tbodyBuscaPlaca">
-                        <tr id="1">
-                            <td>0001</td>
-                            <td>Teste Nome Requerente</td>
-                            <td>ABC0D000</td>
-                            <td>Em Aberto</td>
-                        </tr>
-                        <tr id="2">
-                            <td>0001</td>
-                            <td>Teste Nome Requerente</td>
-                            <td>ABC0D000</td>
-                            <td>Em Aberto</td>
-                        </tr>
+                    <tbody id="tbodyBuscaOs">
+                        
                     </tbody>
                 </table>
 
@@ -197,7 +192,7 @@ ORDEM DE SERVIÇO
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-dark" id="btnSelecionarf"
+                <button type="button" class="btn btn-dark" id="btnSelecionarOs"
                     data-bs-dismiss="modal">Selecionar</button>
             </div>
 
