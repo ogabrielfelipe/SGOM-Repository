@@ -338,7 +338,8 @@ def busca_personalizada_ordemDeServico():
         "carro": resp['placa'],
         "status": resp['status']
     }   
-    sql = text('SELECT * FROM ordemDeServico '+convertPesquisa(['='], entry))
+    sql = text('SELECT * FROM ordemDeServico o\
+                INNER JOIN carro c on c.id = o.carro '+convertPesquisa(['='], entry))
     try:        
         os = db.session.execute(sql).fetchall()
         os_dict = [dict(u) for u in os]
