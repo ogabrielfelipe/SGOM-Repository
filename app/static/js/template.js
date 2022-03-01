@@ -126,12 +126,14 @@ $(document).ready(()=>{
         var status = $('#SelectStatusOS option:selected').val();
         var placa = $('#idVeiculo').val();
         var funcionario = $('#idFuncionario').val();
+        var codigo = $('#codigoOS').val();
         entry = {
+            "codigo": codigo,
             "placa": placa,
             "mecanico": funcionario,
             "status": status
         }
-        Envia(entry, '/OrdemDeServico/Relatorio', 'POST')
+        Envia(entry, '/OrdemDeServico/Relatorio/OrdemDeServico', 'POST')
         .then((dados) => {
             dadosOrdemDeServico = dados['dados']['OrdemDeServico']
             dadosRegistroDeServico = dados['dados']['RegistroOS']
@@ -196,6 +198,101 @@ $(document).ready(()=>{
             }
         });
     });
+
+
+
+    //Funcionalidades Relatório Financiero
+
+    $('#competenciaRelFinanciero').mask('99/9999');
+    $('#btnImprimirRelatorioFinanceiro').click(() => {
+        var competencia = $('#competenciaRelFinanciero').val();
+        if (competencia == ''){
+            console.log('Competencia em Branco');
+        }else {
+            entry = {
+                'competencia': competencia
+            }
+            Envia(entry, '/OrdemDeServico/Relatorio/Financeiro', 'POST')
+            .then((dados) => {
+                $('#totalOS').text(dados['dados']['ResumoOS'].length);
+
+                var custoMec = 0
+                var valTotal = 0
+                for (var i = 0; i < dados['dados']['ResumoOS'].length; i++){
+                    custoMec += dados['dados']['ResumoOS'][i]['custoMecanico'];
+                }
+                for (var i = 0; i < dados['dados']['ResumoOS'].length; i++){
+                    valTotal += dados['dados']['ResumoOS'][i]['valorTodal'];
+                }
+                $('#totalCustoMesOS').text(custoMec);
+                $('#totalMesOS').text(valTotal);
+                var i = 0;
+                var id_os_aux = 0
+                $(dados['dados']['ResumoOS'], dados['dados']['ResumoServicos']).each(function(){
+                    var id_os_aux = this.id_os
+                    $('#detailOS').append(
+                        `<div id="" style="margin: 15px; border-bottom: 1px solid black; border-style: dashed; border-left: none;border-right: none; border-top: none;">
+                            <div>
+                                <label for="OSID" style="font-weight: 600;" >OS: </label>
+                                <span id="OSID">${this.id_os}</span>
+                            </div>
+                            <div>
+                                <label for="PlacaOSRF" style="font-weight: 600;" >Veículo: </label>
+                                
+                                <span id="PlacaOSRF">${this.placa}</span>
+                            </div>
+                            <div>
+                                <label for="CustMeca" style="font-weight: 600;" >Custo Mecânico: </label>
+                                <span>R$&nbsp;</span>
+                                <span id="CustMeca">${this.custoMecanico}</span>
+                            </div>                     
+                            <div>
+                                <label for="ValTRF" style="font-weight: 600;" >Valor Total: </label>
+                                <span>R$&nbsp;</span>
+                                <span id="ValTRF">${this.valorTodal}</span>
+                            </div>
+                            <div>
+                                <table style="text-align: center;">
+                                    <thead>
+                                        <th>&nbsp;Serviço&nbsp;</th>
+                                        <th>&nbsp;Quantidade&nbsp;</th>
+                                        <th>&nbsp;Valor Unitário&nbsp;</th>
+                                        <th>&nbsp;Total&nbsp;</th>
+                                    </thead>
+                                    <tbody id="tableServicosRel${this.id_os}">                                                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>`
+                    );
+                        
+                    $(dados['dados']['ResumoServicos'][i]).each(function(){
+                        console.log(this.id_os_servicos)
+                        if(this.id_os_servicos === id_os_aux){
+                            $('#tableServicosRel'+id_os_aux).append(
+                                `<tr>
+                                    <td>${this.nome}</td>
+                                    <td>${this.quantidade}</td>
+                                    <td>
+                                        <span>R$&nbsp;</span>
+                                        <span>${this.valor}</span>
+                                    </td><td>
+                                    <span>R$&nbsp;</span>
+                                    <span>${this.valor*this.quantidade}</span>
+                                </td>
+                                </tr>`                            
+                            )
+                        }
+                    });  
+
+                    i+=1;
+                });                
+            });
+            $('#ModalResultadoRelatorioFinanceiro').modal('show');
+        }
+    
+    });
+
 
 });
 

@@ -58,7 +58,7 @@
                         <ul class="dropdown-menu bg-dark" id="downMenuCadastro" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item text-light" data-bs-toggle="modal" data-bs-target="#RelatorioOS" id="btnChamaOS">Ordem de Serviço</a></li>
                             <li><hr class="dropdown-divider text-light"></li>                            
-                            <li><a class="dropdown-item text-light" href="#">Financeiro</a></li>
+                            <li><a class="dropdown-item text-light" data-bs-toggle="modal" data-bs-target="#RelatorioFinanceiro" id="btnChamaFinanceiro">Financeiro</a></li>
                         </ul>
                     </li>                    
                 </ul>
@@ -87,7 +87,7 @@
 
     </footer>
 
-
+    <!-- Relatório OS-->
 
     <div class="modal fade" id="RelatorioOS">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
@@ -99,6 +99,13 @@
               <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
+                <div class="row">                
+                    <div class="col">
+                        <div class="input-group mb-3" style="max-width: 160px;">
+                            <input type="text" class="form-control complete-input text-white" placeholder="Código" id="codigoOS" aria-label="" aria-describedby="button-addon2">
+                        </div>
+                    </div>
+                </div>
                 <div class="row">                
                     <div class="col">
                         <div class="input-group mb-3" style="max-width: 160px;">
@@ -121,7 +128,8 @@
                 </div>
                 <div class="row">
                     <div class="form-floating" style="max-width: 200px;">
-                        <select class="form-select complete-input" id="SelectStatusOS" aria-label="select label">
+                        <select class="form-select complete-input" id="SelectStatusOS" aria-label="select label">                            
+                            <option value="" style="background-color: #131418; color: white">Seleciona Status</option>
                             <option value="EMABERTO" style="background-color: #131418; color: white">Em Aberto</option>
                             <option value="ACEITA" style="background-color: #131418; color: white">Aceita</option>
                             <option value="AGUARDANDOAPROVACAO" style="background-color: #131418; color: white">Aguardando Aprovação</option>
@@ -328,6 +336,80 @@
                     </div>
                     
 
+                </div>
+            </div>      
+            <!-- <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Close</button>
+              <button type="button" class="btn btn-dark" id="btnSelecionarFuncionarioRelatorio" data-bs-target="#RelatorioOS" data-bs-toggle="modal">Selecionar</button>
+            </div> -->      
+          </div>
+        </div>
+    </div>
+
+    <!--===================================================================================-->
+
+    <!-- Relatório Financeiro-->
+    <div class="modal fade" id="RelatorioFinanceiro">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
+          <div class="modal-content complete-modal text-white" style="background-color: #131418;">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Relatório Financeiro</h4>
+              <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">                
+                    <div class="col">
+                        <div class="input-group mb-3" style="max-width: 160px;">
+                            <input type="text" class="form-control complete-input text-white" placeholder="" id="competenciaRelFinanciero" aria-label="" aria-describedby="button-addon2">
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-dark" id="btnImprimirRelatorioFinanceiro" data-bs-dismiss="modal">Imprimir</button>
+            </div>      
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalResultadoRelatorioFinanceiro">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content bg-dark complete-modal text-white">      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title"></h4>
+              <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-black" style="font-family: 'Open Sans', sans-serif;">                
+                <div style="margin: 5px; background-color: white;">
+                    <div style="display: flex; justify-content: center; border-bottom: 1px solid black;">
+                        <label style="font-weight: 800;" >Relatório Financeiro</label>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-left: 15px;">
+                        <label for="totalOS" style="font-weight: 600;" >Total de Ordem de Serviços Atendidas: </label>
+                        <span id="totalOS"></span>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-left: 15px;">
+                        <div>                            
+                            <label for="totalCustoMesOS" style="font-weight: 600;" >Valor Total Custo Mecânico do Mês: </label>
+                            <span>R$&nbsp;</span>
+                            <span id="totalCustoMesOS"></span>
+                        </div>
+                        <div>                            
+                            <label for="totalMesOS" style="font-weight: 600;" >Valor Total do Mês: </label>
+                            <span>R$&nbsp;</span>
+                            <span id="totalMesOS"></span>
+                        </div>
+                    </div>
+
+                    <div id="detailOS" style="margin-bottom: 5px; margin-left: 15px;  margin-right: 15px; border-top: 1px solid black; border-style: dashed; border-left: none;border-right: none; border-bottom: none;">
+                                               
+                        
+                    </div>
                 </div>
             </div>      
             <!-- <div class="modal-footer">

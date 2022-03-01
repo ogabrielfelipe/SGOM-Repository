@@ -2,12 +2,12 @@
 from .ItemOrcamento import db, ma
 from sqlalchemy import Enum
 from .Status import Status
-import datetime
+from datetime import date
 
 class RegistroDaOS(db.Model):
     __tablename__='registroDaOS'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    data = db.Column(db.DateTime, default=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))).strftime('%d/%m/%Y %H:%M'))
+    data = db.Column(db.DATE, default=date.today())
     statusAnterior = db.Column(Enum(Status))
     novoStatus = db.Column(Enum(Status))
     valorTotal = db.Column(db.Float)
