@@ -23,6 +23,7 @@ def abertura_OrdemDeServico(id):
     estadoAtualDoVeiculo = resp['estadoAtualDoVeiculo']
     carro = resp['carro']
 
+
     ordem = OrdemDeServico.abrirOrdemDeServico(carro=carro, nomeR=nomeRequerente, cpfR=cpfDoRequerente, telR=telefoneRequerente,
     problema=problema, reqOr=requisicaoOrcamento, estadoA=estadoAtualDoVeiculo, status=0)
 

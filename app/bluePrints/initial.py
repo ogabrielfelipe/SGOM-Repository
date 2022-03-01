@@ -15,3 +15,6 @@ def root_ordemDeServico():
     return render_template('ordemDeServico.html')
 
 
+@app.route('/Mecanico', methods=['GET'])
+def root_mecanico():
+    return render_template('mecanico.html')

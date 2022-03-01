@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,6 +18,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
     <script src="{{ url_for('static', filename='js/template.js')}}"></script>
     <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+    
     {% block styles%}
     {% endblock %}
 </head>
@@ -64,7 +64,7 @@
                 </ul>
                 <div class="dropdown" style="margin-right: 30px; margin-left: 15px; cursor: pointer;" >
                     <a id="perfil" data-bs-toggle="dropdown" id="imageDropdownUl" aria-expanded="false">
-                        <img src=" {{url_for('static', filename='img/account_circle_white_24dp.svg')}} "/>
+                        <img src="static/img/account_circle_white_24dp.svg"/>
                     </a>
                     <ul class="dropdown-menu bg-dark " role="menu" style="min-width: 70px" aria-labelledby="imageDropdownUl">
                         <li><a class="dropdown-item text-light" style="max-width: 70px; cursor: pointer;" href="#">Sair</a></li>
@@ -80,11 +80,11 @@
 
         {%endblock%}
     </section>
-    <footer class="content_footer">
-        {% block footer %}
 
-        {%endblock%}
-
+    <footer>
+       {% block footer %}
+        
+       {%endblock%}
     </footer>
 
     <!-- Relatório OS-->
