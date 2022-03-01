@@ -30,7 +30,7 @@ $(document).ready(()=>{
     });
 
     //Funcionalidade de busca Veículo
-    $('#btnPesquisarPlaca').click(()=>{
+    $('#btnPesquisarPlacaRelOS').click(()=>{
         var placa = $('#CampoPlacaPesquisa')[0]['value'];
         if (placa.length == 0){
             Envia({},`/Carro/BuscaCarros`, 'POST')
