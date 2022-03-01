@@ -1,3 +1,20 @@
+from datetime import datetime
+import calendar
+
+
+def calcula_intervalo_mes(competencia):
+    yy = int(competencia.split('/')[1])
+    mm = int(competencia.split('/')[0])
+    dias = calendar.monthrange(yy, mm)
+
+    inicio = str(yy)+'-'+str(mm)+'-'+str(dias[0])
+    fim = str(yy)+'-'+str(mm)+'-'+str(dias[1])
+    dataInicio = datetime.strptime(inicio, '%Y-%m-%d').date()
+    dataFim = datetime.strptime(fim, '%Y-%m-%d').date()
+
+    return dataInicio, dataFim
+
+
 def convertPesquisa(operadores, dict):
     cont = 0
     quant = 0

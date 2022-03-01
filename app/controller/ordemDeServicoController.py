@@ -9,7 +9,7 @@ from ..model.ItemOrcamento import ItemOrcamento, itemOrcamento_schema, itemOrcam
 from ..model.Servicos import Servicos, servico_schema,servicos_schema
 from ..model.RegistroDaOS import RegistroDaOS, registroDaOS_schema, registroDaOSs_schema
 from ..model.ItemOrcamento import db
-from .util import convertPesquisa
+from .util import convertPesquisa, calcula_intervalo_mes
 
 
 
@@ -252,6 +252,7 @@ def finalizar_ordemDeServico(id, funcionario):
 def relatorio_ordemDeServico():
     resp = request.get_json()
     entry = {
+        'o.id': resp['codigo'],
         'o.carro': resp['placa'],
         'o.mecanico': resp['mecanico'],
         'o.status': str(resp['status'])
@@ -297,6 +298,37 @@ def relatorio_ordemDeServico():
     except Exception as e:
         return jsonify({'msg': 'Não foi encontrado', 'dados': {}}), 500
 
+
+def relatorio_financeiro():
+    resp = request.get_json()
+    competencia = resp['competencia']  
+    try:        
+        competenciaTratada = calcula_intervalo_mes(competencia=competencia)
+        sql_resumoOS = text(f"SELECT o.id as id_os, c.placa, o.custoMecanico, o.valorTodal   FROM ordemDeServico as o\
+                            INNER JOIN registroDaOS as r on r.ordemServico = o.id\
+                            INNER JOIN carro c on c.id = o.carro\
+                            WHERE r.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND o.status = 'FINALIZADA' AND r.novoStatus = 'FINALIZADA'\
+                            GROUP BY c.placa")
+
+        sql_resumoServicos = text(f"SELECT o.id as id_os_servicos, iO.nome, s.quantidade, iO.valor   FROM ordemDeServico as o\
+                                    INNER JOIN registroDaOS as r on r.ordemServico = o.id\
+                                    INNER JOIN servicos s on o.id = s.ordemDeServico\
+                                    INNER JOIN itemOrcamento iO on iO.id = s.itemOrcamento\
+                                    WHERE r.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND o.status = 'FINALIZADA' AND r.novoStatus = 'FINALIZADA'\
+                                    ORDER BY o.id")
+
+        consultaResumoOS = db.session.execute(sql_resumoOS).fetchall()
+        consultaResumoServicos = db.session.execute(sql_resumoServicos).fetchall()
+        consultaResumoOS_dict = [dict(u) for u in consultaResumoOS]
+        consultaResumoServicos_dict = [dict(u) for u in consultaResumoServicos]
+
+        return jsonify({'msg': 'Busca Efetuada com Sucesso', 'dados': {
+                                                            'ResumoOS':consultaResumoOS_dict,
+                                                            'ResumoServicos': consultaResumoServicos_dict
+                                                            }}), 200
+    except Exception as e:
+        db.session.rollback();
+        return jsonify({'msg': 'Não foi efetuado a busca', 'dados': str(e)}), 500
 
 
 def busca_personalizada_ordemDeServico():
