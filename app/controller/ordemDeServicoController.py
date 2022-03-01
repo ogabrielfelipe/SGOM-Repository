@@ -335,7 +335,6 @@ def busca_personalizada_ordemDeServico():
     resp = request.get_json()
     entry = {
         "id": resp['id'],
-        "nomeRequerente": resp['nomeRequerente'],
         "status": resp['status']
     }   
     sql = text('SELECT * FROM ordemDeServico '+convertPesquisa(['='], entry))

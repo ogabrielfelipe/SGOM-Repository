@@ -174,13 +174,9 @@ $('#btn-pesquisarOs').click(() => {
             $('#tbodyBuscaOs').append(
                 '<tr  onclick=' + "selectTableOS(this);" + '>' +
                 '<td id="identificador" hidden>' + this.id +
-                '</td><th id="OsTable" scope="row">' +
-                this.os +
-                '</th><td>' +
-                this.nomeRequerente +
+                '</td><td>' +
+                this.placa +
                 '</td></tr>' +
-                this.nomePlaca +
-                '</td></tr>'+
                 this.nomeStatus +
                 '</td></tr>'
             );
@@ -202,8 +198,6 @@ function selectTableOs(event) {
 
 
     $('#osAux').val(id);
-    $('#osAux').val(os);
-    $('#nomeRequerenteAux').val(nomeRequerente);
     $('#PlacaAux').val(placa);
     $('#statusAux').val(status);
     
