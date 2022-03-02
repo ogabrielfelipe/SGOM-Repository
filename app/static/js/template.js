@@ -11,14 +11,23 @@ $(document).ready(()=>{
 
 
     $('#btnChamaOS').click(() =>{
+        $('#codigoOS').val('');
         $('#idVeiculo').val('');
         $('#placaAux').val('');
         $('#idFuncionario').val('');
         $('#FuncionarioAux').val('');
         $('#PlacaOSRelatorio').val('');
         $('#FuncionarioOSRelatorio').val('');    
-    })
+    });
 
+    $('#btnChamaFinanceiro').click (() => {
+        $('#competenciaRelFinanciero').val('');
+        $('#totalOS').text('');
+        $('#totalCustoMesOS').text('');
+        $('#totalMesOS').text('');
+        $('#detailOS').text('');
+    });
+    
     
    //Funcionaliades dos modals Relatórios
     $('#btnSelecionarPlacaRelatorio').click(() =>{
