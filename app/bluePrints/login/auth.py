@@ -28,7 +28,7 @@ def login_post():
     return funcionarioController.autentica_funcionario()
 
 
-@aut.route('/Auth/Logout', methods=['DELETE'])
+@aut.route('/Logout', methods=['DELETE'])
 @login_required
 def logout():
     logout_user()

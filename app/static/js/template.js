@@ -297,8 +297,8 @@ $(document).ready(()=>{
     
     });
 
-
 });
+
 
 
 function selectTablePlaca(event){

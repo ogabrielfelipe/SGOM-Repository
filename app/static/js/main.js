@@ -2,7 +2,7 @@ var data = new Date();
 var mes = String(data.getMonth() + 1).padStart(2, '0');
 var ano = data.getFullYear();
 
-console.log(mes+'/'+ano);
+
 $(document).ready(function () {
     $('#dataIdFiltroHome').mask('99/9999');
     $('#dataIdFiltroHome').val(mes+'/'+ano);
@@ -36,7 +36,7 @@ function login(usuario, senha){
 
 function logout(){
     const entry = {}
-    Envia(entry, '/Auth/Logout', 'DELETE')
+    Envia(entry, '/Logout', 'DELETE')
     .then((response) => {
         if (response['msg'] === 'Logout com sucesso'){
             window.location.href = "/"
@@ -46,6 +46,7 @@ function logout(){
         console.log(error)
     })
 }
+
 
 function Envia(entry, url, method){
     return new Promise((resolve, reject)=>{
