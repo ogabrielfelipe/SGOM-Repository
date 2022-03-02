@@ -4,6 +4,13 @@
     --color-font: rgb(243, 241, 241);
     --font-default: 'Roboto', sans-serif;
     --color-background-focus: #4b4e5a;
+    
+}
+.form-control:disabled{
+ background: #6e6e6e;   
+}
+.form-select:disabled{
+    background: #6e6e6e;
 }
 
 input::placeholder {
@@ -29,6 +36,10 @@ input::placeholder {
 
 section{
     background-color: var(--color-background);
+}
+
+section input:disabled{
+    background : #6e6e6e;
 }
 
 .complete-modal{
@@ -92,3 +103,5 @@ section{
 .focus-table{
     background-color: var(--color-font);
 }
+
+

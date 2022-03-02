@@ -334,10 +334,13 @@ def relatorio_financeiro():
 def busca_personalizada_ordemDeServico():
     resp = request.get_json()
     entry = {
-        "id": resp['id'],
-        "status": resp['status']
+        "o.id": resp['id'],
+        "o.nomeRequerente": resp['nomeRequerente'],
+        "o.status": resp['status']
     }   
-    sql = text('SELECT * FROM ordemDeServico o\
+    sql = text('SELECT o.id as id_os, o.nomeRequerente, o.cpfDoRequerente, o.telefoneRequerente, o.problema, o.requisicaoOrcamento,\
+       o.estadoAtualDoVeiculo, o.custoMecanico, o.valorTodal, o.respostaCliente, c.placa as carro, c.id as id_carro,\
+       o.mecanico, o.status FROM ordemDeServico o\
                 INNER JOIN carro c on c.id = o.carro '+convertPesquisa(['='], entry))
     try:        
         os = db.session.execute(sql).fetchall()

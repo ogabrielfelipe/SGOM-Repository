@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
 }
+:disabled {
+    background: #1b1b1b;
+  }
 
 .content-opcoes-ordemServico{
     display: flex;

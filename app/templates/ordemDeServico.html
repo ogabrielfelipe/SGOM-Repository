@@ -157,7 +157,8 @@ ORDEM DE SERVIÇO
                     </div>
                     <div class="col" style="max-width: 350px">
                         <div class="form-floating" style="max-width: 200px;">
-                            <select class="form-select complete-input" id="SelectStatusOS" aria-label="select label">
+                            <select class="form-select complete-input" id="SelectStatusOOS" aria-label="select label">
+                                <option value="" style="background-color: #131418; color: white">selecionar...</option>
                                 <option value="EMABERTO" style="background-color: #131418; color: white">Em Aberto</option>
                                 <option value="ACEITA" style="background-color: #131418; color: white">Aceita</option>
                                 <option value="AGUARDANDOAPROVACAO" style="background-color: #131418; color: white">Aguardando Aprovação</option>
@@ -171,10 +172,10 @@ ORDEM DE SERVIÇO
                         </div>
                     </div>
                     <div class="col">
-                        <button type="button" id ="btn-pesquisarOs"class="btn btn-dark" style="margin-right: 10px;">Pesquisar</button>
+                        <button type="button" id ="btn_pesquisarOs"class="btn btn-dark" style="margin-right: 10px;">Pesquisar</button>
                     </div>
                 </div>
-                <table class="table table-dark " id="tableBuscaPlaca" style="margin-top: 15px; cursor: pointer;">
+                <table class="table table-dark " id="tableBuscaOs" style="margin-top: 15px; cursor: pointer;">
                     <thead>
                         <tr>
                             <th scope="col">OS</th>
@@ -214,14 +215,14 @@ ORDEM DE SERVIÇO
                         <label> Pintura: </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="pinturaEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input id="pinturaObs" type="text" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
@@ -230,14 +231,14 @@ ORDEM DE SERVIÇO
                         <label> Lataria </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="latariaEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input type="text" id="latariaObs" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
@@ -246,14 +247,14 @@ ORDEM DE SERVIÇO
                         <label> Pneu: </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="pneuEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input type="text" id="pneuObs" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
@@ -262,14 +263,14 @@ ORDEM DE SERVIÇO
                         <label> Vidro: </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="vidroEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input type="text" id="vidroObs" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
@@ -278,14 +279,14 @@ ORDEM DE SERVIÇO
                         <label> Parachoque: </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="parachoqueEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input type="text" id="parachoqueObs" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
@@ -294,14 +295,14 @@ ORDEM DE SERVIÇO
                         <label> Lanterna: </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="lanternaEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input type="text" id="lanternaObs" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
@@ -310,14 +311,14 @@ ORDEM DE SERVIÇO
                         <label> Interior: </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="interiorEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input type="text" id="interiorObs" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
@@ -326,14 +327,14 @@ ORDEM DE SERVIÇO
                         <label> Funcionamento: </label>
                     </div>
                     <div class="col" style="max-width: 200px">
-                        <select class="form-select complete-input" id="floatingSelect" aria-label="select label">
-                            <option value="0" style="background-color: #131418;">Excelente</option>
-                            <option value="1" style="background-color: #131418;">Bom</option>
-                            <option value="2" style="background-color: #131418;">Ruim</option>
+                        <select class="form-select complete-input" id="funcionamentoEstado" aria-label="select label">
+                            <option value="EXCELENTE" style="background-color: #131418;">Excelente</option>
+                            <option value="BOM" style="background-color: #131418;">Bom</option>
+                            <option value="RUIM" style="background-color: #131418;">Ruim</option>
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input text-white" placeholder="Observação"
+                        <input type="text" id="funcionamentoObs" class="form-control complete-input text-white" placeholder="Observação"
                             aria-label="First name">
                     </div>
                 </div>
