@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
     <script src="{{ url_for('static', filename='js/template.js')}}"></script>
     <script src="{{ url_for('static', filename='js/main.js')}}"></script>
-    
+    <script src="{{url_for('static', filename='js/home.js')}}"></script>
     {% block styles%}
     {% endblock %}
 </head>
@@ -420,6 +420,8 @@
         </div>
     </div>
 
+{%block modalHome%}
 
+{%endblock%}
 </body>
 </html>
