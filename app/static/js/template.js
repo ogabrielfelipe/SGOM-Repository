@@ -1,132 +1,132 @@
-$(document).ready(()=>{
+$(document).ready(() => {
     $('#CPFR').mask('999.999.999-99');
     $('#TELR').mask('(99) 99999-9999');
     $('#dataIdFiltroHome').mask('99/9999');
 
-    $('#downMenuPrincipal').click(()=>{
+    $('#downMenuPrincipal').click(() => {
         $('#downMenu').toggle('complete-nav-down');
     });
 
     $('[data-toggle="popover"]').popover();
 
 
-    $('#btnChamaOS').click(() =>{
+    $('#btnChamaOS').click(() => {
         $('#codigoOS').val('');
         $('#idVeiculo').val('');
         $('#placaAux').val('');
         $('#idFuncionario').val('');
         $('#FuncionarioAux').val('');
         $('#PlacaOSRelatorio').val('');
-        $('#FuncionarioOSRelatorio').val('');    
+        $('#FuncionarioOSRelatorio').val('');
     });
 
-    $('#btnChamaFinanceiro').click (() => {
+    $('#btnChamaFinanceiro').click(() => {
         $('#competenciaRelFinanciero').val('');
         $('#totalOS').text('');
         $('#totalCustoMesOS').text('');
         $('#totalMesOS').text('');
         $('#detailOS').text('');
     });
-    
-    
-   //Funcionaliades dos modals Relatórios
-    $('#btnSelecionarPlacaRelatorio').click(() =>{
-        $('#PlacaOSRelatorio').val($('#placaAux').val());        
+
+
+    //Funcionaliades dos modals Relatórios
+    $('#btnSelecionarPlacaRelatorio').click(() => {
+        $('#PlacaOSRelatorio').val($('#placaAux').val());
     });
 
-    $('#btnSelecionarFuncionarioRelatorio').click(() =>{
-        $('#FuncionarioOSRelatorio').val($('#FuncionarioAux').val());        
+    $('#btnSelecionarFuncionarioRelatorio').click(() => {
+        $('#FuncionarioOSRelatorio').val($('#FuncionarioAux').val());
     });
 
     //Funcionalidade de busca Veículo
-    $('#btnPesquisarPlacaRelOS').click(()=>{
+    $('#btnPesquisarPlacaRelOS').click(() => {
         var placa = $('#CampoPlacaPesquisa')[0]['value'];
-        if (placa.length == 0){
-            Envia({},`/Carro/BuscaCarros`, 'POST')
-            .then((data)=>{
-                $('#tbodyBuscaPlacaRelatorio tr').remove();
-                response = data['dados']
-                $(response).each( function(){                    
-                    $('#tbodyBuscaPlacaRelatorio').append(
-                        '<tr onclick='+"selectTablePlaca(this);"+'>' +
-                                '<td id="identificador" hidden>'+ this.id +
-                        '</td><th id="PlacaTable" scope="row">'+
-                                this.placa +
-                        '</th><td>'+
-                                this.telefone +
-                        '</td></tr>'
-                    );
-                });
-            })
-        } else if (placa.length < 7){
+        if (placa.length == 0) {
+            Envia({}, `/Carro/BuscaCarros`, 'POST')
+                .then((data) => {
+                    $('#tbodyBuscaPlacaRelatorio tr').remove();
+                    response = data['dados']
+                    $(response).each(function () {
+                        $('#tbodyBuscaPlacaRelatorio').append(
+                            '<tr onclick=' + "selectTablePlaca(this);" + '>' +
+                            '<td id="identificador" hidden>' + this.id +
+                            '</td><th id="PlacaTable" scope="row">' +
+                            this.placa +
+                            '</th><td>' +
+                            this.telefone +
+                            '</td></tr>'
+                        );
+                    });
+                })
+        } else if (placa.length < 7) {
             console.log('Placa Inválida');
-        }else if(placa.length > 7){
+        } else if (placa.length > 7) {
             console.log('Placa Inválida');
-        }else{
+        } else {
             console.log(placa.toUpperCase())
-            Envia({},`/Carro/Busca/${placa.toUpperCase()}`, 'POST')
-            .then((data)=>{
-                $('#tbodyBuscaPlacaRelatorio tr').remove();
-                response = data['dados']
-                $(response).each( function(){                    
-                    $('#tbodyBuscaPlacaRelatorio').append(
-                        '<tr  onclick='+"selectTablePlaca(this);"+'>' +
-                                '<td id="identificador" hidden>'+ this.id +
-                        '</td><th id="PlacaTable" scope="row">'+
-                                this.placa +
-                        '</th><td>'+
-                                this.telefone +
-                        '</td></tr>'
-                    );
+            Envia({}, `/Carro/Busca/${placa.toUpperCase()}`, 'POST')
+                .then((data) => {
+                    $('#tbodyBuscaPlacaRelatorio tr').remove();
+                    response = data['dados']
+                    $(response).each(function () {
+                        $('#tbodyBuscaPlacaRelatorio').append(
+                            '<tr  onclick=' + "selectTablePlaca(this);" + '>' +
+                            '<td id="identificador" hidden>' + this.id +
+                            '</td><th id="PlacaTable" scope="row">' +
+                            this.placa +
+                            '</th><td>' +
+                            this.telefone +
+                            '</td></tr>'
+                        );
+                    });
                 });
-            });
         }
-        
+
     });
 
     //Funcionalidade de BuscarFuncionário
     $('#btnPesquisarFuncionario').click(() => {
         var usuario = $('#CampoFuncionarioPesquisa').val();
-        if (usuario.length == 0){
+        if (usuario.length == 0) {
             Envia({}, `/Funcionario/BuscaFuncionaios`, 'POST')
-            .then((dados)=> {
-                $('#tbodyBuscaFuncionarioRelatorio tr').remove();
-                
-                console.log(dados);
-                response = dados['dados'];
-                console.log(response);
-                $(response).each( function(){                    
-                    $('#tbodyBuscaFuncionarioRelatorio').append(
-                        '<tr onclick='+"selectTableFuncionario(this);"+'>' +
-                                '<td id="identificador">'+ this.id +
-                        '</td><th scope="row">'+
-                                this.usuario +
-                        '</th><td id="FuncionarioTable" >'+
-                                this.nome +
-                        '</td></tr>'
-                    );
+                .then((dados) => {
+                    $('#tbodyBuscaFuncionarioRelatorio tr').remove();
+
+                    console.log(dados);
+                    response = dados['dados'];
+                    console.log(response);
+                    $(response).each(function () {
+                        $('#tbodyBuscaFuncionarioRelatorio').append(
+                            '<tr onclick=' + "selectTableFuncionario(this);" + '>' +
+                            '<td id="identificador">' + this.id +
+                            '</td><th scope="row">' +
+                            this.usuario +
+                            '</th><td id="FuncionarioTable" >' +
+                            this.nome +
+                            '</td></tr>'
+                        );
+                    });
                 });
-            });
-        }else {
+        } else {
             Envia({}, `/Funcionario/BuscaUsername/${usuario}`, 'POST')
-            .then((dados)=> {
-                $('#tbodyBuscaFuncionarioRelatorio tr').remove();
-                console.log(dados);
-                response = dados['dados'];
-                console.log(response);
-                $(response).each( function(){                    
-                    $('#tbodyBuscaFuncionarioRelatorio').append(
-                        '<tr onclick='+"selectTableFuncionario(this);"+'>' +
-                                '<td id="identificador">'+ this.id +
-                        '</td><th scope="row">'+
-                                this.usuario +
-                        '</th><td id="FuncionarioTable" >'+
-                                this.nome +
-                        '</td></tr>'
-                    );
+                .then((dados) => {
+                    $('#tbodyBuscaFuncionarioRelatorio tr').remove();
+                    console.log(dados);
+                    response = dados['dados'];
+                    console.log(response);
+                    $(response).each(function () {
+                        $('#tbodyBuscaFuncionarioRelatorio').append(
+                            '<tr onclick=' + "selectTableFuncionario(this);" + '>' +
+                            '<td id="identificador">' + this.id +
+                            '</td><th scope="row">' +
+                            this.usuario +
+                            '</th><td id="FuncionarioTable" >' +
+                            this.nome +
+                            '</td></tr>'
+                        );
+                    });
                 });
-            });
-        }    
+        }
     });
 
 
@@ -143,69 +143,69 @@ $(document).ready(()=>{
             "status": status
         }
         Envia(entry, '/OrdemDeServico/Relatorio/OrdemDeServico', 'POST')
-        .then((dados) => {
-            dadosOrdemDeServico = dados['dados']['OrdemDeServico']
-            dadosRegistroDeServico = dados['dados']['RegistroOS']
-            dadosServicos = dados['dados']['Servicos']
-            if (dadosOrdemDeServico === {} || dadosRegistroDeServico === []){
-                console.log('Nenhum dado encontrado')
-            }else{
-                $('#NOS').text('');
-                $('#nomeR').text('');
-                $('#cpfR').text('');                
-                $('#telR').text('');            
-                $('#placaCarroRel').text('');        
-                $('#telPlacaRel').text('');                           
-                $('#dataA').text('');
-                $('#custoM').text('');
-                $('#problema').text('');
-                $('#dataF').text('');
-                $('#valT').text('');
-                $('#mecanicoRel').text('');
+            .then((dados) => {
+                dadosOrdemDeServico = dados['dados']['OrdemDeServico']
+                dadosRegistroDeServico = dados['dados']['RegistroOS']
+                dadosServicos = dados['dados']['Servicos']
+                if (dadosOrdemDeServico === {} || dadosRegistroDeServico === []) {
+                    console.log('Nenhum dado encontrado')
+                } else {
+                    $('#NOS').text('');
+                    $('#nomeR').text('');
+                    $('#cpfR').text('');
+                    $('#telR').text('');
+                    $('#placaCarroRel').text('');
+                    $('#telPlacaRel').text('');
+                    $('#dataA').text('');
+                    $('#custoM').text('');
+                    $('#problema').text('');
+                    $('#dataF').text('');
+                    $('#valT').text('');
+                    $('#mecanicoRel').text('');
 
-                $('#NOS').text(dadosOrdemDeServico['id']);
-                $('#nomeR').text(dadosOrdemDeServico['nomeRequerente']);
-                $('#cpfR').text(dadosOrdemDeServico['cpfDoRequerente']);                
-                $('#telR').text(dadosOrdemDeServico['telefoneRequerente']);            
-                $('#placaCarroRel').text(dadosOrdemDeServico['placa_veiculo']);        
-                $('#telPlacaRel').text(dadosOrdemDeServico['telefone_veiculo']);       
-                $('#mecanicoRel').text(dadosOrdemDeServico['mecanico']);                
-                for(var i = 0; i < dadosRegistroDeServico.length; i++){      
-                    let valAuxStatus = dadosRegistroDeServico[i]['status']  
-                    if (valAuxStatus === 'EMABERTO'){     
-                        console.log(dadosRegistroDeServico[i]['data_alteracao'])                          
-                        $('#dataA').text(dadosRegistroDeServico[i]['data_alteracao']);
-                    }                    
-                }
-                $('#custoM').text(dadosOrdemDeServico['custoMecanico']);
-                $('#problema').text(dadosOrdemDeServico['problema']);
-                for(var i = 0; i < dadosRegistroDeServico.length; i++){      
-                    let valAuxStatus = dadosRegistroDeServico[i]['status']         
-                    if (valAuxStatus === 'FINALIZADA'){   
-                        console.log(dadosRegistroDeServico[i]['data_alteracao'])
-                        $('#dataF').text(dadosRegistroDeServico[i]['data_alteracao']);   
-                    }                    
-                }
+                    $('#NOS').text(dadosOrdemDeServico['id']);
+                    $('#nomeR').text(dadosOrdemDeServico['nomeRequerente']);
+                    $('#cpfR').text(dadosOrdemDeServico['cpfDoRequerente']);
+                    $('#telR').text(dadosOrdemDeServico['telefoneRequerente']);
+                    $('#placaCarroRel').text(dadosOrdemDeServico['placa_veiculo']);
+                    $('#telPlacaRel').text(dadosOrdemDeServico['telefone_veiculo']);
+                    $('#mecanicoRel').text(dadosOrdemDeServico['mecanico']);
+                    for (var i = 0; i < dadosRegistroDeServico.length; i++) {
+                        let valAuxStatus = dadosRegistroDeServico[i]['status']
+                        if (valAuxStatus === 'EMABERTO') {
+                            console.log(dadosRegistroDeServico[i]['data_alteracao'])
+                            $('#dataA').text(dadosRegistroDeServico[i]['data_alteracao']);
+                        }
+                    }
+                    $('#custoM').text(dadosOrdemDeServico['custoMecanico']);
+                    $('#problema').text(dadosOrdemDeServico['problema']);
+                    for (var i = 0; i < dadosRegistroDeServico.length; i++) {
+                        let valAuxStatus = dadosRegistroDeServico[i]['status']
+                        if (valAuxStatus === 'FINALIZADA') {
+                            console.log(dadosRegistroDeServico[i]['data_alteracao'])
+                            $('#dataF').text(dadosRegistroDeServico[i]['data_alteracao']);
+                        }
+                    }
 
 
-                $('#tbodytableRelServicos tr').remove();                
-                $(dadosServicos).each( function(){                    
-                    $('#tbodytableRelServicos').append(
-                        '<tr><td>'+ 
-                            this.nome_item+
-                        '</td><td>'+
-                            this.quant_item+
-                        '</td><td>'+
+                    $('#tbodytableRelServicos tr').remove();
+                    $(dadosServicos).each(function () {
+                        $('#tbodytableRelServicos').append(
+                            '<tr><td>' +
+                            this.nome_item +
+                            '</td><td>' +
+                            this.quant_item +
+                            '</td><td>' +
                             this.valor_item +
-                        '</td><td>'+
-                            this.valor_item*this.quant_item +
-                        '</td></tr>'
-                    );
-                });
-                $('#valT').text(dadosOrdemDeServico['valorTodal']);
-                $('#ModalResultadoRelatorioOs').modal('show');
-            }
-        });
+                            '</td><td>' +
+                            this.valor_item * this.quant_item +
+                            '</td></tr>'
+                        );
+                    });
+                    $('#valT').text(dadosOrdemDeServico['valorTodal']);
+                    $('#ModalResultadoRelatorioOs').modal('show');
+                }
+            });
     });
 
 
@@ -215,31 +215,31 @@ $(document).ready(()=>{
     $('#competenciaRelFinanciero').mask('99/9999');
     $('#btnImprimirRelatorioFinanceiro').click(() => {
         var competencia = $('#competenciaRelFinanciero').val();
-        if (competencia == ''){
+        if (competencia == '') {
             console.log('Competencia em Branco');
-        }else {
+        } else {
             entry = {
                 'competencia': competencia
             }
             Envia(entry, '/OrdemDeServico/Relatorio/Financeiro', 'POST')
-            .then((dados) => {
-                $('#totalOS').text(dados['dados']['ResumoOS'].length);
+                .then((dados) => {
+                    $('#totalOS').text(dados['dados']['ResumoOS'].length);
 
-                var custoMec = 0
-                var valTotal = 0
-                for (var i = 0; i < dados['dados']['ResumoOS'].length; i++){
-                    custoMec += dados['dados']['ResumoOS'][i]['custoMecanico'];
-                }
-                for (var i = 0; i < dados['dados']['ResumoOS'].length; i++){
-                    valTotal += dados['dados']['ResumoOS'][i]['valorTodal'];
-                }
-                $('#totalCustoMesOS').text(custoMec);
-                $('#totalMesOS').text(valTotal);
-                var i = 0;
-                var id_os_aux = 0
-                $(dados['dados']['ResumoOS']).each(function(){
-                    $('#detailOS').append(
-                        `<div id="" style="margin: 15px; border-bottom: 1px solid black; border-style: dashed; border-left: none;border-right: none; border-top: none;">
+                    var custoMec = 0
+                    var valTotal = 0
+                    for (var i = 0; i < dados['dados']['ResumoOS'].length; i++) {
+                        custoMec += dados['dados']['ResumoOS'][i]['custoMecanico'];
+                    }
+                    for (var i = 0; i < dados['dados']['ResumoOS'].length; i++) {
+                        valTotal += dados['dados']['ResumoOS'][i]['valorTodal'];
+                    }
+                    $('#totalCustoMesOS').text(custoMec);
+                    $('#totalMesOS').text(valTotal);
+                    var i = 0;
+                    var id_os_aux = 0
+                    $(dados['dados']['ResumoOS']).each(function () {
+                        $('#detailOS').append(
+                            `<div id="" style="margin: 15px; border-bottom: 1px solid black; border-style: dashed; border-left: none;border-right: none; border-top: none;">
                             <div>
                                 <label for="OSID" style="font-weight: 600;" >OS: </label>
                                 <span id="OSID">${this.id_os}</span>
@@ -272,13 +272,13 @@ $(document).ready(()=>{
                                 </table>
                             </div>
                         </div>`
-                    ); 
-                    i+=1;
-                });
-                
-                $(dados['dados']['ResumoServicos']).each(function(){
-                    $('#tableServicosRel'+this.id_os_servicos).append(
-                        `<tr>
+                        );
+                        i += 1;
+                    });
+
+                    $(dados['dados']['ResumoServicos']).each(function () {
+                        $('#tableServicosRel' + this.id_os_servicos).append(
+                            `<tr>
                             <td>${this.nome}</td>
                             <td>${this.quantidade}</td>
                             <td>
@@ -286,22 +286,22 @@ $(document).ready(()=>{
                                 <span>${this.valor}</span>
                             </td><td>
                             <span>R$&nbsp;</span>
-                            <span>${this.valor*this.quantidade}</span>
+                            <span>${this.valor * this.quantidade}</span>
                         </td>
-                        </tr>`                            
-                    )
-                });  
-            });
+                        </tr>`
+                        )
+                    });
+                });
             $('#ModalResultadoRelatorioFinanceiro').modal('show');
         }
-    
+
     });
 
 
 });
 
 
-function selectTablePlaca(event){
+function selectTablePlaca(event) {
     var id = $(event).children('#identificador')[0]['innerText'];
     var placa = $(event).children('#PlacaTable')[0]['innerText'];
 
@@ -313,7 +313,7 @@ function selectTablePlaca(event){
     $('#placaAux').val(placa);
 }
 
-function selectTableFuncionario(event){
+function selectTableFuncionario(event) {
     var id = $(event).children('#identificador')[0]['innerText'];
     var funcionario = $(event).children('#FuncionarioTable')[0]['innerText'];
 

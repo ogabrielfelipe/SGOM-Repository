@@ -1,8 +1,15 @@
-const CAD_PATH = `/Carro/Cadastrar`;
-const UP_PATH = `/Carro/Atulizar/`;
-const DEL_PATH = `/Carro/Excluir/`;
-const LIST_PATH = `/Carro/BuscaCarros`;
-const BUSC_PATH = `/Carro/Busca/`;
+const CAD_VEICULO_PATH = `/Carro/Cadastrar`;
+const UP_VEICULO_PATH = `/Carro/Atulizar/`;
+const DEL_VEICULO_PATH = `/Carro/Excluir/`;
+const LIST_VEICULO_PATH = `/Carro/BuscaCarros`;
+const BUSC_VEICULO_PATH = `/Carro/Busca/`;
+//================================================================================
+const CAD_FUNCIONARIO_PATH = `/Funcionario/Cadastrar`;
+const UP_FUNCIONARIO_VEICULO_PATH = `/Funcionario/Atualizar/`;
+const DEL_FUNCIONARIO_VEICULO_PATH = `/Carro/Excluir/`;
+const LIST_FUNCIONARIO_VEICULO_PATH = `/Funcionario/BuscaFuncionaios`;
+const BUSC_FUNCIONARIO_VEICULO_PATH = `Funcionario/Busca/`;
+//================================================================================
 
 
 function Envia(entry, url, method) {
@@ -71,31 +78,47 @@ $(document).ready(() => {
             console.log($(''));
         }
     });
+    //===================================================================
+    //              CRUDÃO DE FUNCIONARIO
+    let condFuncinario = false;
+    $('#crud-func').click(() => {
+        if (!condFuncinario) {
+            let resp = Envia({}, LIST_FUNCIONARIO_VEICULO_PATH, `POST`);
+            console.log(resp);
+            escreveTableFuncionario(resp);
+            condFuncinario = true;
+        }
+    });
+    //===================================================================
 
     //filtar por placa
     $('#btnPesquisaVeiculoCad').click(() => {
         var placa = $('#inp_pesquisaPlaca')[0]['value'];
         if (placa.length == 0) {
+            //arrumar dps
             Envia({}, `/Carro/BuscaCarros`, 'POST').then((data) => {
                 $('#tbodyListVeiculos tr').remove();
                 response = data['dados']
-                $(response).each(function () {
-                    $('#tbodyListVeiculos').append(
-                        '<tr>'
-                        +
-                        '<td>' + dadosAtual['placa'] + '</td>' +
-                        '<td>' + dadosAtual['telefone'] + '</td>'
-                        +
-                        '<input type="hidden" id="idVeiculo" name="custId" value="' + dadosAtual['id'] + '">'
-                        +
-                        '<td><div class="col btnEdit"><button id="edit" onclick="solicitarAlteracao(' + dadosAtual['id'] + ')" type="button" class="btn btn-danger" style="margin-right: 10px;">Editar</button></div></td>'
-                        +
-                        '<td><div class="col btnDel"><button id="exclu" onclick="solicitarExclusao(' + dadosAtual['id'] + ')"type="button" class="btn btn-danger" style="margin-right: 10px;">Excluir</button></div></td>'
-                        +
-                        +
-                        '</tr>'
-                    );
-                });
+                for (dadosAtual of response) {
+                    $(response).each(function () {
+                        $('#tbodyListVeiculos').append(
+                            '<tr>'
+                            +
+                            '<td>' + dadosAtual['placa'] + '</td>' +
+                            '<td>' + dadosAtual['telefone'] + '</td>'
+                            +
+                            '<input type="hidden" id="idVeiculo" name="custId" value="' + dadosAtual['id'] + '">'
+                            +
+                            '<td><div class="col btnEdit"><button id="edit" onclick="solicitarAlteracao(' + dadosAtual['id'] + ')" type="button" class="btn btn-danger" style="margin-right: 10px;">Editar</button></div></td>'
+                            +
+                            '<td><div class="col btnDel"><button id="exclu" onclick="solicitarExclusao(' + dadosAtual['id'] + ')"type="button" class="btn btn-danger" style="margin-right: 10px;">Excluir</button></div></td>'
+                            +
+                            +
+                            '</tr>'
+                        );
+
+                    });
+                }
             })
         } else if (placa.length < 7) {
             console.log('Placa Inválida');
@@ -123,17 +146,13 @@ $(document).ready(() => {
                         '</tr>'
                     );
                 });
+
             });
+
         }
 
     });
-    // Cadastro de veiculo
 
-    // Edição de veiculo
-
-
-
-    //===================================================================
 
 });
 
@@ -149,3 +168,32 @@ function solicitarExclusao(id) {
 //pesquisar
 
 //id="btnPesquisarPlacaRelOS"
+//================================================================================
+//          CRUDÃO DE FUNCIONARIOS
+function escreveTableFuncionario(resp) {
+    $('#tbodyListFuncionarios').empty();
+    console.log(resp);
+    (resp.then((data) => {
+        response = data['dados'];
+        for (dadosAtual of response) {
+            $('#tbodyListFuncionarios').append(
+                '<tr>'
+                +
+                '<td>' + dadosAtual['nome'] + '</td>' +
+                '<td>' + dadosAtual['cpf'] + '</td>' +
+                '<td>' + dadosAtual['telefone'] + '</td>' +
+                '<td>' + dadosAtual['dataDeAdmissao'] + '</td>' +
+                '<td>' + dadosAtual['tipoFuncionario'] + '</td>' +
+                '<td>' + dadosAtual['usuario'] + '</td>' +
+                '<td>' + dadosAtual['status'] + '</td>' +
+                +
+                '<td><div class="col btnEdit"><button id="edit" type="button" class="btn btn-danger" style="margin-right: 10px;">Editar</button></div></td>'
+                +
+                '<td><div class="col btnDel"><button id="exclu" type="button" class="btn btn-danger" style="margin-right: 10px;">Mudar status</button></div></td>'
+                +
+                +
+                '</tr>'
+            )
+        }
+    }));
+}
