@@ -228,8 +228,7 @@ $(document).ready(()=>{
                 $('#totalMesOS').text(valTotal);
                 var i = 0;
                 var id_os_aux = 0
-                $(dados['dados']['ResumoOS'], dados['dados']['ResumoServicos']).each(function(){
-                    var id_os_aux = this.id_os
+                $(dados['dados']['ResumoOS']).each(function(){
                     $('#detailOS').append(
                         `<div id="" style="margin: 15px; border-bottom: 1px solid black; border-style: dashed; border-left: none;border-right: none; border-top: none;">
                             <div>
@@ -264,29 +263,25 @@ $(document).ready(()=>{
                                 </table>
                             </div>
                         </div>`
-                    );
-                        
-                    $(dados['dados']['ResumoServicos'][i]).each(function(){
-                        console.log(this.id_os_servicos)
-                        if(this.id_os_servicos === id_os_aux){
-                            $('#tableServicosRel'+id_os_aux).append(
-                                `<tr>
-                                    <td>${this.nome}</td>
-                                    <td>${this.quantidade}</td>
-                                    <td>
-                                        <span>R$&nbsp;</span>
-                                        <span>${this.valor}</span>
-                                    </td><td>
-                                    <span>R$&nbsp;</span>
-                                    <span>${this.valor*this.quantidade}</span>
-                                </td>
-                                </tr>`                            
-                            )
-                        }
-                    });  
-
+                    ); 
                     i+=1;
-                });                
+                });
+                
+                $(dados['dados']['ResumoServicos']).each(function(){
+                    $('#tableServicosRel'+this.id_os_servicos).append(
+                        `<tr>
+                            <td>${this.nome}</td>
+                            <td>${this.quantidade}</td>
+                            <td>
+                                <span>R$&nbsp;</span>
+                                <span>${this.valor}</span>
+                            </td><td>
+                            <span>R$&nbsp;</span>
+                            <span>${this.valor*this.quantidade}</span>
+                        </td>
+                        </tr>`                            
+                    )
+                });  
             });
             $('#ModalResultadoRelatorioFinanceiro').modal('show');
         }

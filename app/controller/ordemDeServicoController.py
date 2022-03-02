@@ -305,17 +305,15 @@ def relatorio_financeiro():
     try:        
         competenciaTratada = calcula_intervalo_mes(competencia=competencia)
         sql_resumoOS = text(f"SELECT o.id as id_os, c.placa, o.custoMecanico, o.valorTodal   FROM ordemDeServico as o\
-                            INNER JOIN registroDaOS as r on r.ordemServico = o.id\
-                            INNER JOIN carro c on c.id = o.carro\
-                            WHERE r.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND o.status = 'FINALIZADA' AND r.novoStatus = 'FINALIZADA'\
-                            GROUP BY c.placa")
+                                INNER JOIN registroDaOS as r on r.ordemServico = o.id\
+                                INNER JOIN carro c on c.id = o.carro\
+                                WHERE r.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND r.novoStatus = 'FINALIZADA'")
 
-        sql_resumoServicos = text(f"SELECT o.id as id_os_servicos, iO.nome, s.quantidade, iO.valor   FROM ordemDeServico as o\
+        sql_resumoServicos = text(f"SELECT o.id as id_os_servicos, iO.nome, s.quantidade, iO.valor FROM ordemDeServico as o\
                                     INNER JOIN registroDaOS as r on r.ordemServico = o.id\
                                     INNER JOIN servicos s on o.id = s.ordemDeServico\
                                     INNER JOIN itemOrcamento iO on iO.id = s.itemOrcamento\
-                                    WHERE r.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND o.status = 'FINALIZADA' AND r.novoStatus = 'FINALIZADA'\
-                                    ORDER BY o.id")
+                                    WHERE r.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND r.novoStatus = 'FINALIZADA'")
 
         consultaResumoOS = db.session.execute(sql_resumoOS).fetchall()
         consultaResumoServicos = db.session.execute(sql_resumoServicos).fetchall()
