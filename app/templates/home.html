@@ -14,6 +14,18 @@ Home
 <link rel="stylesheet" href="{{url_for('static', filename='js/template.js')}}">
 {% endblock %}
 
+{%block script%}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+<script src="{{url_for('static', filename='js/home.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+
+{%endblock%}
+
 {%block section%}
 <div class="pesquisa">
    <input type="text" name="data-filtro" id="dataIdFiltroHome">
@@ -21,7 +33,8 @@ Home
 </div>
 
 <div id="dashboard">
-    <div class="aguardando-aprovacao">
+    <div class="aguardando-aprovacao" id="aguardando_aprovacao_dashboard" onclick="chamaModal(this)">
+        <!-- data-bs-toggle="modal" data-bs-target="#aguardando-aprovacao" -->
         <span>
             Aguardando Aprovação
         </span>
@@ -29,7 +42,7 @@ Home
             00
         </span>
     </div>
-    <div class="finalizadas">
+    <div class="finalizadas" id="finalizadas_dashboard" onclick="chamaModal(this)">
         <span>
             Finalizadas
         </span>
@@ -37,7 +50,7 @@ Home
             00
         </span>
     </div>
-    <div class="aguardando-pagamento">
+    <div class="aguardando-pagamento" id="aguardando_pagamento_dashboard" onclick="chamaModal(this)">
         <span>
             Aguardando Pagamento
         </span>
@@ -45,13 +58,163 @@ Home
             00
         </span>
     </div>
-    <div class="aguardando-atendimento">
+    <div class="aguardando-atendimento" id="aguardando_atendimento_dashboard" onclick="chamaModal(this)">
         <span>
             Aguardando Atendimento
         </span>
         <span class="contador" id="cont-aguardandoa-atendimento">
             00
         </span>
+    </div>
+</div>
+
+{%endblock%}
+
+{%block modalHome%}
+
+<!-- Relatório Home-->
+
+
+<!-- Aguardando Aprovação -->
+<div class="modal fade" id="modal_dashboard">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
+      <div class="modal-content complete-modal text-white" style="background-color: #131418;">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Home</h4>
+          <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            <table class="table table-dark " id="tableBuscaDadosHome" style="margin-top: 15px; cursor: pointer;">
+                <thead>
+                  <tr>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Telefone</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyBuscaDadosHome">
+                                  
+                </tbody>
+              </table>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" id="btnImprimirOSRelatorio" data-bs-dismiss="modal">Imprimir</button>
+        </div>
+  
+      </div>
+    </div>
+</div>
+
+
+<!-- Finalizadas -->
+<div class="modal fade" id="modal_dashboard">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
+      <div class="modal-content complete-modal text-white" style="background-color: #131418;">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Home</h4>
+          <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            <table class="table table-dark " id="tableBuscaDadosHome" style="margin-top: 15px; cursor: pointer;">
+                <thead>
+                  <tr>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Telefone</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyBuscaDadosHome">
+                                  
+                </tbody>
+              </table>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" id="btnImprimirOSRelatorio" data-bs-dismiss="modal">Imprimir</button>
+        </div>
+  
+      </div>
+    </div>
+</div>
+
+
+<!-- Aguardando Pagamento -->
+<div class="modal fade" id="modal_dashboard">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
+      <div class="modal-content complete-modal text-white" style="background-color: #131418;">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Home</h4>
+          <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            <table class="table table-dark " id="tableBuscaDadosHome" style="margin-top: 15px; cursor: pointer;">
+                <thead>
+                  <tr>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Telefone</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyBuscaDadosHome">
+                                  
+                </tbody>
+              </table>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" id="btnImprimirOSRelatorio" data-bs-dismiss="modal">Imprimir</button>
+        </div>
+  
+      </div>
+    </div>
+</div>
+
+
+<!-- Aguardando Atendimento -->
+<div class="modal fade" id="modal_dashboard">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
+      <div class="modal-content complete-modal text-white" style="background-color: #131418;">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Home</h4>
+          <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            <table class="table table-dark " id="tableBuscaDadosHome" style="margin-top: 15px; cursor: pointer;">
+                <thead>
+                  <tr>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Telefone</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyBuscaDadosHome">
+                                  
+                </tbody>
+              </table>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" id="btnImprimirOSRelatorio" data-bs-dismiss="modal">Imprimir</button>
+        </div>
+  
+      </div>
     </div>
 </div>
 
