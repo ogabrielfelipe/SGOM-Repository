@@ -61,11 +61,6 @@ def altera_orcamento_ordemDeServico(id, mecanico):
 
     try:
         Servicos.query.filter(Servicos.ordemDeServico == ordem.id).delete()
-        #servicos_dict = [dict(u) for u in servicos]
-        #for i in servicos_dict:
-        #    print(i['id'])
-        #    serv = Servicos.query.filter(Servicos.ordemDeServico == i['id'])        
-        #db.session.delete(servicos)
         db.session.commit()
     except Exception as e:
         db.session.rollback()
@@ -113,10 +108,7 @@ def altera_orcamento_ordemDeServico(id, mecanico):
                 return jsonify({'msg': 'Não foi possível incluir o resgistro', 'dados': str(e)}), 500           
         else:
             return jsonify({'msg': f'Status não comptativel com a funçao - Status Ordem de Servico:{ordem.status}', 'dados':{}}), 401
-                  
-
-    
-        
+      
 
 def aceita_ordemDeServico(id, mecanico):
     ordem = OrdemDeServico.query.get(id)
@@ -443,3 +435,4 @@ def populate_dict(cursor, schema):
                 colindex += 1
 
     return schema
+    
