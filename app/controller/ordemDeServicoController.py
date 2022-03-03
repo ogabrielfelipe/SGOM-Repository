@@ -418,8 +418,6 @@ def busca_personalizada_ordemDeServico():
         return jsonify({'msg': 'Busca não efetuada', 'dados': str(e)}), 500
 
 
-
-
 def populate_dict(cursor, schema):
     for i in schema.keys():
         cursor.execute("select * from {table};".format(table=i))
@@ -435,4 +433,3 @@ def populate_dict(cursor, schema):
                 colindex += 1
 
     return schema
-    

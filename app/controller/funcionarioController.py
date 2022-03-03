@@ -53,7 +53,6 @@ def atualiza_funcionario(id):
         usuario = resp['usuario']
         senha = generate_password_hash(resp['senha'])
         telefone = resp['telefone']
-        status = bool(resp['status'])
         tipoFuncionario = resp['tipoFuncionario']
         valid_cpf = CPF()
         cpf = valid_cpf.validate(resp['cpf'])
@@ -65,7 +64,6 @@ def atualiza_funcionario(id):
                     funcionario.nome = nome
                     funcionario.senha = senha
                     funcionario.telefone = telefone
-                    funcionario.status = status
                     funcionario.tipoFuncionario = tipoFuncionario
                     funcionario.cpf = resp['cpf']
                     db.session.commit()
