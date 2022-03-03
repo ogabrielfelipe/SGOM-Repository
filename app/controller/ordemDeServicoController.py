@@ -2,6 +2,7 @@ import datetime
 from unittest import result
 from flask import request, jsonify, session
 from itsdangerous import json
+from pydantic import conset
 from sqlalchemy import text
 from app.model.Status import Status
 from ..model.OrdemDeServico import OrdemDeServico, ordemDeServico_schema, ordemDeServicos_schema
@@ -40,6 +41,82 @@ def abertura_OrdemDeServico(id):
         print(e)
         return jsonify({'msg': 'Erro ao salvar', 'error': str(e)}), 500
 
+
+def altera_orcamento_ordemDeServico(id, mecanico):
+    ordem = OrdemDeServico.query.get(id)
+    resp = request.get_json()
+    problema = resp['problema']
+    custoMecanico = resp['custoMecanico']
+    quant_item = resp['quant_item']
+  
+    auxItem = []
+    for i in range(len(quant_item['itens'])):
+        auxItem.append(quant_item['itens'][i])
+
+    itens = None
+    try:
+        itens = ItemOrcamento.query.filter(ItemOrcamento.id.in_(auxItem))
+    except Exception as e:
+        itens = None 
+
+    try:
+        Servicos.query.filter(Servicos.ordemDeServico == ordem.id).delete()
+        #servicos_dict = [dict(u) for u in servicos]
+        #for i in servicos_dict:
+        #    print(i['id'])
+        #    serv = Servicos.query.filter(Servicos.ordemDeServico == i['id'])        
+        #db.session.delete(servicos)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'msg': 'Não foi possível fazer a alteração', 'dados': {}, 'error': str(e)}), 500
+
+    if itens:
+        cont = 0
+        valorTotal = 0
+        auxQuant = []
+        servicos = []
+        for i in itens:
+            valorTotal += (i.valor * quant_item['quantidade'][cont])
+            auxQuant.append(quant_item['quantidade'][cont])
+            servicos.append(Servicos(ordem.id, i.id, quant_item['quantidade'][cont]))
+            cont+=1
+        valorTotal += custoMecanico                
+        statusAterior = ordem.status
+        if ordem.status == 4:
+            try:
+                ordem.registraOrcamento(problema=problema, custoMec=custoMecanico, valTodal=valorTotal, status=4)
+                db.session.add_all(servicos)
+                regis = RegistroDaOS(data=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))), 
+                            statusA=statusAterior, novoS=4, valorTotal=valorTotal, problema=problema, mecanico=mecanico, ordemDeServico=ordem.id)      
+                db.session.add(regis)
+                db.session.commit()
+                resul1 = servicos_schema.dump(servicos)
+                result2 = ordemDeServico_schema.dump(ordem)
+                return jsonify({'msg': 'Registro Efetuado com sucesso', 'dados': {"Servicos": resul1, "Ordem_de_Servico": result2}}), 200
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({'msg': 'Não foi possível incluir o resgistro', 'dados': str(e)}), 500
+        elif ordem.status == 2 or ordem.status == 3:
+            try:
+                ordem.registraOrcamento(problema=problema, custoMec=custoMecanico, valTodal=valorTotal, status=2)
+                db.session.add_all(servicos)
+                regis = RegistroDaOS(data=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))), 
+                            statusA=statusAterior, novoS=2, valorTotal=valorTotal, problema=problema, mecanico=mecanico, ordemDeServico=ordem.id)      
+                db.session.add(regis)
+                db.session.commit()
+                resul1 = servicos_schema.dump(servicos)
+                result2 = ordemDeServico_schema.dump(ordem)
+                return jsonify({'msg': 'Registro Efetuado com sucesso', 'dados': {"Servicos": resul1, "Ordem_de_Servico": result2}}), 200
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({'msg': 'Não foi possível incluir o resgistro', 'dados': str(e)}), 500           
+        else:
+            return jsonify({'msg': f'Status não comptativel com a funçao - Status Ordem de Servico:{ordem.status}', 'dados':{}}), 401
+                  
+
+    
+        
 
 def aceita_ordemDeServico(id, mecanico):
     ordem = OrdemDeServico.query.get(id)
@@ -140,7 +217,7 @@ def avaliar_ordemServico(id, funcionario):
     statusAterior = ordem.status
     if ordem:
         if respostaClient == True:
-            if ordem.status == 2:
+            if ordem.status == 2 or ordem.status == 3:
                 try:
                     ordem.avaliarOrdemServico(respC=respostaClient, status=3)
                     regis = RegistroDaOS(data=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))), 

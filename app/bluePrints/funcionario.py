@@ -5,11 +5,12 @@ from ..controller.funcionarioController import (
     busca_funcionario_route,
     busca_funcionarios,
     busca_funcionario,
-    funcionario_username_like
+    funcionario_username_like,
+    inativa_funcionario
 )
 from datetime import datetime
 from datetime import timezone, timedelta
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager, login_required, current_user
 
 
 login_manager = LoginManager()
@@ -59,3 +60,9 @@ def busc_username_funcionaio(nome):
 #@login_required
 def alter_funcionario(codigo):
     return atualiza_funcionario(codigo)
+
+
+@func.route('/Funcionario/Inativar/<int:codigo>', methods=['DELETE'])
+#@login_required
+def inativa_route_funcionario(codigo):
+    return inativa_funcionario(codigo, current_user.id)

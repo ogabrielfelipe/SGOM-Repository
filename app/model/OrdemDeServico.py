@@ -20,9 +20,6 @@ class OrdemDeServico(db.Model):
     itemOrcamento = db.relationship('ItemOrcamento', secondary='servicos', back_populates='ordemDeServico')
     status = db.Column(Enum(Status))
 
-    '''def __init__(self, mecanico, status):
-        self.mecanico = mecanico
-        self.status = status'''
     
     def __init__(self, nomeR, cpfR, telR, problema, reqOr, estV, carro, status):
         self.nomeRequerente = nomeR

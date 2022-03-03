@@ -1,4 +1,5 @@
-from sqlalchemy import false
+from datetime import datetime, timezone, timedelta
+from sqlalchemy import and_, or_, text
 from ..model.Funcionario import Funcionario, funcionario_schema, funcionarios_schema
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,6 +9,9 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 from validate_docbr import CPF
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import current_user, login_user, logout_user
+from ..model.OrdemDeServico import OrdemDeServico, ordemDeServicos_schema, ordemDeServico_schema
+from ..model.RegistroDaOS import RegistroDaOS, registroDaOS_schema, registroDaOSs_schema
+
 
 
 def cad_funcionario():
@@ -110,7 +114,7 @@ def autentica_funcionario():
     if not funcionario:
             return jsonify({'msg': 'Usuário não encontrado'}), 404
 
-    if funcionario.status == false: #Verifica se o status do profissional está desativado
+    if funcionario.status == False: #Verifica se o status do profissional está desativado
         return jsonify({'msg': 'Usuário Inativado'}), 403
   
 
@@ -118,6 +122,32 @@ def autentica_funcionario():
         return jsonify({'msg': 'Usuário Invalido ou Senha Incorreta'}), 401            
     login_user(funcionario) #Cria o login
     return jsonify({'msg': 'Login realizado'}), 200
+
+
+def inativa_funcionario(id, funcionario):
+    func = Funcionario.query.get(id)
+    if not func:
+        return jsonify({'msg': 'Funcionário não encontrado', 'dados': {}}), 404
+    try:
+        os_sql = text(f"SELECT id FROM ordemDeServico\
+                        WHERE\
+                            mecanico = {id} AND status != 'FINALIZADA' AND status != 'AGUARDANDOPAGAMENTO' AND status != 'CANCELADA'")
+        os = db.session.execute(os_sql).fetchall()
+        os_dict = [dict(u) for u in os]
+        for i in os_dict:
+            ordem = OrdemDeServico.query.get(i['id'])
+            regis = RegistroDaOS(data=datetime.now().astimezone(timezone(timedelta(hours=-3))), 
+                    statusA=ordem.status, novoS=0, valorTotal=ordem.valorTodal, problema=ordem.problema, mecanico=funcionario, ordemDeServico=ordem.id)
+            ordem.status = 0
+            ordem.mecanico = None
+            db.session.add(regis)
+            db.session.commit()
+        func.status = 0
+        db.session.commit()
+        return jsonify({'msg': 'Inativado com sucesso'}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'msg':'Não foi possível fazer a alteração','error': str(e)}), 500
 
 
 def busca_funcionario(id):

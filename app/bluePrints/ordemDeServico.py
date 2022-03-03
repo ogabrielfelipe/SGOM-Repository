@@ -12,7 +12,8 @@ from ..controller.ordemDeServicoController import (
     finalizar_ordemDeServico,
     relatorio_ordemDeServico,
     busca_personalizada_ordemDeServico,
-    relatorio_financeiro
+    relatorio_financeiro,
+    altera_orcamento_ordemDeServico
 )
 
 ordem = Blueprint('ordem', __name__)
@@ -22,6 +23,12 @@ ordem = Blueprint('ordem', __name__)
 @login_required
 def abre_ordemDeServico():
     return abertura_OrdemDeServico(current_user.id)
+
+
+@ordem.route('/OrdemDeServico/Alterar/<int:codigo>', methods=['POST'])
+#@login_required
+def altera_route_financeiro(codigo):
+    return altera_orcamento_ordemDeServico(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/Aceita/<int:codigo>', methods=['POST'])
