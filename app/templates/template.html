@@ -508,18 +508,25 @@
                                 style="margin-right: 10px;">Pesquisar</button>
                         </div>
 
+                        <div class="col">
+                            <button id="btnEditarVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
+                                type="button" class="btn btn-dark">Editar</button>
+                        </div>
+                        <div class="col">
+                            <button id="btnExcluirVei"
+                                type="button" class="btn btn-danger">Excluir</button>
+                        </div>
                     </div>
 
-                    <table class="table table-dark " id="tableBuscaPlaca" style="margin-top: 15px; cursor: pointer;">
+                    <table style="margin-top: .9%;"class="table table-dark " id="tblListVeiculos">
                         <thead>
                             <tr>
-                                <th scope="col">Placa do Veiculo</th>
-                                <th scope="col">Telefone de Contato</th>
-                                <th scope="col">Edição</th>
-                                <th scope="col">Exclusão</th>
+                                <th scope="col">Placa</th>
+                                <th scope="col">Telefone</th>
                             </tr>
                         </thead>
-                        <tbody class="bodyListVeiculos" id="tbodyListVeiculos">
+                        <tbody id="tbodyListVeiculos">
+
                         </tbody>
                     </table>
 
@@ -547,12 +554,12 @@
                     <label class="dropdown-item text-light">Telefone</label>
                     <div class="col">
                         <input id="inp_telefoneVeiculo" type="text" class="form-control complete-input"
-                            placeholder="Telefone para contato" aria-label="First name">
+                            placeholder="Telefone para contato" aria-label="First name" >
                     </div>
-
+                    <a id="inpIdVei" value="-1" hidden></a>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-target="#ModalCrudVeiculos"
-                            data-bs-toggle="modal">Close</button>
+                            data-bs-toggle="modal" id="btnCloseVeiculo">Close</button>
                         <button type="button" class="btn btn-dark" data-bs-target="#ModalCrudVeiculos"
                             data-bs-toggle="modal" id="btnCadastrarVeiculo">Cadastrar</button>
                     </div>
@@ -628,16 +635,36 @@
                             placeholder="Nome do Funcionario" aria-label="First name">
                     </div>
 
+                    <a class="dropdown-item text-light" href="#">Cpf</a>
+                    <div class="col">
+                        <input id="inp_cpf" type="text" class="form-control complete-input"
+                            placeholder="Cpf do Funcionario" aria-label="First name">
+                    </div>                 
+
                     <label class="dropdown-item text-light">Telefone</label>
                     <div class="col">
                         <input id="inp_telefoneFuncionario" type="text" class="form-control complete-input"
                             placeholder="Telefone para contato" aria-label="First name">
                     </div>
+
+                    <a class="dropdown-item text-light" href="#">Data de Adimissão</a>
+                    <div class="col">
+                        <input id="inp_dataDeAdimissao" type="date" class="form-control complete-input"
+                            placeholder="Nome do Funcionario" aria-label="First name">
+                    </div>
+
+                    <a class="dropdown-item text-light" href="#">Tipo de Funcionario</a>
+                    <div class="col">
+                        <input id="inp_tipoFuncionario" type="text" class="form-control complete-input"
+                            placeholder="Tipo do Funcionario" aria-label="First name">
+                    </div>
+
                     <label class="dropdown-item text-light">Usuario</label>
                     <div class="col">
                         <input id="inp_usuario" type="text" class="form-control complete-input"
                             placeholder="Telefone para contato" aria-label="First name">
                     </div>
+
                     <label class="dropdown-item text-light">Senha</label>
                     <div class="col">
                         <input id="inp_senha" type="text" class="form-control complete-input"
@@ -647,7 +674,7 @@
                         <button type="button" class="btn btn-danger" data-bs-target="#ModalCrudFuncionario"
                             data-bs-toggle="modal">Close</button>
                         <button type="button" class="btn btn-dark" data-bs-target="#ModalCrudFuncionario"
-                            data-bs-toggle="modal" id="btnCadastrarVeiculo">Cadastrar</button>
+                            data-bs-toggle="modal" id="btnCadastrarFuncionario">Cadastrar</button>
                     </div>
                 </div>
             </div>
