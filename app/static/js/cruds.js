@@ -39,15 +39,15 @@ function Envia(entry, url, method) {
 
 // POPULA A TABELA DE VEICULOS
 function escreveTableVeiculo(resp) {
-    let cont = 0,tdBtnEditar = 'tdBtnEditar';
+    let cont = 0, tdBtnEditar = 'tdBtnEditar';
     (resp.then((data) => {
         response = data['dados'];
         for (dadosAtual of response) {
             tdBtnEditar += cont
             $('#tbodyListVeiculos').append(
-                '<tr onclick=' + "selectTblPlaca(this);"+'>'
+                '<tr onclick=' + "selectTblPlaca(this);" + '>'
                 +
-                '<td id="tblIdVeiculo" hidden>' +  dadosAtual['id'] +
+                '<td id="tblIdVeiculo" hidden>' + dadosAtual['id'] +
                 '</td><th id="tblPlacaVeiculo" scope="row">' +
                 dadosAtual['placa'] +
                 '</th><td id="tblTelefoneVeiculo" scope="row">' +
@@ -63,7 +63,7 @@ function selectTblPlaca(event) {
     let placa = $(event).children('#tblPlacaVeiculo')[0]['innerText'];
     let telefone = $(event).children('#tblTelefoneVeiculo')[0]['innerText'];
 
-    $('#tblListVeiculos #tbodyListVeiculos tr').removeClass('table-light');    
+    $('#tblListVeiculos #tbodyListVeiculos tr').removeClass('table-light');
     $(event).addClass('table-light');
 
     //console.log(id);
@@ -135,7 +135,7 @@ $(document).ready(() => {
     let idVeiculo = -1;
     limparTabela(SELECTOR_VEICULO);
 
-    $('#btnCloseVeiculo').click(()=>{
+    $('#btnCloseVeiculo').click(() => {
         zerarCampos($('#inp_placaVeiculo'), $('#inp_telefoneVeiculo'));
     })
     // ======================== CRUDÃO DE VEICULOS AKI ==============================
@@ -160,10 +160,10 @@ $(document).ready(() => {
                 "placa": placa.toUpperCase(),
                 "telefone": telefone.toUpperCase()
             };
-            if (!(id> -1)){
+            if (!(id > -1)) {
                 console.log('CADASTRADO');
                 cadastrarElemento(veiculo, CAD_VEICULO_PATH);
-            }   
+            }
             else {
                 console.log('UPDATE')
                 atualizarElemento(veiculo, id, UP_VEICULO_PATH);
@@ -173,10 +173,6 @@ $(document).ready(() => {
             limparTabela(SELECTOR_VEICULO);
             listaDeElementos(SELECTOR_VEICULO, LIST_VEICULO_PATH);
         }
-    });
-    // Edição
-    $('#btnEditarVei').click(()=>{
-        
     });
     //filtar por placa
     $('#btnPesquisaVeiculoCad').click(() => {
@@ -223,13 +219,13 @@ $(document).ready(() => {
     $('#crud-func').click(() => {
         limparTabela(SELECTOR_FUNCIONARIO);
         listaDeElementos(SELECTOR_FUNCIONARIO, LIST_FUNCIONARIO_PATH);
-        zerarCampos($('#inp_nome'), $('#inp_cpf'),$('#inp_telefoneFuncionario'),$('#inp_dataDeAdimissao'),$('#inp_tipoFuncionario'),$('#inp_usuario'),$('#inp_senha'));
+        zerarCampos($('#inp_nome'), $('#inp_cpf'), $('#inp_telefoneFuncionario'), $('#inp_dataDeAdimissao'), $('#inp_tipoFuncionario'), $('#inp_usuario'), $('#inp_senha'));
     });
-    $('#btnCadastrarFuncionario').click(()=>{
-        if (!verificarCampo($('#inp_nome'), $('#inp_cpf'),$('#inp_telefoneFuncionario'),$('#inp_dataDeAdimissao'),$('#inp_tipoFuncionario'),$('#inp_usuario'),$('#inp_senha'))) {
+    $('#btnCadastrarFuncionario').click(() => {
+        if (!verificarCampo($('#inp_nome'), $('#inp_cpf'), $('#inp_telefoneFuncionario'), $('#inp_dataDeAdimissao'), $('#inp_tipoFuncionario'), $('#inp_usuario'), $('#inp_senha'))) {
             alert("Preencha todos os campos");
         } else {
-            if (!atualizarOuCadastrar){
+            if (!atualizarOuCadastrar) {
                 let funcionario = {
                     "cpf": $('#inp_cpf'),
                     "dataDeAdmissao": $('#inp_dataDeAdimissao'),
@@ -242,11 +238,11 @@ $(document).ready(() => {
                 };
                 cadastrarElemento(funcionario, CAD_FUNCIONARIO_PATH);
                 atualizarOuCadastrar = false;
-            }   
+            }
             else {
-                let resp_func = buscarElemento(idFuncionario,BUSC_FUNCIONARIO_PATH);
-                let passFunc; 
-                resp_func.then((data) =>{
+                let resp_func = buscarElemento(idFuncionario, BUSC_FUNCIONARIO_PATH);
+                let passFunc;
+                resp_func.then((data) => {
                     passFunc = data['dados']['senha']
                 });
                 let funcionario = {
@@ -286,8 +282,8 @@ function listaDeElementos(seletor, path) {
 }
 //                  FUNCIONARIO
 // Edição de Funcionario
-function solicitarAlteracaoFuncionario(elementHTML){
-    let [id,nome,cpf,telefone,dataDeAdmissao,tipoFuncionario,usuario] = [$(elementHTML).siblings('#idFuncionario').val(),$(elementHTML).siblings('#tdNome').val(),$(elementHTML).siblings('#tdCpf').val(),$(elementHTML).siblings('#tdTelefone').val(),$(elementHTML).siblings('#tdDataDeAdimissao').val(),$(elementHTML).siblings('#tdTipoFuncionario').val(),$(elementHTML).siblings('#tdUsuario').val()];
+function solicitarAlteracaoFuncionario(elementHTML) {
+    let [id, nome, cpf, telefone, dataDeAdmissao, tipoFuncionario, usuario] = [$(elementHTML).siblings('#idFuncionario').val(), $(elementHTML).siblings('#tdNome').val(), $(elementHTML).siblings('#tdCpf').val(), $(elementHTML).siblings('#tdTelefone').val(), $(elementHTML).siblings('#tdDataDeAdimissao').val(), $(elementHTML).siblings('#tdTipoFuncionario').val(), $(elementHTML).siblings('#tdUsuario').val()];
     $('#inp_nome').val(nome);
     $('#inp_cpf').val(cpf);
     $('#inp_telefoneFuncionario').val(telefone);
@@ -299,7 +295,7 @@ function solicitarAlteracaoFuncionario(elementHTML){
     atualizarOuCadastrar = true;
 }
 // Exclusão de Funcionario
-function solicitarAlteracaoStatusFuncionario(elementHTML){
+function solicitarAlteracaoStatusFuncionario(elementHTML) {
     let id = $(elementHTML).siblings('#idVeiculo').val();
     deletarElemento(id, DEL_VEICULO_PATH);
     limparTabela(SELECTOR_VEICULO);
@@ -325,15 +321,14 @@ function zerarCampos() {
         element.val("");
     }
 }
-function verificarCampo() {
+function verificarCampo(){
     console.log(arguments);
     var elements = [].slice.call(arguments);
-    let teste ;//= element.replace(/\s/g, '');
+    let teste;//= element.replace(/\s/g, '');
     for (let element of elements) {
         teste = element.val().replace(/\s/g, '');
-        if (teste === "" || teste === "null") {
+        if (teste === "" || teste === "null")
             return false;
-        }
+        
     }
-    return true;
 }
