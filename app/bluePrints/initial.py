@@ -10,14 +10,16 @@ def root():
     return render_template('home.html')
 
 
+@app.route('/OrdemDeServico/EnviaInfo/<string:id_os>', methods=['GET'])
+#@login_required
+def root_envia_info_ordemDeServico(id_os):
+    return render_template('ordemDeServico.html', id_os_route=id_os)
+
+
 @app.route('/OrdemDeServico', methods=['GET'])
 #@login_required
 def root_ordemDeServico():
     return render_template('ordemDeServico.html')
-
-# @app.route('/RelOrdemDeServico', methods=['GET'])
-# def root_rel_ordemDeServico():
-#     return render_template('rel_ordemDeServico.html')
 
 
 @app.route('/Mecanico', methods=['GET'])

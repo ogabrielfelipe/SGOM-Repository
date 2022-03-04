@@ -8,9 +8,7 @@ Home
 
 <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='js/template.js')}}">
-{% endblock %}
-
-{%block script%}
+{% endblock %} {%block script%}
 
 
 {%endblock%}
@@ -22,6 +20,7 @@ Home
 </div>
 
 <div id="dashboard">
+  {% if current_user.tipoFuncionario == 0 %}
     <div class="aguardando-aprovacao" id="aguardando_aprovacao_dashboard" onclick="chamaModal(this)">
         <span>
             Aguardando Aprovação
@@ -30,6 +29,7 @@ Home
             00
         </span>
     </div>
+  {% endif %}
     <div class="finalizadas" id="finalizadas_dashboard" onclick="chamaModal(this)">
         <span>
             Finalizadas
