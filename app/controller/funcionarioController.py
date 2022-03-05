@@ -5,7 +5,6 @@ from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from ..model.ItemOrcamento import db
-from flask_jwt_extended import create_access_token, create_refresh_token
 from validate_docbr import CPF
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import current_user, login_user, logout_user
