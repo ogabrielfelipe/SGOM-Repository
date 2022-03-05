@@ -6,7 +6,8 @@ from ..controller.funcionarioController import (
     busca_funcionarios,
     busca_funcionario,
     funcionario_username_like,
-    inativa_funcionario
+    inativa_funcionario,
+    atualiza_status_funcionario
 )
 from datetime import datetime
 from datetime import timezone, timedelta
@@ -66,3 +67,9 @@ def alter_funcionario(codigo):
 #@login_required
 def inativa_route_funcionario(codigo):
     return inativa_funcionario(codigo, current_user.id)
+
+
+@func.route('/Funcionario/Ativar/<int:codigo>', methods=['PATCH'])
+#@login_required
+def ativa_route_funcionario(codigo):
+    return atualiza_status_funcionario(codigo)

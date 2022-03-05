@@ -57,7 +57,6 @@ def atualiza_funcionario(id):
         valid_cpf = CPF()
         cpf = valid_cpf.validate(resp['cpf'])
         try:
-            dataA = datetime.strptime(resp['dataA'], '%Y-%m-%d').date()
             if cpf:
                 try:
                     funcionario.usuario = usuario
@@ -77,6 +76,21 @@ def atualiza_funcionario(id):
         except Exception as e:
             return jsonify({'msg': 'Data inválido', 'dados': {}, 'error': str(e)}), 401
 
+
+def atualiza_status_funcionario(id):
+    funcionario = busca_funcionario(id)
+    if funcionario:
+        resp = request.get_json()
+        status = bool(resp['status'])
+        if status == 0:
+            try:
+                funcionario.status = status
+                db.session.commit()
+                return jsonify({'msg': 'Usuário ativado com sucesso'}), 200
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({'msg': 'Não foi possível ativar'}), 500
+    
 
 def busca_funcionarios():
     func = Funcionario.query.all()
