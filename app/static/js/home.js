@@ -1,6 +1,10 @@
 $(document).ready(function (){
     competenciaHome = $('#dataIdFiltroHome').val()
     atualizaHome(competenciaHome);
+    
+    setInterval(function (){
+        atualizaHome(competenciaHome)
+    }, 30000);
 
     $('#btn_filtro_home').click(() =>{
         competenciaHome = $('#dataIdFiltroHome').val()
@@ -90,6 +94,7 @@ function abreOS(id){
 
 
 function atualizaHome(competencia){
+    console.log('Fui Chamado');
     entry = {
         "competencia": competencia 
     }

@@ -21,75 +21,130 @@ Home
 </div>
 
 <div id="dashboard">
+
+
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aguardando_aprovacao_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aguardando_aprovacao_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Aguardando Aprovação</h5>
+        
+          <span class="contador" id="cont_aguardando_aprovacao">
+            0
+          </span>
+      </div>
+    </div>
   
-    <div class="aguardando-aprovacao" id="aguardando_aprovacao_dashboard" onclick="chamaModal(this)">
-        <span>
-            Aguardando Aprovação
-        </span>
-        <span class="contador" id="cont_aguardando_aprovacao">
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="finalizadas_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_finalizadas_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Finalizadas</h5>
+        
+          <span class="contador" id="cont_finalizadas">
             0
-        </span>
+          </span>
+      </div>
     </div>
 
-    <div class="finalizadas" id="finalizadas_dashboard" onclick="chamaModal(this)">
-        <span>
-            Finalizadas
-        </span>
-        <span class="contador" id="cont_finalizadas">
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aguardando_pagamento_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aguardando_pagamento_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Aguardando Pagamento</h5>
+        
+          <span class="contador" id="cont_aguardando_pagamento">
             0
-        </span>
+          </span>
+      </div>
     </div>
-    <div class="aguardando-pagamento" id="aguardando_pagamento_dashboard" onclick="chamaModal(this)">
-        <span>
-            Aguardando Pagamento
-        </span>
-        <span class="contador" id="cont_aguardando_pagamento">
+
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aguardando_atendimento_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aguardando_atendimento_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Aguardando Atendimento</h5>
+        
+          <span class="contador" id="cont_aguardando_atendimento">
             0
-        </span>
+          </span>
+      </div>
     </div>
-    <div class="aguardando-atendimento" id="aguardando_atendimento_dashboard" onclick="chamaModal(this)">
-        <span>
-            Aguardando Atendimento
-        </span>
-        <span class="contador" id="cont_aguardando_atendimento">
+
+
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aceita_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aceita_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Ordens de Serviços Aceitas</h5>
+        
+          <span class="contador" id="cont_aceita">
             0
-        </span>
+          </span>
+      </div>
     </div>
 
-    <div class="aguardando-atendimento" id="aceita_dashboard" onclick="chamaModal(this)">
-      <span>
-          Ordens de Serviços Aceitas
-      </span>
-      <span class="contador" id="cont_aceita">
-          0
-      </span>
+
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aprovadas_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aprovadas_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Ordens de Serviços Aprovadas</h5>
+        
+          <span class="contador" id="cont_aprovadas">
+            0
+          </span>
+      </div>
     </div>
 
-    <div class="aguardando-atendimento" id="aprovadas_dashboard" onclick="chamaModal(this)">
-      <span>
-          Ordens de Serviços Aprovadas
-      </span>
-      <span class="contador" id="cont_aprovadas">
-          0
-      </span>
+
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="ematendimento_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_ematendimento_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Ordens de Serviços Em Atendimento</h5>
+        
+          <span class="contador" id="cont_ematendimento">
+            0
+          </span>
+      </div>
     </div>
 
-    <div class="aguardando-atendimento" id="ematendimento_dashboard" onclick="chamaModal(this)">
-      <span>
-          Ordens de Serviços Em Atendimento
-      </span>
-      <span class="contador" id="cont_ematendimento">
-          0
-      </span>
-    </div>
-
-    <div class="aguardando-atendimento" id="canceladas_dashboard" onclick="chamaModal(this)">
-      <span>
-          Ordens de Serviços Canceladas
-      </span>
-      <span class="contador" id="cont_canceladas">
-          0
-      </span>
+    
+    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="canceladas_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+      <div class="card-body">
+        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_canceladas_dashboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+          </svg>
+        </div>
+        <h5 class="card-title">Ordens de Serviços Canceladas</h5>
+        
+          <span class="contador" id="cont_canceladas">
+            0
+          </span>
+      </div>
     </div>
 
 
