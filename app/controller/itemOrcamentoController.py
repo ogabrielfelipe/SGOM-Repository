@@ -34,6 +34,7 @@ def altera_itemOrcamento(id):
     else:
         return jsonify({'msg': 'Item não encontrado', 'dados': {}, 'error': str(e)}), 404        
 
+
 def excluir_itemOrcamento(id):
     item = ItemOrcamento.query.get(id)
     if item:
@@ -43,9 +44,10 @@ def excluir_itemOrcamento(id):
             return jsonify({'msg': 'Excluido com sucesso', 'dados': itemOrcamento_schema.dump(item)}), 200
         except Exception as e:
             db.session.rollback()
-            return jsonify('msg': 'Não foi possivel excluir', 'dados': {}, 'error': str(e)}), 500
+            return jsonify({'msg': 'Não foi possivel excluir', 'dados': {}, 'error': str(e)}), 500
     else:
         return jsonify({'msg': 'Item não encontrado', 'dados': {}, 'error': str(e)}), 404  
+
 
 def buscar_todos():
     try:
@@ -54,6 +56,3 @@ def buscar_todos():
     except Exception as e:
         db.session.rollback()
         return jsonify({'msg': 'Não foi possivel efetuar a busca', 'dados': {}, 'error': str(e)}), 500
-
-
-
