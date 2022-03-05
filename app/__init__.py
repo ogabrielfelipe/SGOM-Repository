@@ -54,7 +54,7 @@ def my_on_connect(dbapi_con, connection_record):
 with app.app_context():
     ItemOrcamento.db.create_all()
     try:
-        func = Funcionario.Funcionario(nome='Master', user='master', senha=  generate_password_hash('master1'), cpf='0', tel='0', 
+        func = Funcionario.Funcionario(nome='Master', user='master', senha=generate_password_hash('master1'), cpf='0', tel='0', 
                         dataA=datetime.strptime('1900-01-01', '%Y-%m-%d').date(), tFunc=0,status=False)
         ItemOrcamento.db.session.add(func)
         ItemOrcamento.db.session.commit()

@@ -13,7 +13,9 @@ from ..controller.ordemDeServicoController import (
     relatorio_ordemDeServico,
     busca_personalizada_ordemDeServico,
     relatorio_financeiro,
-    altera_orcamento_ordemDeServico
+    altera_orcamento_ordemDeServico, 
+    total_ordemDeServico_status, 
+    busca_os_status_home
 )
 
 ordem = Blueprint('ordem', __name__)
@@ -83,3 +85,15 @@ def busca_route_ordemDeServico():
 #@login_required
 def relatorio_route_financeiro():
     return relatorio_financeiro()
+
+
+@ordem.route('/OrdemDeServico/Home/Totais', methods=['POST'])
+#@login_required
+def total_os_route():
+    return total_ordemDeServico_status()
+
+
+@ordem.route('/OrdemDeServico/Home/BuscaOS', methods=['POST'])
+#@login_required
+def busca_os_home():
+    return busca_os_status_home()

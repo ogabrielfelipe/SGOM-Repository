@@ -433,3 +433,50 @@ def populate_dict(cursor, schema):
                 colindex += 1
 
     return schema
+
+
+def total_ordemDeServico_status():
+    resp = request.get_json()
+    competencia = resp['competencia']  
+    competenciaTratada = calcula_intervalo_mes(competencia=competencia)
+    try:
+
+        sql_totalos = text(f"SELECT DISTINCT o.status as status_os, COUNT(DISTINCT o.id) as total_os FROM ordemDeServico as o\
+                                INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
+                                WHERE \
+                                    rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}'\
+                                GROUP BY\
+                                    O.status\
+                                HAVING o.status IN ('FINALIZADA', 'EMATENDIMENTO', 'EMABERTO', 'ACEITA', 'AGUARDANDOAPROVACAO', 'APROVADA',\
+                                'AGUARDANDOPAGAMENTO', 'CANCELADO')\
+                                ")
+
+        consultatotalOS = db.session.execute(sql_totalos).fetchall()
+        consultatotalOS_dict = [dict(u) for u in consultatotalOS]
+        return jsonify(consultatotalOS_dict), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'msg': 'Não foi possível efetuar a busca', 'dados': {}, 'error': str(e)}), 401
+
+
+def busca_os_status_home():
+    resp = request.get_json()
+    competencia = resp['competencia']
+    status = resp['status']
+    competenciaTratada = calcula_intervalo_mes(competencia=competencia)
+    try:
+        sql_totalos = text(f"SELECT o.id, c.placa, o.nomeRequerente, o.telefoneRequerente FROM ordemDeServico o\
+                            INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
+                            INNER JOIN carro c on c.id = o.carro\
+                            WHERE o.status = '{status}' AND rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}'\
+                            GROUP BY\
+                                o.id\
+                                ")
+
+        consultatotalOS = db.session.execute(sql_totalos).fetchall()
+        consultatotalOS_dict = [dict(u) for u in consultatotalOS]
+        return jsonify(consultatotalOS_dict), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'msg': 'Não foi possível efetuar a busca', 'dados': {}, 'error': str(e)}), 401
+        
