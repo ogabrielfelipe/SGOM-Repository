@@ -125,7 +125,7 @@ def autentica_funcionario():
     if not funcionario:
             return jsonify({'msg': 'Usuário não encontrado'}), 404
 
-    if funcionario.status == False: #Verifica se o status do profissional está desativado
+    if funcionario.status == True: #Verifica se o status do profissional está desativado
         return jsonify({'msg': 'Usuário Inativado'}), 403
   
 
