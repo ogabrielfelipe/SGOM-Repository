@@ -20,7 +20,7 @@
 }
 
 
-#btn-filtro{
+#btn_filtro_home{
     position: relative;
     width: 123px;
     height: 29px;
@@ -36,7 +36,7 @@
     border-radius: 5px;
 }
 
-#btn-filtro:active{
+#btn_filtro_home:active{
     position: relative;
     width: 120px;
     height: 25px;

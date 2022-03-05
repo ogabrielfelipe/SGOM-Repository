@@ -1,4 +1,9 @@
 $(document).ready(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const IdOS_Home = urlParams.get('OS');
+    console.log(IdOS_Home)
+
+
     $('#CPFR').mask('999.999.999-99')
     $('#TELR').mask('(99) 99999-9999')
 
