@@ -17,46 +17,49 @@ function chamaModal(event){
     competenciaHome = $('#dataIdFiltroHome').val()
 
     if (event.id == 'aguardando_aprovacao_dashboard') {
-        atualizaTableHome(competenciaHome, 'AGUARDANDOAPROVACAO')
-        $('#title_Model_Home').text('Ordens de Serviço Aguardando Aprovação')
+        $('#bell_aguardando_aprovacao_dashboard').css({"display": "none"});
+        atualizaTableHome(competenciaHome, 'AGUARDANDOAPROVACAO');
+        $('#title_Model_Home').text('Ordens de Serviço Aguardando Aprovação');
 
     }else if (event.id == 'finalizadas_dashboard'){
+        $('#bell_finalizadas_dashboard').css({"display": "none"});
         $('#title_Model_Home').text('Ordens de Serviço Finalizadas')
         atualizaTableHome(competenciaHome, 'FINALIZADA')
 
     }else if (event.id == 'aguardando_atendimento_dashboard'){
+        $('#bell_aguardando_atendimento_dashboard').css({"display": "none"});
         $('#title_Model_Home').text('Ordens de Serviço Aguardando Atendimento')
         atualizaTableHome(competenciaHome, 'EMABERTO')
 
     }else if (event.id == 'aguardando_pagamento_dashboard'){
+        $('#bell_aguardando_pagamento_dashboard').css({"display": "none"});
         $('#title_Model_Home').text('Ordens de Serviço Aguardando pagamento')
         atualizaTableHome(competenciaHome, 'AGUARDANDOPAGAMENTO')
 
     }else if (event.id == 'aceita_dashboard'){
+        $('#bell_aceita_dashboard').css({"display": "none"});
         $('#title_Model_Home').text('Ordens de Serviço Aceitas')
         atualizaTableHome(competenciaHome, 'ACEITA')
 
     }else if (event.id == 'aprovadas_dashboard'){
+        $('#bell_aprovadas_dashboard').css({"display": "none"});
         $('#title_Model_Home').text('Ordens de Serviço Aprovadas')
         atualizaTableHome(competenciaHome, 'APROVADA')
 
     }else if (event.id == 'ematendimento_dashboard'){
+        $('#bell_ematendimento_dashboard').css({"display": "none"});
         $('#title_Model_Home').text('Ordens de Serviço Em Atendimento')
         atualizaTableHome(competenciaHome, 'EMATENDIMENTO')
 
     }else if (event.id == 'canceladas_dashboard'){
+        $('#bell_canceladas_dashboard').css({"display": "none"});
         $('#title_Model_Home').text('Ordens de Serviço Canceladas')
         atualizaTableHome(competenciaHome, 'CANCELADO')
 
     }
 
-
-
     $('#modal_dashboard').modal('show');
-
     
-
-
 }
 
 function atualizaTableHome(competencia, status){
@@ -109,8 +112,11 @@ function atualizaHome(competencia){
             $('#cont_aprovadas').text('0');
             $('#cont_ematendimento').text('0');
             $('#cont_canceladas').text('0');
-        }else{
-            $(dados).each(function(){
+        }else{    
+
+            dados_localStorage = JSON.parse(localStorage.getItem('quant_home'));
+
+            $(dados_localStorage).each(function(){
                 if (this.status_os == 'FINALIZADA'){
                     $('#cont_finalizadas').text(this.total_os);
                 }
@@ -137,6 +143,67 @@ function atualizaHome(competencia){
                 }
             });
 
+            var total_anterior_finalizadas = $('#cont_finalizadas').text();
+            var total_anterior_atendimento = $('#cont_aguardando_atendimento').text();
+            var total_anterior_aguardando_aprovacao = $('#cont_aguardando_aprovacao').text();
+            var total_anterior_aguardando_pagamento = $('#cont_aguardando_pagamento').text();
+            var total_anterior_aceita = $('#cont_aceita').text();
+            var total_anterior_aprovadas = $('#cont_aprovadas').text();
+            var total_anterior_ematendimento = $('#cont_ematendimento').text();
+            var total_anterior_canceladas = $('#cont_canceladas').text();
+            for (var i = 0; i < dados.length; i++){
+                switch (dados[i]['status_os']){
+                    case 'ACEITA':
+                        if (total_anterior_aceita < dados[i]['total_os']){
+                            $('#cont_aceita').text(dados[i]['total_os']);
+                            $('#bell_aceita_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                    case 'FINALIZADA':
+                        if (total_anterior_finalizadas < dados[i]['total_os']){
+                            $('#cont_finalizadas').text(dados[i]['total_os']);
+                            $('#bell_finalizadas_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                    case 'EMABERTO':
+                        if (total_anterior_atendimento < dados[i]['total_os']){
+                            $('#cont_aguardando_atendimento').text(dados[i]['total_os']);
+                            $('#bell_aguardando_atendimento_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                    case 'AGUARDANDOAPROVACAO':
+                        if (total_anterior_aguardando_aprovacao < dados[i]['total_os']){
+                            $('#cont_aguardando_aprovacao').text(dados[i]['total_os']);
+                            $('#bell_aguardando_aprovacao_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                    case 'AGUARDANDOPAGAMENTO':
+                        if (total_anterior_aguardando_pagamento < dados[i]['total_os']){
+                            $('#cont_aguardando_pagamento').text(dados[i]['total_os']);
+                            $('#bell_aguardando_pagamento_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                    case 'APROVADA':
+                        if (total_anterior_aprovadas < dados[i]['total_os']){
+                            $('#cont_aprovadas').text(dados[i]['total_os']);
+                            $('#bell_aprovadas_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                    case 'EMATENDIMENTO':
+                        if (total_anterior_ematendimento < dados[i]['total_os']){
+                            $('#cont_ematendimento').text(dados[i]['total_os']);
+                            $('#bell_ematendimento_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                    case 'CANCELADO':
+                        if (total_anterior_canceladas < dados[i]['total_os']){
+                            $('#cont_canceladas').text(dados[i]['total_os']);
+                            $('#bell_canceladas_dashboard').css({"display": "flex"});
+                        }
+                    break;
+                }
+            } 
+            localStorage.setItem('quant_home', JSON.stringify(dados));
         }        
     });
 }
