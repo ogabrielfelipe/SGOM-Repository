@@ -174,8 +174,7 @@ $(document).ready(()=>{
                 $('#mecanicoRel').text(dadosOrdemDeServico['mecanico']);                
                 for(var i = 0; i < dadosRegistroDeServico.length; i++){      
                     let valAuxStatus = dadosRegistroDeServico[i]['status']  
-                    if (valAuxStatus === 'EMABERTO'){     
-                        console.log(dadosRegistroDeServico[i]['data_alteracao'])                          
+                    if (valAuxStatus === 'EMABERTO'){                            
                         $('#dataA').text(dadosRegistroDeServico[i]['data_alteracao']);
                     }                    
                 }
@@ -184,7 +183,6 @@ $(document).ready(()=>{
                 for(var i = 0; i < dadosRegistroDeServico.length; i++){      
                     let valAuxStatus = dadosRegistroDeServico[i]['status']         
                     if (valAuxStatus === 'FINALIZADA'){   
-                        console.log(dadosRegistroDeServico[i]['data_alteracao'])
                         $('#dataF').text(dadosRegistroDeServico[i]['data_alteracao']);   
                     }                    
                 }
