@@ -55,7 +55,7 @@ with app.app_context():
     ItemOrcamento.db.create_all()
     try:
         func = Funcionario.Funcionario(nome='Master', user='master', senha=generate_password_hash('master1'), cpf='0', tel='0', 
-                        dataA=datetime.strptime('1900-01-01', '%Y-%m-%d').date(), tFunc=0,status=False)
+                        dataA=datetime.strptime('1900-01-01', '%Y-%m-%d').date(), tFunc=0,status=True)
         ItemOrcamento.db.session.add(func)
         ItemOrcamento.db.session.commit()
     except Exception as e:
