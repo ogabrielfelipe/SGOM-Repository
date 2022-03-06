@@ -28,7 +28,7 @@ def abre_ordemDeServico():
 
 
 @ordem.route('/OrdemDeServico/Alterar/<int:codigo>', methods=['POST'])
-#@login_required
+@login_required
 def altera_route_financeiro(codigo):
     return altera_orcamento_ordemDeServico(codigo, current_user.id)
 
@@ -70,30 +70,30 @@ def finaliza_ordemDeServico(codigo):
     
 
 @ordem.route('/OrdemDeServico/Relatorio/OrdemDeServico', methods=['POST'])
-#@login_required
+@login_required
 def relatorio_route_ordemDeServico():
     return relatorio_ordemDeServico()
 
 
 @ordem.route('/OrdemDeServico/BuscaPersonalizada', methods=['POST'])
-#@login_required
+@login_required
 def busca_route_ordemDeServico():
     return busca_personalizada_ordemDeServico()
     
 
 @ordem.route('/OrdemDeServico/Relatorio/Financeiro', methods=['POST'])
-#@login_required
+@login_required
 def relatorio_route_financeiro():
     return relatorio_financeiro()
 
 
 @ordem.route('/OrdemDeServico/Home/Totais', methods=['POST'])
-#@login_required
+@login_required
 def total_os_route():
     return total_ordemDeServico_status()
 
 
 @ordem.route('/OrdemDeServico/Home/BuscaOS', methods=['POST'])
-#@login_required
+@login_required
 def busca_os_home():
     return busca_os_status_home()

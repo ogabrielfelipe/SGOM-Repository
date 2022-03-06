@@ -79,11 +79,9 @@ def atualiza_funcionario(id):
 def atualiza_status_funcionario(id):
     funcionario = busca_funcionario(id)
     if funcionario:
-        resp = request.get_json()
-        status = bool(resp['status'])
-        if status == 0:
+        if funcionario.status == False:
             try:
-                funcionario.status = status
+                funcionario.status = True
                 db.session.commit()
                 return jsonify({'msg': 'Usuário ativado com sucesso'}), 200
             except Exception as e:
@@ -153,7 +151,7 @@ def inativa_funcionario(id, funcionario):
             ordem.mecanico = None
             db.session.add(regis)
             db.session.commit()
-        func.status = 0
+        func.status = False
         db.session.commit()
         return jsonify({'msg': 'Inativado com sucesso'}), 200
     except Exception as e:
