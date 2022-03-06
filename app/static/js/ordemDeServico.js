@@ -1,9 +1,8 @@
 $(document).ready(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const IdOS_Home = urlParams.get('OS');
+    var IdOS_Home = urlParams.get('OS');
     console.log(IdOS_Home)
 
-    
 
     // função carrega OS da HOME
     entry = {
@@ -12,80 +11,106 @@ $(document).ready(() => {
         "status": ''
     }
 
-    Envia(entry, '/OrdemDeServico/BuscaPersonalizada', 'POST')
-        .then((data) => {
-        response = data['dados']
-        console.log(response[0])
-        document.getElementById("PlacaOSf").value = response[0]['carro']
-        document.querySelector("#PlacaOSf").disabled = true;
-        document.getElementById("nomeRequerente").value = response[0]['nomeRequerente']
-        document.querySelector("#nomeRequerente").disabled = true;
-        document.getElementById("CPFR").value = response[0]['cpfDoRequerente']
-        document.querySelector("#CPFR").disabled = true;
-        document.getElementById("TELR").value = response[0]['telefoneRequerente']
-        document.querySelector("#TELR").disabled = true;
-        document.getElementById("floatingSelect").value = response[0]['requisicaoOrcamento']
-        document.querySelector("#floatingSelect").disabled = true;
-        document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
-        document.querySelector("#exampleFormControlTextarea1").disabled = true;
-        document.querySelector("#btn-salvar").disabled = true;
 
-        var dadosEstado = response[0]['estadoAtualDoVeiculo'];
-        console.log(dadosEstado)
-        var dadosEstadoJ = JSON.parse(dadosEstado);
-        console.log(dadosEstadoJ)
+    if (IdOS_Home != null) {
+        Envia(entry, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+            .then((data) => {
+                response = data['dados']
+                console.log(response[0]['status'])                
+                if (response[0]['status'] == "EMABERTO") {
+                    Envia({}, '/OrdemDeServico/Aceita/'+ response[0]['id_os'], 'POST');
+                }
+                console.log(response[0])
+                document.getElementById("PlacaOSf").value = response[0]['carro']
+                document.querySelector("#PlacaOSf").disabled = true;
+                document.getElementById("nomeRequerente").value = response[0]['nomeRequerente']
+                document.querySelector("#nomeRequerente").disabled = true;
+                document.getElementById("CPFR").value = response[0]['cpfDoRequerente']
+                document.querySelector("#CPFR").disabled = true;
+                document.getElementById("TELR").value = response[0]['telefoneRequerente']
+                document.querySelector("#TELR").disabled = true;
+                document.getElementById("floatingSelect").value = response[0]['requisicaoOrcamento']
+                document.querySelector("#floatingSelect").disabled = true;
+                document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
+                document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                document.querySelector("#btn-salvar").disabled = true;
+                
+                var statusOs = response[0]['status'];
+                
+                console.log(response[0]['status'])                
+                var auxa = { "id": response[0]['id_os'],
+                "nomeRequerente": '',
+                "status": ''}
+                Envia(auxa, 'OrdemDeServico/BuscaPersonalizada','POST')
+                    .then((data) => {
+                        console.log(data['dados'][0]['status'])
+                        if (data['dados'][0]['status'] == "ACEITA") {
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                        }
+                    });
+                console.log(statusOs)
+                
 
-        document.getElementById("pinturaEstado").value = dadosEstadoJ[0]['estado']
-        document.getElementById("pinturaObs").value = dadosEstadoJ[0]['obs']
-        
-        document.getElementById("latariaEstado").value = dadosEstadoJ[1]['estado']
-        document.getElementById("latariaObs").value = dadosEstadoJ[1]['obs']
-        
-        document.getElementById("pneuEstado").value = dadosEstadoJ[2]['estado']
-        document.getElementById("pneuObs").value = dadosEstadoJ[2]['obs']
-        
-        document.getElementById("vidroEstado").value = dadosEstadoJ[3]['estado']
-        document.getElementById("vidroObs").value = dadosEstadoJ[3]['obs']
-        
-        document.getElementById("parachoqueEstado").value = dadosEstadoJ[4]['estado']
-        document.getElementById("parachoqueObs").value = dadosEstadoJ[4]['obs']
-        
-        document.getElementById("lanternaEstado").value = dadosEstadoJ[5]['estado']
-        document.getElementById("lanternaObs").value = dadosEstadoJ[5]['obs']
-        
-        document.getElementById("interiorEstado").value = dadosEstadoJ[6]['estado']
-        document.getElementById("interiorObs").value = dadosEstadoJ[6]['obs']
-        
-        document.getElementById("funcionamentoEstado").value = dadosEstadoJ[7]['estado']
-        document.getElementById("funcionamentoObs").value = dadosEstadoJ[7]['obs']
-        //
-        // disabled estado veiculo
-        //
-        document.getElementById("pinturaEstado").disabled = true;
-        document.getElementById("pinturaObs").disabled = true;
 
-        document.getElementById("latariaEstado").disabled = true;
-        document.getElementById("latariaObs").disabled = true;
-        
-        document.getElementById("pneuEstado").disabled = true;
-        document.getElementById("pneuObs").disabled = true;
-        
-        document.getElementById("vidroEstado").disabled = true;
-        document.getElementById("vidroObs").disabled = true;
-        
-        document.getElementById("parachoqueEstado").disabled = true;
-        document.getElementById("parachoqueObs").disabled = true;
-        
-        document.getElementById("lanternaEstado").disabled = true;
-        document.getElementById("lanternaObs").disabled = true;
-        
-        document.getElementById("interiorEstado").disabled = true;
-        document.getElementById("interiorObs").disabled = true;
-        
-        document.getElementById("funcionamentoEstado").disabled = true;
-        document.getElementById("funcionamentoObs").disabled = true;
-    });
+                var dadosEstado = response[0]['estadoAtualDoVeiculo'];
+                console.log(dadosEstado)
+                var dadosEstadoJ = JSON.parse(dadosEstado);
+                console.log(dadosEstadoJ)
 
+                document.getElementById("pinturaEstado").value = dadosEstadoJ[0]['estado']
+                document.getElementById("pinturaObs").value = dadosEstadoJ[0]['obs']
+
+                document.getElementById("latariaEstado").value = dadosEstadoJ[1]['estado']
+                document.getElementById("latariaObs").value = dadosEstadoJ[1]['obs']
+
+                document.getElementById("pneuEstado").value = dadosEstadoJ[2]['estado']
+                document.getElementById("pneuObs").value = dadosEstadoJ[2]['obs']
+
+                document.getElementById("vidroEstado").value = dadosEstadoJ[3]['estado']
+                document.getElementById("vidroObs").value = dadosEstadoJ[3]['obs']
+
+                document.getElementById("parachoqueEstado").value = dadosEstadoJ[4]['estado']
+                document.getElementById("parachoqueObs").value = dadosEstadoJ[4]['obs']
+
+                document.getElementById("lanternaEstado").value = dadosEstadoJ[5]['estado']
+                document.getElementById("lanternaObs").value = dadosEstadoJ[5]['obs']
+
+                document.getElementById("interiorEstado").value = dadosEstadoJ[6]['estado']
+                document.getElementById("interiorObs").value = dadosEstadoJ[6]['obs']
+
+                document.getElementById("funcionamentoEstado").value = dadosEstadoJ[7]['estado']
+                document.getElementById("funcionamentoObs").value = dadosEstadoJ[7]['obs']
+                //
+                // disabled estado veiculo
+                //
+                document.getElementById("pinturaEstado").disabled = true;
+                document.getElementById("pinturaObs").disabled = true;
+
+                document.getElementById("latariaEstado").disabled = true;
+                document.getElementById("latariaObs").disabled = true;
+
+                document.getElementById("pneuEstado").disabled = true;
+                document.getElementById("pneuObs").disabled = true;
+
+                document.getElementById("vidroEstado").disabled = true;
+                document.getElementById("vidroObs").disabled = true;
+
+                document.getElementById("parachoqueEstado").disabled = true;
+                document.getElementById("parachoqueObs").disabled = true;
+
+                document.getElementById("lanternaEstado").disabled = true;
+                document.getElementById("lanternaObs").disabled = true;
+
+                document.getElementById("interiorEstado").disabled = true;
+                document.getElementById("interiorObs").disabled = true;
+
+                document.getElementById("funcionamentoEstado").disabled = true;
+                document.getElementById("funcionamentoObs").disabled = true;
+            });
+
+
+    }
 
     document.querySelector("#button-addon2").disabled = true;
     document.querySelector("#PlacaOSf").disabled = true;
@@ -118,6 +143,10 @@ $(document).ready(() => {
 
 
     $('#btn-novo').click(function () {
+        document.getElementById("btnFazerOrcamento").style.visibility = "hidden";
+        document.getElementById("custoMecanico").style.visibility = "hidden";
+
+        IdOS_Home = null;
         console.log('botão acionado');
         $('#formulario input ').val('');
         $('#formulario textarea ').val('');
@@ -137,22 +166,22 @@ $(document).ready(() => {
 
         document.getElementById("latariaEstado").disabled = false;
         document.getElementById("latariaObs").disabled = false;
-        
+
         document.getElementById("pneuEstado").disabled = false;
         document.getElementById("pneuObs").disabled = false;
-        
+
         document.getElementById("vidroEstado").disabled = false;
         document.getElementById("vidroObs").disabled = false;
-        
+
         document.getElementById("parachoqueEstado").disabled = false;
         document.getElementById("parachoqueObs").disabled = false;
-        
+
         document.getElementById("lanternaEstado").disabled = false;
         document.getElementById("lanternaObs").disabled = false;
-        
+
         document.getElementById("interiorEstado").disabled = false;
         document.getElementById("interiorObs").disabled = false;
-        
+
         document.getElementById("funcionamentoEstado").disabled = false;
         document.getElementById("funcionamentoObs").disabled = false;
 
@@ -163,28 +192,31 @@ $(document).ready(() => {
 
         document.getElementById("latariaEstado").value = "EXCELENTE";
         document.getElementById("latariaObs").value = "";
-        
+
         document.getElementById("pneuEstado").value = "EXCELENTE";
         document.getElementById("pneuObs").value = "";
-        
+
         document.getElementById("vidroEstado").value = "EXCELENTE";
         document.getElementById("vidroObs").value = "";
-        
+
         document.getElementById("parachoqueEstado").value = "EXCELENTE";
         document.getElementById("parachoqueObs").value = "";
-        
+
         document.getElementById("lanternaEstado").value = "EXCELENTE";
         document.getElementById("lanternaObs").value = "";
-        
+
         document.getElementById("interiorEstado").value = "EXCELENTE";
         document.getElementById("interiorObs").value = "";
-        
+
         document.getElementById("funcionamentoEstado").value = "EXCELENTE";
         document.getElementById("funcionamentoObs").value = "";
 
     });
 
     $('#btn-cancelar').click(function () {
+        document.getElementById("btnFazerOrcamento").style.visibility = "hidden";
+        document.getElementById("custoMecanico").style.visibility = "hidden";
+        IdOS_Home = null;
         console.log('botão acionado');
         $('#formulario input ').val('');
         $('#formulario textarea ').val('');
@@ -203,22 +235,22 @@ $(document).ready(() => {
 
         document.getElementById("latariaEstado").disabled = false;
         document.getElementById("latariaObs").disabled = false;
-        
+
         document.getElementById("pneuEstado").disabled = false;
         document.getElementById("pneuObs").disabled = false;
-        
+
         document.getElementById("vidroEstado").disabled = false;
         document.getElementById("vidroObs").disabled = false;
-        
+
         document.getElementById("parachoqueEstado").disabled = false;
         document.getElementById("parachoqueObs").disabled = false;
-        
+
         document.getElementById("lanternaEstado").disabled = false;
         document.getElementById("lanternaObs").disabled = false;
-        
+
         document.getElementById("interiorEstado").disabled = false;
         document.getElementById("interiorObs").disabled = false;
-        
+
         document.getElementById("funcionamentoEstado").disabled = false;
         document.getElementById("funcionamentoObs").disabled = false;
         // limpar estado do veiculo
@@ -228,22 +260,22 @@ $(document).ready(() => {
 
         document.getElementById("latariaEstado").value = "EXCELENTE";
         document.getElementById("latariaObs").value = "";
-        
+
         document.getElementById("pneuEstado").value = "EXCELENTE";
         document.getElementById("pneuObs").value = "";
-        
+
         document.getElementById("vidroEstado").value = "EXCELENTE";
         document.getElementById("vidroObs").value = "";
-        
+
         document.getElementById("parachoqueEstado").value = "EXCELENTE";
         document.getElementById("parachoqueObs").value = "";
-        
+
         document.getElementById("lanternaEstado").value = "EXCELENTE";
         document.getElementById("lanternaObs").value = "";
-        
+
         document.getElementById("interiorEstado").value = "EXCELENTE";
         document.getElementById("interiorObs").value = "";
-        
+
         document.getElementById("funcionamentoEstado").value = "EXCELENTE";
         document.getElementById("funcionamentoObs").value = "";
     });
@@ -251,6 +283,7 @@ $(document).ready(() => {
     $('#btnSelecionarf').click(() => {
         $('#CampoPlacaPesquisa').val($('#placaAux').val());
         $('#PlacaOSf').val($('#placaAux').val());
+
 
     });
 
@@ -300,7 +333,24 @@ $(document).ready(() => {
         }
 
     });
+
+    $('#btnFazerOrcamento').click(function () {
+
+        Envia({}, '/ItemOrcamento/BuscarTodos', 'POST')
+            .then((dados) => {
+                $('#selectItemValor option').remove();
+                $(dados['dados']).each(function () {
+                    $('#selectItemValor').append(
+                        ' <option class="bg-dark text-white" value="' + this.id + '">' + this.nome + '</option>'
+                    )
+                })
+            })
+
+    });
+
 });
+
+
 
 function selectTablePlaca(event) {
     var id = $(event).children('#identificador')[0]['innerText'];
@@ -420,77 +470,83 @@ $('#btnSelecionarOs').click(() => {
     }
     Envia(entry, '/OrdemDeServico/BuscaPersonalizada', 'POST')
         .then((data) => {
-        response = data['dados']
-        console.log(response[0])
-        document.getElementById("PlacaOSf").value = response[0]['carro']
-        document.querySelector("#PlacaOSf").disabled = true;
-        document.getElementById("nomeRequerente").value = response[0]['nomeRequerente']
-        document.querySelector("#nomeRequerente").disabled = true;
-        document.getElementById("CPFR").value = response[0]['cpfDoRequerente']
-        document.querySelector("#CPFR").disabled = true;
-        document.getElementById("TELR").value = response[0]['telefoneRequerente']
-        document.querySelector("#TELR").disabled = true;
-        document.getElementById("floatingSelect").value = response[0]['requisicaoOrcamento']
-        document.querySelector("#floatingSelect").disabled = true;
-        document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
-        document.querySelector("#exampleFormControlTextarea1").disabled = true;
-        document.querySelector("#btn-salvar").disabled = true;
+            response = data['dados']
+            console.log(response[0])
+            document.getElementById("PlacaOSf").value = response[0]['carro']
+            document.querySelector("#PlacaOSf").disabled = true;
+            document.getElementById("nomeRequerente").value = response[0]['nomeRequerente']
+            document.querySelector("#nomeRequerente").disabled = true;
+            document.getElementById("CPFR").value = response[0]['cpfDoRequerente']
+            document.querySelector("#CPFR").disabled = true;
+            document.getElementById("TELR").value = response[0]['telefoneRequerente']
+            document.querySelector("#TELR").disabled = true;
+            document.getElementById("floatingSelect").value = response[0]['requisicaoOrcamento']
+            document.querySelector("#floatingSelect").disabled = true;
+            document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
+            document.querySelector("#exampleFormControlTextarea1").disabled = true;
+            document.querySelector("#btn-salvar").disabled = true;
 
-        var dadosEstado = response[0]['estadoAtualDoVeiculo'];
-        console.log(dadosEstado)
-        var dadosEstadoJ = JSON.parse(dadosEstado);
-        console.log(dadosEstadoJ)
+            var dadosEstado = response[0]['estadoAtualDoVeiculo'];
+            console.log(dadosEstado)
+            var dadosEstadoJ = JSON.parse(dadosEstado);
+            console.log(dadosEstadoJ)
 
-        document.getElementById("pinturaEstado").value = dadosEstadoJ[0]['estado']
-        document.getElementById("pinturaObs").value = dadosEstadoJ[0]['obs']
-        
-        document.getElementById("latariaEstado").value = dadosEstadoJ[1]['estado']
-        document.getElementById("latariaObs").value = dadosEstadoJ[1]['obs']
-        
-        document.getElementById("pneuEstado").value = dadosEstadoJ[2]['estado']
-        document.getElementById("pneuObs").value = dadosEstadoJ[2]['obs']
-        
-        document.getElementById("vidroEstado").value = dadosEstadoJ[3]['estado']
-        document.getElementById("vidroObs").value = dadosEstadoJ[3]['obs']
-        
-        document.getElementById("parachoqueEstado").value = dadosEstadoJ[4]['estado']
-        document.getElementById("parachoqueObs").value = dadosEstadoJ[4]['obs']
-        
-        document.getElementById("lanternaEstado").value = dadosEstadoJ[5]['estado']
-        document.getElementById("lanternaObs").value = dadosEstadoJ[5]['obs']
-        
-        document.getElementById("interiorEstado").value = dadosEstadoJ[6]['estado']
-        document.getElementById("interiorObs").value = dadosEstadoJ[6]['obs']
-        
-        document.getElementById("funcionamentoEstado").value = dadosEstadoJ[7]['estado']
-        document.getElementById("funcionamentoObs").value = dadosEstadoJ[7]['obs']
-        //
-        // disabled estado veiculo
-        //
-        document.getElementById("pinturaEstado").disabled = true;
-        document.getElementById("pinturaObs").disabled = true;
+            document.getElementById("pinturaEstado").value = dadosEstadoJ[0]['estado']
+            document.getElementById("pinturaObs").value = dadosEstadoJ[0]['obs']
 
-        document.getElementById("latariaEstado").disabled = true;
-        document.getElementById("latariaObs").disabled = true;
-        
-        document.getElementById("pneuEstado").disabled = true;
-        document.getElementById("pneuObs").disabled = true;
-        
-        document.getElementById("vidroEstado").disabled = true;
-        document.getElementById("vidroObs").disabled = true;
-        
-        document.getElementById("parachoqueEstado").disabled = true;
-        document.getElementById("parachoqueObs").disabled = true;
-        
-        document.getElementById("lanternaEstado").disabled = true;
-        document.getElementById("lanternaObs").disabled = true;
-        
-        document.getElementById("interiorEstado").disabled = true;
-        document.getElementById("interiorObs").disabled = true;
-        
-        document.getElementById("funcionamentoEstado").disabled = true;
-        document.getElementById("funcionamentoObs").disabled = true;
-    });
+            document.getElementById("latariaEstado").value = dadosEstadoJ[1]['estado']
+            document.getElementById("latariaObs").value = dadosEstadoJ[1]['obs']
+
+            document.getElementById("pneuEstado").value = dadosEstadoJ[2]['estado']
+            document.getElementById("pneuObs").value = dadosEstadoJ[2]['obs']
+
+            document.getElementById("vidroEstado").value = dadosEstadoJ[3]['estado']
+            document.getElementById("vidroObs").value = dadosEstadoJ[3]['obs']
+
+            document.getElementById("parachoqueEstado").value = dadosEstadoJ[4]['estado']
+            document.getElementById("parachoqueObs").value = dadosEstadoJ[4]['obs']
+
+            document.getElementById("lanternaEstado").value = dadosEstadoJ[5]['estado']
+            document.getElementById("lanternaObs").value = dadosEstadoJ[5]['obs']
+
+            document.getElementById("interiorEstado").value = dadosEstadoJ[6]['estado']
+            document.getElementById("interiorObs").value = dadosEstadoJ[6]['obs']
+
+            document.getElementById("funcionamentoEstado").value = dadosEstadoJ[7]['estado']
+            document.getElementById("funcionamentoObs").value = dadosEstadoJ[7]['obs']
+            //
+            // disabled estado veiculo
+            //
+            document.getElementById("pinturaEstado").disabled = true;
+            document.getElementById("pinturaObs").disabled = true;
+
+            document.getElementById("latariaEstado").disabled = true;
+            document.getElementById("latariaObs").disabled = true;
+
+            document.getElementById("pneuEstado").disabled = true;
+            document.getElementById("pneuObs").disabled = true;
+
+            document.getElementById("vidroEstado").disabled = true;
+            document.getElementById("vidroObs").disabled = true;
+
+            document.getElementById("parachoqueEstado").disabled = true;
+            document.getElementById("parachoqueObs").disabled = true;
+
+            document.getElementById("lanternaEstado").disabled = true;
+            document.getElementById("lanternaObs").disabled = true;
+
+            document.getElementById("interiorEstado").disabled = true;
+            document.getElementById("interiorObs").disabled = true;
+
+            document.getElementById("funcionamentoEstado").disabled = true;
+            document.getElementById("funcionamentoObs").disabled = true;
+
+            var statusOs = response[0]['status'];
+            if (statusOs === "ACEITA") {
+                document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                document.getElementById("custoMecanico").style.visibility = "visible";
+            }
+        });
 })
 $('#btnSalvarEstado').click(() => {
     var pinturaEstado = document.getElementById("pinturaEstado").value;
@@ -561,3 +617,4 @@ $('#btnSalvarEstado').click(() => {
     estadoAtualDoVeiculoOs = JSON.stringify(dados);
 })
 var estadoAtualDoVeiculoOs;
+

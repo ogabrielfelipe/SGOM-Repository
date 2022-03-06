@@ -30,6 +30,6 @@ def delete_itemOrcamento(codigo):
 
 
 @item.route('/ItemOrcamento/BuscarTodos', methods=['POST'])
-@login_required
+#@login_required
 def busca_itemOrcamento():
     return buscar_todos()

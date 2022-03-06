@@ -18,11 +18,12 @@ Ordem de Serviço
 <div class="container-fluid">
     <button type="button" class="btn btn-dark" id="btn-novo">Novo</button>
     <button type="button" class="btn btn-dark" id="btn-alterar">Alterar</button>
-    <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-        data-bs-target="#ModalLocalizar" id="btn-localizar">Localizar</button>
+    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ModalLocalizar"
+        id="btn-localizar">Localizar</button>
 
 </div>
-<div id="formulario" class="container-fluid d-flex flex-sm-column justify-content-sm-center" style="margin: 15px; max-width: 98%;">
+<div id="formulario" class="container-fluid d-flex flex-sm-column justify-content-sm-center"
+    style="margin: 15px; max-width: 98%;">
     <div class="input-group mb-3" style="max-width: 200px;">
         <input type="text" class="form-control complete-input text-white" placeholder="Placa" id="PlacaOSf"
             aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -34,15 +35,15 @@ Ordem de Serviço
 
     <div class="row">
         <div class="col">
-            <input type="text" id="nomeRequerente" class="form-control complete-input text-white" placeholder="Nome do Requerente"
-                aria-label="First name">
+            <input type="text" id="nomeRequerente" class="form-control complete-input text-white"
+                placeholder="Nome do Requerente" aria-label="First name">
         </div>
         <div class="col" style="max-width: 250px;">
             <input type="text" class="form-control complete-input text-white" placeholder="CPF do Requerente"
                 aria-label="Last name" id="CPFR">
         </div>
         <div class="col" style="max-width: 250px;">
-            <input type="text"  class="form-control complete-input text-white" placeholder="Telefone do Requerente"
+            <input type="text" class="form-control complete-input text-white" placeholder="Telefone do Requerente"
                 aria-label="Last name" style="
             max-width: 250px;" id="TELR">
         </div>
@@ -58,7 +59,13 @@ Ordem de Serviço
     <div class="col d-flex justify-content-center align-items-md-center">
         <button data-bs-toggle="modal" data-bs-target="#ModalEstadoVeiculo" type="button"
             class="btn btn-dark btn-lg">Estado do Veículo</button>
+        <button id="btnFazerOrcamento" style="margin-left: 50px; visibility: hidden;" data-bs-toggle="modal"
+            data-bs-target="#ModalOrcamento" type="button" class="btn btn-dark btn-lg">Fazer Orçamento</button>
+        <input type="text" class="form-control complete-input text-white" placeholder="Custo do mecanico" style="max-width: 200px;margin-left: 50px; visibility: hidden;"
+               id="custoMecanico">
+            
     </div>
+
     <div class="row" style="margin-top: 15px;">
         <div class="form-group">
             <label class="text-white" for="exampleFormControlTextarea1">Problema: </label>
@@ -83,13 +90,13 @@ Ordem de Serviço
                     <div class="col">
                         <input type="hidden" id="placaAux" valur="">
                         <input type="hidden" id="idVeiculo" valur="">
-                        
+
                         <input type="text" class="form-control complete-input" placeholder="Placa"
-                        id="CampoPlacaPesquisa"
-                            aria-label="First name">
+                            id="CampoPlacaPesquisa" aria-label="First name">
                     </div>
                     <div class="col">
-                        <button type="button" id="btnPesquisarPlaca" class="btn btn-dark" style="margin-right: 10px;">Pesquisar</button>
+                        <button type="button" id="btnPesquisarPlaca" class="btn btn-dark"
+                            style="margin-right: 10px;">Pesquisar</button>
                     </div>
                 </div>
                 <table class="table table-dark " id="tableBuscaPlaca" style="margin-top: 15px; cursor: pointer;">
@@ -100,7 +107,7 @@ Ordem de Serviço
                         </tr>
                     </thead>
                     <tbody id="tbodyBuscaPlaca">
-                       
+
                     </tbody>
                 </table>
 
@@ -135,30 +142,39 @@ Ordem de Serviço
 
 
                     <div class="col" style="max-width: 100px">
-                        <input type="text" class="form-control complete-input" placeholder="OS" id="os" aria-label="First name">
+                        <input type="text" class="form-control complete-input" placeholder="OS" id="os"
+                            aria-label="First name">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control complete-input" placeholder="Nome do Requerente" id="nomeRequerenteOs"
-                            aria-label="First name">
+                        <input type="text" class="form-control complete-input" placeholder="Nome do Requerente"
+                            id="nomeRequerenteOs" aria-label="First name">
                     </div>
                     <div class="col" style="max-width: 350px">
                         <div class="form-floating" style="max-width: 200px;">
                             <select class="form-select complete-input" id="SelectStatusOOS" aria-label="select label">
                                 <option value="" style="background-color: #131418; color: white">selecionar...</option>
-                                <option value="EMABERTO" style="background-color: #131418; color: white">Em Aberto</option>
+                                <option value="EMABERTO" style="background-color: #131418; color: white">Em Aberto
+                                </option>
                                 <option value="ACEITA" style="background-color: #131418; color: white">Aceita</option>
-                                <option value="AGUARDANDOAPROVACAO" style="background-color: #131418; color: white">Aguardando Aprovação</option>
-                                <option value="APROVADA" style="background-color: #131418; color: white">Aprovada</option>
-                                <option value="EMATENDIMENTO" style="background-color: #131418; color: white">Em Atendimento</option>
-                                <option value="AGUARDANDOPAGAMENTO" style="background-color: #131418; color: white">Aguardando Pagamento</option>
-                                <option value="FINALIZADA" style="background-color: #131418; color: white">Finalizada</option>
-                                <option value="CANCELADO" style="background-color: #131418; color: white">Cancelado</option>
+                                <option value="AGUARDANDOAPROVACAO" style="background-color: #131418; color: white">
+                                    Aguardando Aprovação</option>
+                                <option value="APROVADA" style="background-color: #131418; color: white">Aprovada
+                                </option>
+                                <option value="EMATENDIMENTO" style="background-color: #131418; color: white">Em
+                                    Atendimento</option>
+                                <option value="AGUARDANDOPAGAMENTO" style="background-color: #131418; color: white">
+                                    Aguardando Pagamento</option>
+                                <option value="FINALIZADA" style="background-color: #131418; color: white">Finalizada
+                                </option>
+                                <option value="CANCELADO" style="background-color: #131418; color: white">Cancelado
+                                </option>
                             </select>
                             <label for="floatingSelect" class="text-white" style="margin-left: 10px;">Status:</label>
                         </div>
                     </div>
                     <div class="col">
-                        <button type="button" id ="btn_pesquisarOs"class="btn btn-dark" style="margin-right: 10px;">Pesquisar</button>
+                        <button type="button" id="btn_pesquisarOs" class="btn btn-dark"
+                            style="margin-right: 10px;">Pesquisar</button>
                     </div>
                 </div>
                 <table class="table table-dark " id="tableBuscaOs" style="margin-top: 15px; cursor: pointer;">
@@ -171,7 +187,7 @@ Ordem de Serviço
                         </tr>
                     </thead>
                     <tbody id="tbodyBuscaOs">
-                        
+
                     </tbody>
                 </table>
 
@@ -208,8 +224,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input id="pinturaObs" type="text" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input id="pinturaObs" type="text" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -224,8 +240,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" id="latariaObs" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input type="text" id="latariaObs" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -240,8 +256,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" id="pneuObs" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input type="text" id="pneuObs" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -256,8 +272,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" id="vidroObs" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input type="text" id="vidroObs" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -272,8 +288,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" id="parachoqueObs" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input type="text" id="parachoqueObs" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -288,8 +304,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" id="lanternaObs" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input type="text" id="lanternaObs" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -304,8 +320,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" id="interiorObs" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input type="text" id="interiorObs" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
                 <div class="row" style="margin-top: 15px;">
@@ -320,8 +336,8 @@ Ordem de Serviço
                         </select>
                     </div>
                     <div class="col">
-                        <input type="text" id="funcionamentoObs" class="form-control complete-input text-white" placeholder="Observação"
-                            aria-label="First name">
+                        <input type="text" id="funcionamentoObs" class="form-control complete-input text-white"
+                            placeholder="Observação" aria-label="First name">
                     </div>
                 </div>
             </div>
@@ -337,11 +353,62 @@ Ordem de Serviço
 </div>
 </div>
 
-{%endblock%}
 
-{%block footer%}
-<div class="container-fluid d-flex justify-content-end" style="margin-bottom: 15px;">
-    <button id="btn-cancelar" type="button" class="btn btn-dark" style="margin-right: 25px;">Cancelar</button>
-    <button type="button" class="btn btn-dark" style="margin-right: 10px;" id="btn-salvar" onclick=salvarOrdemDeServico()>Salvar</button>
-</div>
-{%endblock%}
+<div class="modal fade" id="ModalOrcamento">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content complete-modal text-white">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Orçamento</h4>
+                <button type="button" class="btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="max-width: 600px">
+                    <div class="col" style="max-width: 200px">
+                        <div class="form-floating">
+                            <select class="form-select complete-input" id="selectItemValor" aria-label="select label">
+                                
+                            </select>
+                            <label for="selectItemValor" class="text-white" style="margin-left: 10px;">Item:</label>
+                        </div>
+                    </div>
+
+                    <div class="col" style="max-width: 200px">
+                        <input type="text" id="quantidadeItem" class="form-control complete-input text-white"
+                            placeholder="Quantidade" aria-label="First name">
+                    </div>
+                    <div class="col" style="max-width: 200px">
+                        <button type="button" class="btn btn-dark" id="btnAdcionarItem">Adicionar </button>
+                    </div>
+                </div>
+                <table class="table table-dark " id="tableBuscaItemO" style="margin-top: 15px; cursor: pointer;">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyBuscaIOO">
+
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-dark" id="btnSalvarOrcamento"
+                        data-bs-dismiss="modal">Salvar</button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    {%endblock%}
+
+    {%block footer%}
+    <div class="container-fluid d-flex justify-content-end" style="margin-bottom: 15px;">
+        <button id="btn-cancelar" type="button" class="btn btn-dark" style="margin-right: 25px;">Cancelar</button>
+        <button type="button" class="btn btn-dark" style="margin-right: 10px;" id="btn-salvar"
+            onclick=salvarOrdemDeServico()>Salvar</button>
+    </div>
+    {%endblock%}
