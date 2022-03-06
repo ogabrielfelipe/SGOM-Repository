@@ -34,42 +34,42 @@ def root_funcionario():
 
 
 @func.route('/Funcionario/Cadastrar', methods=['POST'])
-#@login_required
+@login_required
 def cadastra_funcionario():
     return cad_funcionario()
 
 
 @func.route('/Funcionario/BuscaFuncionaios', methods=['POST'])
-#@login_required
+@login_required
 def busc_funcionaios():
     return busca_funcionarios()
 
 
 @func.route('/Funcionario/Busca/<int:codigo>', methods=['POST'])
-#@login_required
+@login_required
 def busc_funcionaio(codigo):
     return busca_funcionario_route(codigo)
 
 
 @func.route('/Funcionario/BuscaUsername/<string:nome>', methods=['POST'])
-#@login_required
+@login_required
 def busc_username_funcionaio(nome):
     return funcionario_username_like(nome)
 
 
 @func.route('/Funcionario/Atualizar/<int:codigo>', methods=['PATCH'])
-#@login_required
+@login_required
 def alter_funcionario(codigo):
     return atualiza_funcionario(codigo)
 
 
 @func.route('/Funcionario/Inativar/<int:codigo>', methods=['DELETE'])
-#@login_required
+@login_required
 def inativa_route_funcionario(codigo):
     return inativa_funcionario(codigo, current_user.id)
 
 
 @func.route('/Funcionario/Ativar/<int:codigo>', methods=['PATCH'])
-#@login_required
+@login_required
 def ativa_route_funcionario(codigo):
     return atualiza_status_funcionario(codigo)
