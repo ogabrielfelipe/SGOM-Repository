@@ -3,6 +3,92 @@ $(document).ready(() => {
     const IdOS_Home = urlParams.get('OS');
     console.log(IdOS_Home)
 
+    
+
+    // função carrega OS da HOME
+    entry = {
+        "id": IdOS_Home,
+        "nomeRequerente": '',
+        "status": ''
+    }
+
+    Envia(entry, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+        .then((data) => {
+        response = data['dados']
+        console.log(response[0])
+        document.getElementById("PlacaOSf").value = response[0]['carro']
+        document.querySelector("#PlacaOSf").disabled = true;
+        document.getElementById("nomeRequerente").value = response[0]['nomeRequerente']
+        document.querySelector("#nomeRequerente").disabled = true;
+        document.getElementById("CPFR").value = response[0]['cpfDoRequerente']
+        document.querySelector("#CPFR").disabled = true;
+        document.getElementById("TELR").value = response[0]['telefoneRequerente']
+        document.querySelector("#TELR").disabled = true;
+        document.getElementById("floatingSelect").value = response[0]['requisicaoOrcamento']
+        document.querySelector("#floatingSelect").disabled = true;
+        document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
+        document.querySelector("#exampleFormControlTextarea1").disabled = true;
+        document.querySelector("#btn-salvar").disabled = true;
+
+        var dadosEstado = response[0]['estadoAtualDoVeiculo'];
+        console.log(dadosEstado)
+        var dadosEstadoJ = JSON.parse(dadosEstado);
+        console.log(dadosEstadoJ)
+
+        document.getElementById("pinturaEstado").value = dadosEstadoJ[0]['estado']
+        document.getElementById("pinturaObs").value = dadosEstadoJ[0]['obs']
+        
+        document.getElementById("latariaEstado").value = dadosEstadoJ[1]['estado']
+        document.getElementById("latariaObs").value = dadosEstadoJ[1]['obs']
+        
+        document.getElementById("pneuEstado").value = dadosEstadoJ[2]['estado']
+        document.getElementById("pneuObs").value = dadosEstadoJ[2]['obs']
+        
+        document.getElementById("vidroEstado").value = dadosEstadoJ[3]['estado']
+        document.getElementById("vidroObs").value = dadosEstadoJ[3]['obs']
+        
+        document.getElementById("parachoqueEstado").value = dadosEstadoJ[4]['estado']
+        document.getElementById("parachoqueObs").value = dadosEstadoJ[4]['obs']
+        
+        document.getElementById("lanternaEstado").value = dadosEstadoJ[5]['estado']
+        document.getElementById("lanternaObs").value = dadosEstadoJ[5]['obs']
+        
+        document.getElementById("interiorEstado").value = dadosEstadoJ[6]['estado']
+        document.getElementById("interiorObs").value = dadosEstadoJ[6]['obs']
+        
+        document.getElementById("funcionamentoEstado").value = dadosEstadoJ[7]['estado']
+        document.getElementById("funcionamentoObs").value = dadosEstadoJ[7]['obs']
+        //
+        // disabled estado veiculo
+        //
+        document.getElementById("pinturaEstado").disabled = true;
+        document.getElementById("pinturaObs").disabled = true;
+
+        document.getElementById("latariaEstado").disabled = true;
+        document.getElementById("latariaObs").disabled = true;
+        
+        document.getElementById("pneuEstado").disabled = true;
+        document.getElementById("pneuObs").disabled = true;
+        
+        document.getElementById("vidroEstado").disabled = true;
+        document.getElementById("vidroObs").disabled = true;
+        
+        document.getElementById("parachoqueEstado").disabled = true;
+        document.getElementById("parachoqueObs").disabled = true;
+        
+        document.getElementById("lanternaEstado").disabled = true;
+        document.getElementById("lanternaObs").disabled = true;
+        
+        document.getElementById("interiorEstado").disabled = true;
+        document.getElementById("interiorObs").disabled = true;
+        
+        document.getElementById("funcionamentoEstado").disabled = true;
+        document.getElementById("funcionamentoObs").disabled = true;
+    });
+
+
+    document.querySelector("#button-addon2").disabled = true;
+    document.querySelector("#PlacaOSf").disabled = true;
 
     $('#CPFR').mask('999.999.999-99')
     $('#TELR').mask('(99) 99999-9999')
@@ -36,7 +122,7 @@ $(document).ready(() => {
         $('#formulario input ').val('');
         $('#formulario textarea ').val('');
         $('#formulario select ').val(0);
-        document.querySelector("#PlacaOSf").disabled = false;
+        document.querySelector("#button-addon2").disabled = false;
         document.querySelector("#nomeRequerente").disabled = false;
         document.querySelector("#CPFR").disabled = false;
         document.querySelector("#TELR").disabled = false;
@@ -103,7 +189,7 @@ $(document).ready(() => {
         $('#formulario input ').val('');
         $('#formulario textarea ').val('');
         $('#formulario select ').val(0);
-        document.querySelector("#PlacaOSf").disabled = false;
+        document.querySelector("#button-addon2").disabled = false;
         document.querySelector("#nomeRequerente").disabled = false;
         document.querySelector("#CPFR").disabled = false;
         document.querySelector("#TELR").disabled = false;
