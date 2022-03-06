@@ -321,24 +321,26 @@ def finalizar_ordemDeServico(id, funcionario):
 def relatorio_ordemDeServico():
     resp = request.get_json()
     entry = {
-        'o.id': resp['codigo'],
+        'o.id': int(resp['codigo']),
         'o.carro': resp['placa'],
         'o.mecanico': resp['mecanico'],
         'o.status': str(resp['status'])
     }
     whereSQL = convertPesquisa(['='], entry)
 
+    print(whereSQL)
+
     sql_ordemDeServico = text('SELECT o.id ,o.nomeRequerente, o.cpfDoRequerente, o.telefoneRequerente, o.problema,\
                                                 o.requisicaoOrcamento, o.estadoAtualDoVeiculo, o.custoMecanico, o.valorTodal,\
                                                 o.respostaCliente, c.placa as placa_veiculo, c.telefone as telefone_veiculo ,f.nome as mecanico\
                                             FROM ordemDeServico AS o\
-                                            INNER JOIN carro c on c.id = o.id\
-                                            INNER JOIN funcionario f on f.id = o.mecanico \
+                                            LEFT JOIN carro c on c.id = o.id\
+                                            LEFT JOIN funcionario f on f.id = o.mecanico \
                                             '+ whereSQL)
 
     sql_registroDaOS = text('SELECT strftime("%d/%m/%Y %H:%M",r.data) as data_alteracao, r.novoStatus as status, f.nome as funcionario, r.problema  FROM ordemDeServico AS o\
-                                INNER JOIN registroDaOS r ON r.ordemServico = o.id\
-                                INNER JOIN funcionario AS f ON f.id = o.mecanico \
+                                LEFT JOIN registroDaOS r ON r.ordemServico = o.id\
+                                LEFT JOIN funcionario AS f ON f.id = o.mecanico \
                             '+ whereSQL)
 
     sql_servicos = text('SELECT i.nome as nome_item, s.quantidade as quant_item, i.valor as valor_item FROM ordemDeServico as o \
