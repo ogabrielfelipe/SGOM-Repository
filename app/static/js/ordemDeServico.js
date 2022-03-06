@@ -42,9 +42,9 @@ $(document).ready(() => {
                 "nomeRequerente": '',
                 "status": ''}
                 Envia(auxa, 'OrdemDeServico/BuscaPersonalizada','POST')
-                    .then((data) => {
-                        console.log(data['dados'][0]['status'])
-                        if (data['dados'][0]['status'] == "ACEITA") {
+                    .then((data_aceita) => {
+                        console.log(data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "ACEITA") {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                         }
