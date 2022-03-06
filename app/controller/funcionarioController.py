@@ -1,5 +1,5 @@
 from datetime import datetime, timezone, timedelta
-from sqlalchemy import and_, or_, text
+from sqlalchemy import and_, false, or_, text
 from ..model.Funcionario import Funcionario, funcionario_schema, funcionarios_schema
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -125,7 +125,7 @@ def autentica_funcionario():
     if not funcionario:
             return jsonify({'msg': 'Usuário não encontrado'}), 404
 
-    if funcionario.status == True: #Verifica se o status do profissional está desativado
+    if funcionario.status == False: #Verifica se o status do profissional está desativado
         return jsonify({'msg': 'Usuário Inativado'}), 403
   
 
