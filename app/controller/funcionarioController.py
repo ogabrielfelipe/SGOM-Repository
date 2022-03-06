@@ -1,5 +1,8 @@
 from datetime import datetime, timezone, timedelta
+from itsdangerous import json
 from sqlalchemy import and_, false, or_, text
+
+from app.controller.util import convertPesquisa
 from ..model.Funcionario import Funcionario, funcionario_schema, funcionarios_schema
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -109,6 +112,26 @@ def funcionario_username_like(nome):
         return jsonify({'msg': 'Busca Efetuada com sucesso', 'dados': funcionarios_schema.dump(funcionario)}), 200
     except:
         return jsonify({'msg': 'Sem Resultados', 'dados': {}}), 404
+
+
+def busca_funcionario_personalizado():
+    resp = request.get_json()
+    entry = {
+        "nome": resp['nome'],
+        "status": resp['status']
+    }
+
+    whereSQL = convertPesquisa(['LIKE', '='],entry)
+    
+    sql_funcionario = text('SELECT * FROM funcionario '+ whereSQL)
+
+    try:
+        consultaFuncionario = db.session.execute(sql_funcionario).fetchall()        
+        consultaFuncionario_dict = [dict(u) for u in consultaFuncionario]
+        return jsonify({'msg': 'Busca efetuada com sucesso', 'dados': consultaFuncionario_dict}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'msg': 'Busca não efetuada', 'dados': {}, 'error': str(e)}), 500
 
 
 def autentica_funcionario():

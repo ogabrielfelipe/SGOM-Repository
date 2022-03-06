@@ -35,7 +35,7 @@ def convertPesquisa(operadores, dict):
                 consulta += " {} {} '{}' AND || AND".format(chave[:len(chave) - 5], 'BETWEEN', nome)
             else:
                 if chave[len(chave) - 1] != '_':
-                    if isinstance(nome, str):
+                    if isinstance(nome, str) and operadores[cont] != 'LIKE':
                         consulta += " {} {} '{}' AND ".format(chave, operadores[cont], nome)
                     elif isinstance(nome, int):
                         consulta += " {} {} {} AND ".format(chave, operadores[cont], nome)
