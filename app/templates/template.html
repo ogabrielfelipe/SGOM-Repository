@@ -43,8 +43,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('root_ordemDeServico')}}">Ordem de Serviço</a>
                     </li>
-                    
-                    
+
+
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="downMenuCadastro"
@@ -63,7 +63,7 @@
                                 <hr class="dropdown-divider text-light">
                             </li>
                             <li><a id="crud-itemOrca" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#cruItemOrcamento">Itens de Orçamento</a></li>
+                                    data-bs-target="#crudItemOrcamento">Itens de Orçamento</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -490,7 +490,7 @@
 
 
 
-    
+
     <!--===================================================================================-->
     <!-- Fucionalidades de Veiculo -->
     <div style="overflow: hidden" class="modal fade" id="ModalCrudVeiculos">
@@ -527,9 +527,9 @@
                             <button id="btnExcluirVei" type="button" class="btn btn-danger">Excluir</button>
                         </div>
                     </div>
-                    <a id="auxIdVeiculo"hidden></a>
-                    <a id="auxPlaca"hidden></a>
-                    <a id="auxTelefone"hidden></a>
+                    <a id="auxIdVeiculo" hidden></a>
+                    <a id="auxPlaca" hidden></a>
+                    <a id="auxTelefone" hidden></a>
                     <table style="margin-top: .9%;" class="table table-dark " id="tblListVeiculos">
                         <thead>
                             <tr>
@@ -584,7 +584,7 @@
     <!-- Fucionalidades de funcionario -->
     <div style="overflow: hidden" class="modal fade" id="ModalCrudFuncionario">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content complete-modal text-white">
+            <div class="modal-content modal-xl complete-modal text-white" style="overflow:hidden">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -593,7 +593,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                       
+
                         <div class="col">
                             <button id="btnNovoFuncionario" data-bs-toggle="modal"
                                 data-bs-target="#ModalCadastrarFuncionario" type="button"
@@ -611,15 +611,57 @@
                         </div>
                     </div>
 
-                    <a class="#" id="auxIdFuncionario"hidden></a>
-                    <a class="infoFuncionarios" id="auxNomeFuncionario"hidden></a>
-                    <a class="infoFuncionarios" id="auxCpf"hidden></a>
-                    <a class="infoFuncionarios" id="auxTelefone"hidden></a>
-                    <a class="infoFuncionarios" id="auxDataA"hidden></a>
-                    <a class="infoFuncionarios" id="auxTipoFuncionario"hidden></a>
-                    <a class="infoFuncionarios" id="auxUsuario"hidden></a>
-                    <a class="infoFuncionarios" id="auxStatus"hidden></a>
+                    <a class="#" id="auxIdFuncionario" hidden></a>
+                    <a class="infoFuncionarios" id="auxNomeFuncionario" hidden></a>
+                    <a class="infoFuncionarios" id="auxCpf" hidden></a>
+                    <a class="infoFuncionarios" id="auxTelefone" hidden></a>
+                    <a class="infoFuncionarios" id="auxDataA" hidden></a>
+                    <a class="infoFuncionarios" id="auxTipoFuncionario" hidden></a>
+                    <a class="infoFuncionarios" id="auxUsuario" hidden></a>
+                    <a class="infoFuncionarios" id="auxStatus" hidden></a>
 
+                    <!--  -->
+                    <div class="modal-header">
+                    </div>
+                    <!--  -->
+                    <div class="row">
+                        <!-- Pesquisar Status -->
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="form-floating" style="max-width: 200px;">
+                                        <select class="form-select complete-input infoFuncionarios"
+                                            id="selectStatusFuncionario" aria-label="select label">
+                                            <option value="-1" style="background-color: #131418; color: white">
+                                                Seleciona o status</option>
+                                            <option value="0" style="background-color: #131418; color: white">Inativo
+                                            </option>
+                                            <option value="1" style="background-color: #131418; color: white">Ativo
+                                            </option>
+                                        </select>
+                                        <label for="selectStatusFuncionario" style="margin-left: 10px;">Tipo:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <button id="btnPesquisarFuncStatus" type="button" class="btn btn-dark"
+                                    style="margin-right: 10px;">Pesquisar</button>
+                            </div>
+                        </div>
+                        <!-- Pesquisar Nome -->
+                        <div class="row">
+                            <div class="col">
+                                <input id="inp_pesquisaFuncNome" type="text" class="form-control complete-input"
+                                    placeholder="Nome do funcionario" aria-label="First name">
+                            </div>
+                            <div class="col">
+                                <button type="button" id="btnPesquisaFuncNome" class="btn btn-dark"
+                                    style="margin-right: 10px;">Pesquisar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  -->
                     <table class="table table-dark " id="tblFuncionario" style="margin-top: 15px; cursor: pointer;">
                         <thead>
                             <tr>
@@ -639,7 +681,7 @@
                 </div>
             </div>
         </div>
-    </div>      
+    </div>
     <div style="overflow: hidden" class="modal fade" id="ModalCadastrarFuncionario">
         <div class="modal-dialog  modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content bg-dark complete-modal text-white">
@@ -652,7 +694,7 @@
                 </div>
 
                 <div class="modal-body scrollbar scrollbar-black bordered-black square thin">
-                    <a id="up_idFunc"hidden></a>
+                    <a id="up_idFunc" hidden></a>
                     <label class="text-light" style="margin-left: 2.2%;">Nome</label>
                     <div class="col">
                         <input id="inp_nome" type="text" class="form-control complete-input infoFuncionarios"
@@ -667,8 +709,9 @@
 
                     <label style="margin-left: 2.2%;" class=" text-light">Telefone</label>
                     <div class="col">
-                        <input id="inp_telefoneFuncionario" type="text" class="form-control complete-input infoFuncionarios"
-                            placeholder="Telefone para contato" aria-label="First name">
+                        <input id="inp_telefoneFuncionario" type="text"
+                            class="form-control complete-input infoFuncionarios" placeholder="Telefone para contato"
+                            aria-label="First name">
                     </div>
 
                     <label style="margin-left: 2.2%;" class="text-light">Data de Adimissão</label>
@@ -685,7 +728,7 @@
 
                     <label style="margin-left: 2.2%;" class="text-light">Senha</label>
                     <div class="col">
-                        <input id="inp_senha" type="password" class="form-control complete-input infoFuncionarios" 
+                        <input id="inp_senha" type="password" class="form-control complete-input infoFuncionarios"
                             placeholder="Senha" aria-label="First name">
                     </div>
 
@@ -725,7 +768,7 @@
     </div>
 
     <!-- FUNCIONALIDADES DE ITEMORÇAMENTO -->
-    <div class="modal fade" id="cruItemOrcamento">
+    <div class="modal fade" id="crudItemOrcamento">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content complete-modal text-white">
 
@@ -754,9 +797,9 @@
                         <div class="col">
                             <button id="btnExcluirItem" type="button" class="btn btn-danger">Excluir</button>
                         </div>
-                        <a id="auxIdItem"hidden></a>
-                        <a id="auxNome"hidden></a>
-                        <a id="auxValor"hidden></a>
+                        <a id="auxIdItem" hidden></a>
+                        <a id="auxNome" hidden></a>
+                        <a id="auxValor" hidden></a>
                         <table style="margin-top: .9%;" class="table table-dark " id="tblListItemOrca">
                             <thead>
                                 <tr>
@@ -782,7 +825,7 @@
                     <h4 class="modal-title">Cadastro de Item Orçamento</h4>
                 </div>
                 <div class="modal-body">
-                <label class=" text-light">Item</label>
+                    <label class=" text-light">Item</label>
                     <div class="col">
                         <input id="inp_nomeItem" type="text" class="form-control complete-input"
                             placeholder="Nome do Item" aria-label="First name">
@@ -814,20 +857,27 @@
 
     <div class="position-fixed top-0 end-0 p-3" style="z-index: 11;">
         <div id="aleta_msg" class="toast bg-dark text-white" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header bg-secondary" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" id="alerta_advertencia" style="display: none;" color="yellow" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            <div class="toast-header bg-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" id="alerta_advertencia"
+                    style="display: none;" color="yellow" fill="currentColor" class="bi bi-exclamation-triangle-fill"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                 </svg>
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" color="red" id="alerta_error" style="display: none;" fill="currentColor" class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
-                    <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" color="red" id="alerta_error"
+                    style="display: none;" fill="currentColor" class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
                 </svg>
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" color="green" id="alerta_sucesso" style="display: none;" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
-                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" color="green" id="alerta_sucesso"
+                    style="display: none;" fill="currentColor" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z" />
                 </svg>
 
-                <strong class="me-auto text-light" style="margin-left: 5px;" id="title_alerta" >Atenção</strong>
+                <strong class="me-auto text-light" style="margin-left: 5px;" id="title_alerta">Atenção</strong>
                 <small></small>
                 <button type="button" class="btn-close bg-light" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -837,7 +887,7 @@
     </div>
 
 
-    
+
     <script src="{{ url_for('static', filename='js/main.js')}}"></script>
     {%block script%}
     {%endblock%}
@@ -848,4 +898,5 @@
 
 
 </body>
+
 </html>

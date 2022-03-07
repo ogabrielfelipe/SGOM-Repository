@@ -8,7 +8,9 @@ const FUNCIONARIO_CAD_PATH = `/Funcionario/Cadastrar`;
 const FUNCIONARIO_UP_PATH = `/Funcionario/Atualizar/`;
 const FUNCIONARIO_DEL_PATH = `/Carro/Excluir/`;
 const FUNCIONARIO_LIST_PATH = `/Funcionario/BuscaFuncionaios`;
-const FUNCIONARIO_BUSC_PATH = `/Funcionario/Busca/`;
+const FUNCIONARIO_BUSC_ID_PATH = `/Funcionario/Busca/`;
+const FUNCIONARIO_BUSC_NOME_PATH = `/Funcionario/BuscaUsername/`;
+const FUNCIONARIO_BUSC_STATUS_PATH = `/Funcionario/BuscarFuncionarioPersonalizado`;
 const FUNCIONARIO_INATIVAR_PATH = `/Funcionario/Inativar/`;
 const FUNCIONARIO_ATIVAR_PATH = `/Funcionario/Ativar/`;
 //================================================================================
@@ -39,6 +41,7 @@ function Envia(entry, url, method) {
 //================================================================================
 function setTableVeiculos(resp) {
     (resp.then((data) => {
+        $('#tbodyListVeiculos tr').remove();
         response = data['dados'];
         for (dadosAtual of response) {
             $('#tbodyListVeiculos').append(
@@ -53,11 +56,15 @@ function setTableVeiculos(resp) {
             )
         }
     }));
+    console.log($('#tbodyListVeiculos').val());
 }
 function setTableFuncionarios(resp) {
+    console.log($('#tbodyListFuncionarios tr').val());
     (resp.then((data) => {
         response = data['dados'];
         // console.log($('#tbodyListFuncionarios'));
+        $('#tbodyListFuncionarios tr').empty();
+        $('#tbodyListFuncionarios tr').remove();
         for (dadosAtual of response) {
             // console.log('Status:  '+dadosAtual['status']);
             $('#tbodyListFuncionarios').append(
@@ -85,9 +92,11 @@ function setTableFuncionarios(resp) {
             //console.log(typeof dadosAtual['tipoFuncionario']);
         }
     }));
+    //console.log($('#tbodyListFuncionarios ').val());
 }
 function setTableItens(resp) {
     (resp.then((data) => {
+        $('#tbodyListItem tr').remove();
         response = data['dados'];
         for (dadosAtual of response) {
             $('#tbodyListItem').append(
@@ -149,7 +158,7 @@ function selectTblFuncionarios(event) {
     $(event).addClass('table-light');
 
 }
-function selectTblItem(event){
+function selectTblItem(event) {
     let id = $(event).children('#tblIdItem')[0]['innerText'];
     let nome = $(event).children('#tblNomeItem')[0]['innerText'];
     let valor = $(event).children('#tblValorItem')[0]['innerText'];
@@ -168,31 +177,31 @@ $(document).ready(() => {
     const modalCrudVeiculo = ['#auxIdVeiculo', '#auxPlaca', '#auxTelefone'];
     const modalCadastrarVeiculo = ['#inp_placaVeiculo', "#inp_telefoneVeiculo"];
     //----------
-    const modalCrudItem = ['#auxIdItem','#auxNome','#auxValor'];
-    const modalCadastrarItem = ['#inp_nomeItem','#inp_valorItem'];
+    const modalCrudItem = ['#auxIdItem', '#auxNome', '#auxValor'];
+    const modalCadastrarItem = ['#inp_nomeItem', '#inp_valorItem'];
 
     //-------------- DASHBOARDS -------------
     $('#crud-veic').click(() => {
-        $('#tbodyListVeiculos').empty();
+        $('#tbodyListVeiculos tr').remove();
         zerarCamposModel(modalCrudVeiculo);
         zerarCamposModel(modalCadastrarVeiculo);
         setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
     });
     $('#crud-func').click(() => {
-        $('#tbodyListFuncionarios').empty();
+        $('#tbodyListFuncionarios tr').remove();
         zerarCamposModel(modalCrudFuncionario);
         $('#auxIdFuncionario').val('-1');
         setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
     });
-    $('#crud-itemOrca').click(()=>{
+    $('#crud-itemOrca').click(() => {
         zerarCamposModel(modalCrudItem);
         zerarCamposModel(modalCadastrarItem);
-        $('#tbodyListItem').empty();
-        setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
+        $('#tbodyListItem tr').remove();
+        setTableItens(Envia({}, ITEM_LIST_PATH, `POST`));
     })
     //-------------- BTN CLOSE -------------
     $('#btnCloseVeiculo').click(() => {
-        $('#tbodyListVeiculos').empty();
+        $('#tbodyListVeiculos tr').remove();
         zerarCamposModel(modalCrudVeiculo);
         zerarCamposModel(modalCadastrarVeiculo);
         setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
@@ -202,11 +211,11 @@ $(document).ready(() => {
         $('#tbodyListFuncionarios').empty();
         setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
     });
-    $('#btnCloseItem').click(()=>{
+    $('#btnCloseItem').click(() => {
         zerarCamposModel(modalCrudItem);
         zerarCamposModel(modalCadastrarItem);
-        $('#tbodyListItem').empty();
-        setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
+        $('#tbodyListItem tr').remove();
+        setTableItens(Envia({}, ITEM_LIST_PATH, `POST`));
     });
     //-------------- BTN NOVO -------------
     $('#btnNovoVei').click(() => {
@@ -220,7 +229,7 @@ $(document).ready(() => {
         zerarCamposModel(modalCadastrarFuncinoario);
         console.log($('auxIdFuncionario').val());
     });
-    $('#btnNovoItem').click(()=>{
+    $('#btnNovoItem').click(() => {
         zerarCamposModel(modalCrudItem);
         zerarCamposModel(modalCadastrarItem);
     });
@@ -247,9 +256,9 @@ $(document).ready(() => {
         console.log(' ');
         console.log('clicou EDITAR');
         const idFuncionario = $('#auxIdFuncionario').val();
-        console.log(FUNCIONARIO_BUSC_PATH + idFuncionario);
+        console.log(FUNCIONARIO_BUSC_ID_PATH + idFuncionario);
         console.log($('#auxNomeFuncionario').val());
-        const resp = Envia({}, FUNCIONARIO_BUSC_PATH + idFuncionario, `POST`);
+        const resp = Envia({}, FUNCIONARIO_BUSC_ID_PATH + idFuncionario, `POST`);
         console.log(resp);
 
         (resp.then((data) => {
@@ -267,7 +276,7 @@ $(document).ready(() => {
             }
         }))
     });
-    $('#btnEditarItem').click(()=>{
+    $('#btnEditarItem').click(() => {
         console.log(' ');
         console.log('clicou EDITAR');
 
@@ -277,10 +286,10 @@ $(document).ready(() => {
         // const resp = Envia({}, ITEM_BUSC_PATH + idItem, `POST`);
         // console.log(resp);
 
-        if(idItem < 0){
+        if (idItem < 0) {
             alert('Selecione algum dos itens na tabela');
             return;
-        } else{
+        } else {
             $('#inp_nomeItem').val(nomeItem);
             $('#inp_valorItem').val(valorItem);
             console.log(nomeItem);
@@ -325,8 +334,8 @@ $(document).ready(() => {
         console.log(' ');
         console.log('clicou ALTERAR');
         const idFuncionario = $('#auxIdFuncionario').val();
-        console.log(FUNCIONARIO_BUSC_PATH + idFuncionario);
-        const resp = Envia({}, FUNCIONARIO_BUSC_PATH + idFuncionario, `POST`);
+        console.log(FUNCIONARIO_BUSC_ID_PATH + idFuncionario);
+        const resp = Envia({}, FUNCIONARIO_BUSC_ID_PATH + idFuncionario, `POST`);
         console.log(resp);
 
         (resp.then((data) => {
@@ -340,23 +349,24 @@ $(document).ready(() => {
                 else
                     Envia({}, FUNCIONARIO_ATIVAR_PATH + idFuncionario, `PATCH`);
                 zerarCamposModel(modalCrudFuncionario);
-                $('#tbodyListFuncionarios').empty();
-                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+                $('#tbodyListFuncionarios tr').empty();
+                $('#tbodyListFuncionarios tr').remove();
                 alert('Funcionario status alterado')
+                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
             }
         }))
     });
-    $('#btnExcluirItem').click(()=>{
+    $('#btnExcluirItem').click(() => {
         const idItem = $('#auxIdItem').val();
-        if(idItem < 0){
+        if (idItem < 0) {
             alert('Selecionar um item na tabela')
-        } else{
-            const resp = Envia({},ITEM_DEL_PATH+idItem,`DELETE`);
+        } else {
+            const resp = Envia({}, ITEM_DEL_PATH + idItem, `DELETE`);
             alert('Item excluido');
             zerarCamposModel(modalCrudItem);
             zerarCamposModel(modalCadastrarItem);
             $('#tbodyListItem').empty();
-            setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
+            setTableItens(Envia({}, ITEM_LIST_PATH, `POST`));
         }
     })
     //-------------- BTN ADICIONAR -------------  
@@ -383,8 +393,9 @@ $(document).ready(() => {
 
                 zerarCamposModel(modalCrudVeiculo);
                 zerarCamposModel(modalCadastrarVeiculo);
+                $('#tbodyListVeiculos tr').empty();
+                $('#tbodyListVeiculos tr').remove();
                 alert('Veiculo Cadastrado')
-                $('#tbodyListVeiculos').empty();
                 setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
             }
             else {
@@ -398,7 +409,7 @@ $(document).ready(() => {
 
                 alert('Veiculo Editado');
 
-                $('#tbodyListVeiculos').empty();
+                $('#tbodyListVeiculos tr').remove();
                 setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
             }
         }
@@ -422,9 +433,10 @@ $(document).ready(() => {
                 console.log('CADASTRO');
                 const resp = Envia(funcionario, FUNCIONARIO_CAD_PATH, `POST`);
                 console.log(resp);
-                $('#tbodyListFuncionarios').empty();
-                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+                $('#tbodyListFuncionarios tr').empty();
+                $('#tbodyListFuncionarios tr').remove();
                 alert('Funcionario Cadastro');
+                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
 
             } else {
                 console.log('EDIÇÃO')
@@ -433,17 +445,15 @@ $(document).ready(() => {
                 }
                 console.log(funcionario);
                 console.log(FUNCIONARIO_UP_PATH + idFuncionario);
-                const resp = Envia(funcionario, FUNCIONARIO_UP_PATH + idFuncionario, `POST`);
-                //console.log(resp);
-                $('#tbodyListFuncionarios').empty();
-                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+                const resp = Envia(funcionario, FUNCIONARIO_UP_PATH + idFuncionario, `PATCH`);
                 alert('Funcionario Editado');
+                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
             }
             zerarCamposModel(modalCrudFuncionario);
             zerarCamposModel(modalCadastrarFuncinoario);
         }
     });
-    $('#btnCadastrarItem').click(()=>{
+    $('#btnCadastrarItem').click(() => {
         if (!verificarCampo($('#inp_nomeItem'), $('#inp_valorItem'))) {
             alert("Preencha todos os campos");
         } else {
@@ -456,25 +466,27 @@ $(document).ready(() => {
                 "valor": Number(valorItem)
             }
 
-            if(idItem < 0){
+            if (idItem < 0) {
                 console.log('CADASTRO');
                 console.log(item);
                 const resp = Envia(item, ITEM_CAD_PATH, `POST`);
                 console.log(resp);
-                alert('Item Cadastrado');
                 zerarCamposModel(modalCrudItem);
                 zerarCamposModel(modalCadastrarItem);
-                $('#tbodyListItem').empty();
-                setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
-            } else{
+                $('#tbodyListItem tr').empty();
+                $('#tbodyListItem tr').remove();
+                alert('Item Cadastrado');
+                setTableItens(Envia({}, ITEM_LIST_PATH, `POST`));
+            } else {
                 console.log('UPDATE')
                 const resp = Envia(item, ITEM_UP_PATH + idItem, `PATCH`);
                 console.log(resp);
-                alert('Item Editado');
                 zerarCamposModel(modalCrudItem);
                 zerarCamposModel(modalCadastrarItem);
-                $('#tbodyListItem').empty();
-                setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
+                $('#tbodyListItem tr').remove();
+                $('#tbodyListItem tr').empty();
+                alert('Item Editado');
+                setTableItens(Envia({}, ITEM_LIST_PATH, `POST`));
             }
 
         }
@@ -516,10 +528,94 @@ $(document).ready(() => {
         }
 
     });
+    $('#btnPesquisaFuncNome').click(() => {
+        const nome = $('#inp_pesquisaFuncNome').val();
+        const resp = Envia({}, FUNCIONARIO_BUSC_NOME_PATH + nome, `POST`);
+        if (nome.length === 0) {
+            zerarCamposModel(modalCrudFuncionario);
+            zerarCamposModel(modalCadastrarFuncinoario);
+            $('#tbodyListFuncionarios tr').remove();
+            setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+            return;
+        }
+        (resp.then((data) => {
+            func = data['dados'];
+            if (Object.keys(func).length === 0) {
+                alert('Funcionario não encontrado');
+                return;
+            } else {
+                $('#tbodyListFuncionarios tr').remove();
+                setTableFuncionarios(resp);
+                // $('#tbodyListFuncionarios').append(
+                //     '<tr onclick=' + "selectTblFuncionarios(this)" + '>'
+                //     +
+                //     '<td id="tblIdFuncionario" hidden>' + func['id'] +
+                //     '</td>'
+                //     +
+                //     '<td id="tdTipoFuncionario" hidden>' + func['tipoFuncionario'] +
+                //     '</td>'
+                //     +
+                //     '<td id="tdStatus" hidden>' + filtrarStatus(func['status']) +
+                //     '</td>'
+                //     +
+                //     '<th id="tdNome" scope="row">' + func['nome'] + '</th>' +
+                //     '<th id="tdCpf" scope="row">' + func['cpf'] + '</th>' +
+                //     '<th id="tdTelefone" scope="row">' + func['telefone'] + '</th>' +
+                //     '<th id="tdDataDeAdimissao" scope="row">' + func['dataDeAdmissao'] + '</th>' +
+                //     '<th scope="row">' + filtrarTipoFuncionario(func['tipoFuncionario']) + '</th>' +
+                //     '<th id="tdUsuario" scope="row">' + func['usuario'] + '</th>' +
+                //     '<th scope="row">' + filtrarStatus(func['status']) + '</th>' +
+                //     +
+                //     '</tr>'
+                // );
+            }
+        }));
+    });
+    $('#btnPesquisarFuncStatus').click(()=>{
+        const status = Number($('#selectStatusFuncionario').val());
+        console.log(typeof status +'    '+ status);
+        if(status === -1){
+            zerarCamposModel(modalCrudFuncionario);
+            zerarCamposModel(modalCadastrarFuncinoario);
+            $('#tbodyListFuncionarios tr').remove();
+            setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+        } else{
+                const pesqFunc = {
+                    "nome": "",
+                    "status": status
+                };
+                $('#tbodyListFuncionarios tr').remove();
+                setTableFuncionarios(Envia(pesqFunc,FUNCIONARIO_BUSC_STATUS_PATH,`POST`));
+            }
+    });
 });
 
 
 //================================================================================
+function funcionarioEncontrado(funcionario) {
+    $('#tbodyListFuncionarios').append(
+        '<tr onclick=' + "selectTblFuncionarios(this)" + '>'
+        +
+        '<td id="tblIdFuncionario" hidden>' + funcionario['id'] +
+        '</td>'
+        +
+        '<td id="tdTipoFuncionario" hidden>' + funcionario['tipoFuncionario'] +
+        '</td>'
+        +
+        '<td id="tdStatus" hidden>' + filtrarStatus(funcionario['status']) +
+        '</td>'
+        +
+        '<th id="tdNome" scope="row">' + funcionario['nome'] + '</th>' +
+        '<th id="tdCpf" scope="row">' + funcionario['cpf'] + '</th>' +
+        '<th id="tdTelefone" scope="row">' + funcionario['telefone'] + '</th>' +
+        '<th id="tdDataDeAdimissao" scope="row">' + funcionario['dataDeAdmissao'] + '</th>' +
+        '<th scope="row">' + filtrarTipoFuncionario(funcionario['tipoFuncionario']) + '</th>' +
+        '<th id="tdUsuario" scope="row">' + funcionario['usuario'] + '</th>' +
+        '<th scope="row">' + filtrarStatus(funcionario['status']) + '</th>' +
+        +
+        '</tr>'
+    )
+}
 function zerarCamposModel(listIdField) {
     // console.log(listIdField);
     for (let idAtual of listIdField) {
