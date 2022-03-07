@@ -16,9 +16,9 @@ $(document).ready(() => {
         Envia(entry, '/OrdemDeServico/BuscaPersonalizada', 'POST')
             .then((data) => {
                 response = data['dados']
-                console.log(response[0]['status'])                
+                console.log(response[0]['status'])
                 if (response[0]['status'] == "EMABERTO") {
-                    Envia({}, '/OrdemDeServico/Aceita/'+ response[0]['id_os'], 'POST');
+                    Envia({}, '/OrdemDeServico/Aceita/' + response[0]['id_os'], 'POST');
                 }
                 console.log(response[0])
                 document.getElementById("PlacaOSf").value = response[0]['carro']
@@ -34,23 +34,26 @@ $(document).ready(() => {
                 document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
                 document.querySelector("#exampleFormControlTextarea1").disabled = true;
                 document.querySelector("#btn-salvar").disabled = true;
-                
+
                 var statusOs = response[0]['status'];
-                
-                console.log(response[0]['status'])                
-                var auxa = { "id": response[0]['id_os'],
-                "nomeRequerente": '',
-                "status": ''}
-                Envia(auxa, 'OrdemDeServico/BuscaPersonalizada','POST')
+
+                console.log(response[0]['status'])
+                var auxa = {
+                    "id": response[0]['id_os'],
+                    "nomeRequerente": '',
+                    "status": ''
+                }
+                Envia(auxa, 'OrdemDeServico/BuscaPersonalizada', 'POST')
                     .then((data_aceita) => {
                         console.log(data_aceita['dados'][0]['status'])
                         if (data_aceita['dados'][0]['status'] == "ACEITA") {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                             document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = false;
                         }
                     });
                 console.log(statusOs)
-                
+
 
 
                 var dadosEstado = response[0]['estadoAtualDoVeiculo'];
@@ -411,7 +414,12 @@ function salvarOrdemDeServico() {
 
     }
     console.log(dados)
-    Envia(dados, '/OrdemDeServico/Abertura', 'POST');
+    Envia(dados, '/OrdemDeServico/Abertura', 'POST')
+    document.getElementById("osAux").value
+    if (document.getElementById("osAux").value>0) {
+        alert('OS Cadastrada com Sucesso')
+    } else { alert('Ocorreu um Erro ao Cadastrar a OS') }
+
 
 }
 
