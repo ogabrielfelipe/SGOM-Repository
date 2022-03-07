@@ -11,6 +11,7 @@ from ..model.Servicos import Servicos, servico_schema,servicos_schema
 from ..model.RegistroDaOS import RegistroDaOS, registroDaOS_schema, registroDaOSs_schema
 from ..model.ItemOrcamento import db
 from .util import convertPesquisa, calcula_intervalo_mes
+from validate_docbr import CPF
 
 
 
@@ -24,23 +25,26 @@ def abertura_OrdemDeServico(id):
     estadoAtualDoVeiculo = resp['estadoAtualDoVeiculo']
     carro = resp['carro']
 
+    valid_cpf = CPF()
+    cpf = valid_cpf.validate(resp['cpfDoRequerente'])
+    if cpf:
+        ordem = OrdemDeServico.abrirOrdemDeServico(carro=carro, nomeR=nomeRequerente, cpfR=cpfDoRequerente, telR=telefoneRequerente,
+        problema=problema, reqOr=requisicaoOrcamento, estadoA=estadoAtualDoVeiculo, status=0)
 
-    ordem = OrdemDeServico.abrirOrdemDeServico(carro=carro, nomeR=nomeRequerente, cpfR=cpfDoRequerente, telR=telefoneRequerente,
-    problema=problema, reqOr=requisicaoOrcamento, estadoA=estadoAtualDoVeiculo, status=0)
-
-    try:
-        db.session.add(ordem)
-        db.session.commit()
-        regis = RegistroDaOS(data=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))), 
-                                statusA='', novoS=0, valorTotal=0, problema=ordem.problema, mecanico=id, ordemDeServico=ordem.id)      
-        db.session.add(regis) 
-        db.session.commit()
-        return jsonify({'msg': 'Registri efetuado com sucesso'}), 201
-    except Exception as e:
-        db.session.rollback()
-        print(e)
-        return jsonify({'msg': 'Erro ao salvar', 'error': str(e)}), 500
-
+        try:
+            db.session.add(ordem)
+            db.session.commit()
+            regis = RegistroDaOS(data=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))), 
+                                    statusA='', novoS=0, valorTotal=0, problema=ordem.problema, mecanico=id, ordemDeServico=ordem.id)      
+            db.session.add(regis) 
+            db.session.commit()
+            return jsonify({'msg': 'Registri efetuado com sucesso'}), 201
+        except Exception as e:
+            db.session.rollback()
+            print(e)
+            return jsonify({'msg': 'Erro ao salvar', 'error': str(e)}), 500
+    else:
+        return jsonify({'msg': 'CPF inválido'}), 401
 
 def altera_orcamento_ordemDeServico(id, mecanico):
     ordem = OrdemDeServico.query.get(id)

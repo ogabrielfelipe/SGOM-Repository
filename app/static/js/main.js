@@ -66,3 +66,23 @@ function Envia(entry, url, method){
     });
 }
 
+
+
+function Envia2(entry, url, method){
+    return new Promise((resolve, reject)=>{
+        $.ajax({
+            url: url,
+            type: method,
+            data: JSON.stringify(entry),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (jqXHR, textStatus, msg) {
+                resolve(jqXHR)
+            },
+            error: function (error) {
+                reject(error)
+            }
+        });
+    });
+}
+
