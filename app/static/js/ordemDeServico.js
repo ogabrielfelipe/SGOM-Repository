@@ -415,7 +415,7 @@ function salvarOrdemDeServico() {
     }
     console.log(dados)
     Envia(dados, '/OrdemDeServico/Abertura', 'POST')
-    document.getElementById("osAux").value
+    
     if (document.getElementById("osAux").value>0) {
         alert('OS Cadastrada com Sucesso')
     } else { alert('Ocorreu um Erro ao Cadastrar a OS') }
