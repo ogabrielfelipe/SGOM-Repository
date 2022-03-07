@@ -638,7 +638,6 @@ function EnviaOrdemDeServico(entry, url, method){
             contentType: 'application/json; charset=utf-8',
             statusCode:{
                 201: function(){
-
                     $('#alerta_sucesso').css({"display": "block"});
                     $('#title_alerta').text("Sucesso");              
                     $('#body_alerta').text("Executado com sucesso!");
