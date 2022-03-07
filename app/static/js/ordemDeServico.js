@@ -1,6 +1,8 @@
+const urlParams = new URLSearchParams(window.location.search);
+var IdOS_Home = urlParams.get('OS');
+var estadoAtualDoVeiculoOs;
+
 $(document).ready(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    var IdOS_Home = urlParams.get('OS');
     console.log(IdOS_Home)
 
 
@@ -49,6 +51,7 @@ $(document).ready(() => {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                            document.querySelector("#btn-salvar").disabled = false;
                         }
                     });
                 console.log(statusOs)
@@ -230,6 +233,7 @@ $(document).ready(() => {
         document.querySelector("#floatingSelect").disabled = false;
         document.querySelector("#exampleFormControlTextarea1").disabled = false;
         document.querySelector("#btn-salvar").disabled = false;
+        
         // cancelar disabled
 
         document.getElementById("pinturaEstado").disabled = false;
@@ -255,6 +259,7 @@ $(document).ready(() => {
 
         document.getElementById("funcionamentoEstado").disabled = false;
         document.getElementById("funcionamentoObs").disabled = false;
+        
         // limpar estado do veiculo
 
         document.getElementById("pinturaEstado").value = "EXCELENTE";
@@ -387,40 +392,118 @@ function Envia(entry, url, method) {
 
 function salvarOrdemDeServico() {
     var placa = document.getElementById("PlacaOSf").value;
-    var nomerequerente = document.getElementById("nomeRequerente").value;
-    var cpfRequerente = document.getElementById("CPFR").value;
-    var telRequerente = document.getElementById("TELR").value;
-    var reqOrcamento = document.getElementById("floatingSelect").value;
-    var problema = document.getElementById("exampleFormControlTextarea1").value;
+        var nomerequerente = document.getElementById("nomeRequerente").value;
+        var cpfRequerente = document.getElementById("CPFR").value;
+        var telRequerente = document.getElementById("TELR").value;
+        var reqOrcamento = document.getElementById("floatingSelect").value;
+        var problema = document.getElementById("exampleFormControlTextarea1").value;
 
-    if (reqOrcamento == 1) {
-        reqOrcamento = true;
-    } else {
-        reqOrcamento = false;
+        if (reqOrcamento == 1) {
+            reqOrcamento = true;
+        } else {
+            reqOrcamento = false;
+        }
+
+        var idPlaca = $('#idVeiculo').val();
+
+    if(IdOS_Home == null){
+
+        dados = {
+            "nomeRequerente": nomerequerente,
+            "cpfDoRequerente": cpfRequerente,
+            "telefoneRequerente": telRequerente,
+            "problema": problema,
+            "requisicaoOrcamento": reqOrcamento,
+            "estadoAtualDoVeiculo": estadoAtualDoVeiculoOs,
+            "carro": parseInt(idPlaca)
+
+        }
+        console.log(dados)
+
+        EnviaOrdemDeServico(dados, '/OrdemDeServico/Abertura', 'POST')
+
+    } else{
+        entry = {
+            "id": IdOS_Home,
+            "nomeRequerente": '',
+            "status": ''
+        }
+
+        Envia(entry, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+            .then((data) => {
+                response = data['dados']
+                var statusAtual = response[0]['status']
+                switch (statusAtual) {
+                    case 'ACEITA':
+                        dados = {
+                            
+                        }
+                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+
+                        //
+                        // Função que muda o status da OS:
+                        //
+                        
+                        //Envia({}, '/OrdemDeServico/RegistraOrcamento/' + response[0]['id_os'], 'POST');
+                        break;
+
+                    case 'AGUARDANDOAPROVACAO':
+                        dados = {
+                            
+                        }
+                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                        
+                        //
+                        // Função que muda o status da OS:
+                        //
+                        
+                        //Envia({}, '/OrdemDeServico/Avaliar/' + response[0]['id_os'], 'POST');
+                        break;
+
+                    case 'APROVADA':
+                        dados = {
+                            
+                        }
+                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                        
+                        //
+                        // Função que muda o status da OS:
+                        //
+                        
+                        //Envia({}, '/OrdemDeServico/Atender/' + response[0]['id_os'], 'POST');
+                        break;
+
+                    case 'EMATENDIMENTO':
+                        dados = {
+                            
+                        }
+                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                        
+                        //
+                        // Função que muda o status da OS:
+                        //
+                        
+                        //Envia({}, '/OrdemDeServico/Concluir/' + response[0]['id_os'], 'POST');
+                        break;
+
+                    case 'AGUARDANDOPAGAMENTO':
+                        dados = {
+                            
+                        }
+                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                        
+                        //
+                        // Função que muda o status da OS:
+                        //
+                        
+                        //Envia({}, '/OrdemDeServico/Finalizar/' + response[0]['id_os'], 'POST');
+                        break;
+
+                    default:
+                        console.log('Status da OS no switch case do botão Salvar: ' + statusAtual);
+                }
+            });
     }
-
-    var idPlaca = $('#idVeiculo').val();
-
-    //console.log(placa)
-    dados = {
-        "nomeRequerente": nomerequerente,
-        "cpfDoRequerente": cpfRequerente,
-        "telefoneRequerente": telRequerente,
-        "problema": problema,
-        "requisicaoOrcamento": reqOrcamento,
-        "estadoAtualDoVeiculo": estadoAtualDoVeiculoOs,
-        "carro": parseInt(idPlaca)
-
-    }
-    console.log(dados)
-    EnviaOrdemDeServico(dados, '/OrdemDeServico/Abertura', 'POST')
-
-    //document.getElementById("osAux").value
-    //if (document.getElementById("osAux").value>0) {
-    //    alert('OS Cadastrada com Sucesso')
-    //} else { alert('Ocorreu um Erro ao Cadastrar a OS') }
-
-
 }
 
 $('#btn_pesquisarOs').click(() => {
@@ -553,9 +636,13 @@ $('#btnSelecionarOs').click(() => {
             if (statusOs === "ACEITA") {
                 document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                 document.getElementById("custoMecanico").style.visibility = "visible";
+                document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                document.querySelector("#btn-salvar").disabled = false;
             }
         });
 })
+
+
 $('#btnSalvarEstado').click(() => {
     var pinturaEstado = document.getElementById("pinturaEstado").value;
     var pinturaObs = document.getElementById("pinturaObs").value;
@@ -624,7 +711,7 @@ $('#btnSalvarEstado').click(() => {
     ]
     estadoAtualDoVeiculoOs = JSON.stringify(dados);
 })
-var estadoAtualDoVeiculoOs;
+
 
 
 
