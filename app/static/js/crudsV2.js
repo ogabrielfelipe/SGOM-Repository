@@ -39,6 +39,7 @@ function Envia(entry, url, method) {
 //================================================================================
 function setTableVeiculos(resp) {
     (resp.then((data) => {
+        $('#tbodyListVeiculos tr').remove();
         response = data['dados'];
         for (dadosAtual of response) {
             $('#tbodyListVeiculos').append(
@@ -53,11 +54,15 @@ function setTableVeiculos(resp) {
             )
         }
     }));
+    console.log($('#tbodyListVeiculos').val());
 }
 function setTableFuncionarios(resp) {
+    console.log($('#tbodyListFuncionarios tr').val());
     (resp.then((data) => {
         response = data['dados'];
         // console.log($('#tbodyListFuncionarios'));
+        $('#tbodyListFuncionarios tr').empty();
+        $('#tbodyListFuncionarios tr').remove();
         for (dadosAtual of response) {
             // console.log('Status:  '+dadosAtual['status']);
             $('#tbodyListFuncionarios').append(
@@ -85,9 +90,11 @@ function setTableFuncionarios(resp) {
             //console.log(typeof dadosAtual['tipoFuncionario']);
         }
     }));
+    //console.log($('#tbodyListFuncionarios ').val());
 }
 function setTableItens(resp) {
     (resp.then((data) => {
+        $('#tbodyListItem tr').remove();
         response = data['dados'];
         for (dadosAtual of response) {
             $('#tbodyListItem').append(
@@ -173,13 +180,13 @@ $(document).ready(() => {
 
     //-------------- DASHBOARDS -------------
     $('#crud-veic').click(() => {
-        $('#tbodyListVeiculos').empty();
+        $('#tbodyListVeiculos tr').remove();
         zerarCamposModel(modalCrudVeiculo);
         zerarCamposModel(modalCadastrarVeiculo);
         setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
     });
     $('#crud-func').click(() => {
-        $('#tbodyListFuncionarios').empty();
+        $('#tbodyListFuncionarios tr').remove();
         zerarCamposModel(modalCrudFuncionario);
         $('#auxIdFuncionario').val('-1');
         setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
@@ -187,12 +194,12 @@ $(document).ready(() => {
     $('#crud-itemOrca').click(()=>{
         zerarCamposModel(modalCrudItem);
         zerarCamposModel(modalCadastrarItem);
-        $('#tbodyListItem').empty();
+        $('#tbodyListItem tr').remove();
         setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
     })
     //-------------- BTN CLOSE -------------
     $('#btnCloseVeiculo').click(() => {
-        $('#tbodyListVeiculos').empty();
+        $('#tbodyListVeiculos tr').remove();
         zerarCamposModel(modalCrudVeiculo);
         zerarCamposModel(modalCadastrarVeiculo);
         setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
@@ -205,7 +212,7 @@ $(document).ready(() => {
     $('#btnCloseItem').click(()=>{
         zerarCamposModel(modalCrudItem);
         zerarCamposModel(modalCadastrarItem);
-        $('#tbodyListItem').empty();
+        $('#tbodyListItem tr').remove();
         setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
     });
     //-------------- BTN NOVO -------------
@@ -340,9 +347,10 @@ $(document).ready(() => {
                 else
                     Envia({}, FUNCIONARIO_ATIVAR_PATH + idFuncionario, `PATCH`);
                 zerarCamposModel(modalCrudFuncionario);
-                $('#tbodyListFuncionarios').empty();
-                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+                $('#tbodyListFuncionarios tr').empty();
+                $('#tbodyListFuncionarios tr').remove();
                 alert('Funcionario status alterado')
+                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
             }
         }))
     });
@@ -383,8 +391,9 @@ $(document).ready(() => {
 
                 zerarCamposModel(modalCrudVeiculo);
                 zerarCamposModel(modalCadastrarVeiculo);
+                $('#tbodyListVeiculos tr').empty();
+                $('#tbodyListVeiculos tr').remove();
                 alert('Veiculo Cadastrado')
-                $('#tbodyListVeiculos').empty();
                 setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
             }
             else {
@@ -398,7 +407,7 @@ $(document).ready(() => {
 
                 alert('Veiculo Editado');
 
-                $('#tbodyListVeiculos').empty();
+                $('#tbodyListVeiculos tr').remove();
                 setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
             }
         }
@@ -422,9 +431,10 @@ $(document).ready(() => {
                 console.log('CADASTRO');
                 const resp = Envia(funcionario, FUNCIONARIO_CAD_PATH, `POST`);
                 console.log(resp);
-                $('#tbodyListFuncionarios').empty();
-                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+                $('#tbodyListFuncionarios tr').empty();
+                $('#tbodyListFuncionarios tr').remove();
                 alert('Funcionario Cadastro');
+                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
 
             } else {
                 console.log('EDIÇÃO')
@@ -433,11 +443,9 @@ $(document).ready(() => {
                 }
                 console.log(funcionario);
                 console.log(FUNCIONARIO_UP_PATH + idFuncionario);
-                const resp = Envia(funcionario, FUNCIONARIO_UP_PATH + idFuncionario, `POST`);
-                //console.log(resp);
-                $('#tbodyListFuncionarios').empty();
-                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+                const resp = Envia(funcionario, FUNCIONARIO_UP_PATH + idFuncionario, `PATCH`);
                 alert('Funcionario Editado');
+                setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
             }
             zerarCamposModel(modalCrudFuncionario);
             zerarCamposModel(modalCadastrarFuncinoario);
@@ -461,19 +469,21 @@ $(document).ready(() => {
                 console.log(item);
                 const resp = Envia(item, ITEM_CAD_PATH, `POST`);
                 console.log(resp);
-                alert('Item Cadastrado');
                 zerarCamposModel(modalCrudItem);
                 zerarCamposModel(modalCadastrarItem);
-                $('#tbodyListItem').empty();
+                $('#tbodyListItem tr').empty();
+                $('#tbodyListItem tr').remove();
+                alert('Item Cadastrado');
                 setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
             } else{
                 console.log('UPDATE')
                 const resp = Envia(item, ITEM_UP_PATH + idItem, `PATCH`);
                 console.log(resp);
-                alert('Item Editado');
                 zerarCamposModel(modalCrudItem);
                 zerarCamposModel(modalCadastrarItem);
-                $('#tbodyListItem').empty();
+                $('#tbodyListItem tr').remove();
+                $('#tbodyListItem tr').empty();
+                alert('Item Editado');
                 setTableItens(Envia({},ITEM_LIST_PATH,`POST`));
             }
 
