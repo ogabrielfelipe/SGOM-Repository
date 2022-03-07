@@ -11,7 +11,6 @@ $(document).ready(() => {
         "status": ''
     }
 
-
     if (IdOS_Home != null) {
         Envia(entry, '/OrdemDeServico/BuscaPersonalizada', 'POST')
             .then((data) => {
@@ -414,11 +413,12 @@ function salvarOrdemDeServico() {
 
     }
     console.log(dados)
-    Envia(dados, '/OrdemDeServico/Abertura', 'POST')
-    document.getElementById("osAux").value
-    if (document.getElementById("osAux").value>0) {
-        alert('OS Cadastrada com Sucesso')
-    } else { alert('Ocorreu um Erro ao Cadastrar a OS') }
+    EnviaOrdemDeServico(dados, '/OrdemDeServico/Abertura', 'POST')
+
+    //document.getElementById("osAux").value
+    //if (document.getElementById("osAux").value>0) {
+    //    alert('OS Cadastrada com Sucesso')
+    //} else { alert('Ocorreu um Erro ao Cadastrar a OS') }
 
 
 }
@@ -626,3 +626,53 @@ $('#btnSalvarEstado').click(() => {
 })
 var estadoAtualDoVeiculoOs;
 
+
+
+function EnviaOrdemDeServico(entry, url, method){
+    return new Promise((resolve, reject)=>{
+        $.ajax({
+            url: url,
+            type: method,
+            data: JSON.stringify(entry),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            statusCode:{
+                201: function(){
+
+                    $('#alerta_sucesso').css({"display": "block"});
+                    $('#title_alerta').text("Sucesso");              
+                    $('#body_alerta').text("Executado com sucesso!");
+                    
+                    $('.toast').toast('show');
+                },
+                200: function(){
+                    $('#alerta_sucesso').css({"display": "block"});
+                    $('#title_alerta').text("Sucesso");              
+                    $('#body_alerta').text("Executado com sucesso!");
+                    
+                    $('.toast').toast('show');
+                },
+                401: function(){
+                    $('#alerta_advertencia').css({"display": "block"});
+                    $('#title_alerta').text("Atenção");              
+                    $('#body_alerta').text("Não foi possível concluir a requisição");
+                    
+                    $('.toast').toast('show');
+                },
+                500: function(){
+                    $('#alerta_error').css({"display": "block"});
+                    $('#title_alerta').text("Erro ");              
+                    $('#body_alerta').text("Não foi possível Salvar o registro");
+                    
+                    $('.toast').toast('show');
+                },
+            },
+            success: function (data) {
+                resolve(data)
+            },
+            error: function (error) {
+                reject(error)
+            }
+        });
+    });
+}
