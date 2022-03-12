@@ -5,13 +5,13 @@ from ..controller.servicosController import cad_servicos
 
 
 @app.route('/Home', methods=['GET'])
-#@login_required
+@login_required
 def root():
     return render_template('home.html')
 
 
 @app.route('/OrdemDeServico', methods=['GET'])
-#@login_required
+@login_required
 def root_ordemDeServico():
     return render_template('ordemDeServico.html')
 

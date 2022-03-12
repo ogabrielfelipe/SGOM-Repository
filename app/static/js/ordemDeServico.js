@@ -1,5 +1,8 @@
 var estadoAtualDoVeiculoOs;
 
+const urlParams = new URLSearchParams(window.location.search);
+var IdOS_Home = urlParams.get('OS');
+
 $(document).ready(() => {
     const urlParams = new URLSearchParams(window.location.search);
     var IdOS_Home = urlParams.get('OS');

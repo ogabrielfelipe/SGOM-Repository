@@ -31,13 +31,13 @@ def alter_carro(codigo):
 
 
 @car.route('/Carro/Busca/<string:placa>', methods=['POST'])
-#@login_required
+@login_required
 def busc_carro(placa):
     return busca_carro_route(placa) 
 
 
 @car.route('/Carro/BuscaCarros', methods=['POST'])
-#@login_required
+@login_required
 def busc_carros():
     return busca_carros()     
 
