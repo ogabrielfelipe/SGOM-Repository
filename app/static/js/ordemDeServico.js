@@ -1,10 +1,9 @@
-const urlParams = new URLSearchParams(window.location.search);
-var IdOS_Home = urlParams.get('OS');
 var estadoAtualDoVeiculoOs;
 
 $(document).ready(() => {
-    console.log(IdOS_Home)
-
+    const urlParams = new URLSearchParams(window.location.search);
+    var IdOS_Home = urlParams.get('OS');
+    console.log(IdOS_Home);
 
     // função carrega OS da HOME
     entry = {
@@ -338,7 +337,6 @@ $(document).ready(() => {
                     });
                 });
         }
-
     });
 
     $('#btnFazerOrcamento').click(function () {
@@ -406,7 +404,7 @@ function salvarOrdemDeServico() {
 
         var idPlaca = $('#idVeiculo').val();
 
-    if(IdOS_Home == null){
+    if(IdOS_Home == null){  //USAR UM HIDEN NO HTML PARA SALVAR O VALOR DO ID
 
         dados = {
             "nomeRequerente": nomerequerente,
@@ -435,8 +433,10 @@ function salvarOrdemDeServico() {
                 var statusAtual = response[0]['status']
                 switch (statusAtual) {
                     case 'ACEITA':
-                        dados = {
-                            
+                        dados = {   //PREENCHER E REALOCAR
+                            "problema": '',
+                            "quant_item": '',
+                            "custoMecanico": ''
                         }
                         EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
 
