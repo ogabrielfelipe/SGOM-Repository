@@ -631,23 +631,14 @@
                     <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-
-                        <div class="col">
-                            <button id="btnNovoFuncionario" data-bs-toggle="modal"
+                    <div class="container-fluid">
+                        <button id="btnNovoFuncionario" data-bs-toggle="modal"
                                 data-bs-target="#ModalCadastrarFuncionario" type="button"
                                 class="btn btn-dark">Novo</button>
-                        </div>
-
-                        <div class="col">
-                            <button id="btnEditar" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                data-bs-target="#ModalCadastrarFuncionario" style="margin-right: 10px;">Editar</button>
-                        </div>
-
-                        <div class="col">
-                            <button id="btnAlterarStatus" type="button" class="btn btn-danger"
-                                style="margin-right: 10px;">Alterar Status</button>
-                        </div>
+                        <button id="btnEditar" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                data-bs-target="#ModalCadastrarFuncionario" style="margin-right: 1px;">Editar</button>
+                        <button id="btnAlterarStatus" type="button" class="btn btn-secondary"
+                                style="margin-right: 10px;">Ativar/Inativar Funcionario</button>
                     </div>
 
                     <a class="#" id="auxIdFuncionario" hidden></a>
@@ -663,48 +654,43 @@
                     <div class="modal-header">
                     </div>
                     <!--  -->
-                    <div class="row">
+            
                         <!-- Pesquisar Status -->
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="form-floating" style="max-width: 200px;">
-                                        <select class="form-select complete-input infoFuncionarios"
-                                            id="selectStatusFuncionario" aria-label="select label">
-                                            <option value="-1" style="background-color: #131418; color: white">
-                                                Seleciona o status</option>
-                                            <option value="0" style="background-color: #131418; color: white">Inativo
-                                            </option>
-                                            <option value="1" style="background-color: #131418; color: white">Ativo
-                                            </option>
-                                        </select>
-                                        <label for="selectStatusFuncionario" style="margin-left: 10px;">Tipo:</label>
+                        <div class="d-flex flex-row ">
+                            <div class="w-75 align-self-end " style="margin-right: 2%;">       
+                                <input id="inp_pesquisaFuncNome" type="text" class="form-control complete-input"
+                                        placeholder="Nome do funcionario" aria-label="First name">
+                            </div>
+                                    <div class="form-floating " style="max-width: 200px;min-width: 20%; ; margin-right: 2%;">
+                                            <select class="form-select complete-input infoFuncionarios"
+                                                id="selectStatusFuncionario" aria-label="select label">
+                                                <option value="-1" style="background-color: #131418; color: white">
+                                                    Seleciona o status</option>
+                                                <option value="0" style="background-color: #131418; color: white">Inativo
+                                                </option>
+                                                <option value="1" style="background-color: #131418; color: white">Ativo
+                                                </option>
+                                            </select>
+                                            <label for="selectStatusFuncionario" style="margin-left: 10px;">Tipo:</label>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <button id="btnPesquisarFunc" type="button" class="btn btn-dark"
-                                    style="margin-right: 10px;">Pesquisar</button>
-                            </div>
+                                    <div class="align-self-end">
+                                        <button id="btnPesquisarFunc" type="button" class="btn btn-dark"
+                                            style="margin-right: 10px;">Pesquisar</button>
+                                    </div>
+                        </div>
                             <!-- 
                             <div class="col">
                                 <button id="btnPesquisarFuncStatus" type="button" class="btn btn-dark"
                                     style="margin-right: 10px;">Pesquisar</button>
                             </div>
                              -->
-                        </div>
+                       
                         <!-- Pesquisar Nome -->
-                        <div class="row">
-                            <div class="col">
-                                <input id="inp_pesquisaFuncNome" type="text" class="form-control complete-input"
-                                    placeholder="Nome do funcionario" aria-label="First name">
-                            </div>
                             <!-- <div class="col">
                                 <button type="button" id="btnPesquisaFuncNome" class="btn btn-dark"
                                     style="margin-right: 10px;">Pesquisar</button>
                             </div> -->
-                        </div>
-                    </div>
+                    
 
                     <!--  -->
                     <table class="table table-dark " id="tblFuncionario" style="margin-top: 15px; cursor: pointer;">
