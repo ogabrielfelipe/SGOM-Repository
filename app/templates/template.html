@@ -52,10 +52,12 @@
                             Cadastro
                         </a>
                         <ul class="dropdown-menu bg-dark" aria-labelledby="downMenuCadastro">
-                            <li><a id="crud-func" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#ModalCrudFuncionario">Funcionário</a></li>
-                            <li>
-                                <hr class="dropdown-divider text-light">
+                            {% if current_user.tipoFuncionario.name == 'GERENTE': %}
+                                <li><a id="crud-func" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
+                                        data-bs-target="#ModalCrudFuncionario">Funcionário</a></li>
+                                <li>
+                                    <hr class="dropdown-divider text-light">
+                            {% endif %}
                             </li>
                             <li><a id="crud-veic" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
                                     data-bs-target="#ModalCrudVeiculos">Veículo</a></li>
@@ -73,12 +75,15 @@
                         </a>
                         <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuRelatorio">
                             <li><a class="dropdown-item text-light" data-bs-toggle="modal" data-bs-target="#RelatorioOS"
-                                    id="btnChamaOS">Ordem de Serviço</a></li>
+                                    id="btnChamaOS">Ordem de Serviço</a>
+                            </li>
+                            {% if current_user.tipoFuncionario.name == 'GERENTE': %}
                             <li>
                                 <hr class="dropdown-divider text-light">
                             </li>
-                            <li><a class="dropdown-item text-light" data-bs-toggle="modal"
-                                    data-bs-target="#RelatorioFinanceiro" id="btnChamaFinanceiro">Financeiro</a></li>
+                                <li><a class="dropdown-item text-light" data-bs-toggle="modal"
+                                        data-bs-target="#RelatorioFinanceiro" id="btnChamaFinanceiro">Financeiro</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>
@@ -136,7 +141,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" hidden>
                         <div class="col">
                             <div class="input-group mb-3" style="max-width: 160px;">
                                 <input type="text" class="form-control complete-input text-white" placeholder="Placa"
@@ -148,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" hidden>
                         <div class="col">
                             <div class="input-group mb-3" style="max-width: 200px;">
                                 <input type="text" class="form-control complete-input text-white"
@@ -161,7 +166,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" hidden>
                         <div class="form-floating" style="max-width: 200px;">
                             <select class="form-select complete-input" id="SelectStatusOS" aria-label="select label">
                                 <option value="" style="background-color: #131418; color: white">Seleciona Status
@@ -396,6 +401,40 @@
                             <span>R$&nbsp;</span>
                             <span id="valT" style="font-weight: 400;"></span>
                         </div>
+
+
+
+
+
+                        <div
+                            style="display: flex; justify-content: center; margin-top: 10px; background-color: rgb(151, 151, 151);">
+                            <span style="font-weight: 800;">Histórico da Ordem de Serviço</span>
+                        </div>
+
+                        <div style="margin-bottom: 5px;">
+                            <table style="width: 100%; border: 1px solid black; text-align: center;"
+                                id="tableRelRegisOS">
+                                <thead>
+                                    <th>Data do Histório</th>
+                                    <th>Status</th>
+                                    <th>Funcionário</th>
+                                    <th>Problema</th>
+                                </thead>
+                                <tbody style="border: 1px solid black;" id="tbodytableRelRegisOS">
+                                    <tr style="border: 1px solid black;">
+                                        <td style="border: 1px solid black;">Item Orçamento</td>
+                                        <td style="border: 1px solid black;">1</td>
+                                        <td style="border: 1px solid black;">15</td>
+                                        <td style="border: 1px solid black;">
+                                            <span>R$&nbsp;</span>
+                                            <span id="valorTotalTable"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
 
 
                     </div>

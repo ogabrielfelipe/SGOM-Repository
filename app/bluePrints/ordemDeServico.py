@@ -110,10 +110,10 @@ def relatorio_route_financeiro():
 @ordem.route('/OrdemDeServico/Home/Totais', methods=['POST'])
 @login_required
 def total_os_route():
-    return total_ordemDeServico_status()
+    return total_ordemDeServico_status(current_user)
 
 
 @ordem.route('/OrdemDeServico/Home/BuscaOS', methods=['POST'])
 @login_required
 def busca_os_home():
-    return busca_os_status_home()
+    return busca_os_status_home(current_user)

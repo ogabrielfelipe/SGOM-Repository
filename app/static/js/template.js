@@ -134,15 +134,9 @@ $(document).ready(()=>{
 
     //Funcionalidade de Imprimir Relatório OS
     $('#btnImprimirOSRelatorio').click(() => {
-        var status = $('#SelectStatusOS option:selected').val();
-        var placa = $('#idVeiculo').val();
-        var funcionario = $('#idFuncionario').val();
         var codigo = $('#codigoOS').val();
         entry = {
-            "codigo": codigo,
-            "placa": placa,
-            "mecanico": funcionario,
-            "status": status
+            "codigo": codigo
         }
         Envia(entry, '/OrdemDeServico/Relatorio/OrdemDeServico', 'POST')
         .then((dados) => {
@@ -172,14 +166,17 @@ $(document).ready(()=>{
                 $('#placaCarroRel').text(dadosOrdemDeServico['placa_veiculo']);        
                 $('#telPlacaRel').text(dadosOrdemDeServico['telefone_veiculo']);       
                 $('#mecanicoRel').text(dadosOrdemDeServico['mecanico']);                
+                
                 for(var i = 0; i < dadosRegistroDeServico.length; i++){      
                     let valAuxStatus = dadosRegistroDeServico[i]['status']  
                     if (valAuxStatus === 'EMABERTO'){                            
                         $('#dataA').text(dadosRegistroDeServico[i]['data_alteracao']);
                     }                    
                 }
+                
                 $('#custoM').text(dadosOrdemDeServico['custoMecanico']);
                 $('#problema').text(dadosOrdemDeServico['problema']);
+                
                 for(var i = 0; i < dadosRegistroDeServico.length; i++){      
                     let valAuxStatus = dadosRegistroDeServico[i]['status']         
                     if (valAuxStatus === 'FINALIZADA'){   
@@ -201,6 +198,21 @@ $(document).ready(()=>{
                             this.valor_item*this.quant_item +
                         '</td></tr>'
                     );
+                });
+                
+                $('#tbodytableRelRegisOS tr').remove();
+                $(dadosRegistroDeServico).each(function () {
+                    $('#tbodytableRelRegisOS').append(
+                        '<tr><td>'+ 
+                                this.data_alteracao+
+                            '</td><td>'+
+                                this.status+
+                            '</td><td>'+
+                                this.funcionario +
+                            '</td><td>'+
+                                this.problema +
+                            '</td></tr>'
+                    )
                 });
                 $('#valT').text(dadosOrdemDeServico['valorTodal']);
                 $('#ModalResultadoRelatorioOs').modal('show');
