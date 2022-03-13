@@ -3,7 +3,7 @@ from unittest import result
 from flask import request, jsonify, session
 from itsdangerous import json
 from pydantic import conset
-from sqlalchemy import text
+from sqlalchemy import func, text
 from app.model.Status import Status
 from ..model.OrdemDeServico import OrdemDeServico, ordemDeServico_schema, ordemDeServicos_schema
 from ..model.ItemOrcamento import ItemOrcamento, itemOrcamento_schema, itemOrcamentos_schema
@@ -325,22 +325,16 @@ def finalizar_ordemDeServico(id, funcionario):
 def relatorio_ordemDeServico():
     resp = request.get_json()
     entry = {
-        'o.id': int(resp['codigo']),
-        'o.carro': resp['placa'],
-        'o.mecanico': resp['mecanico'],
-        'o.status': str(resp['status'])
+        'o.id': int(resp['codigo'])
     }
     whereSQL = convertPesquisa(['='], entry)
-
-    print(whereSQL)
 
     sql_ordemDeServico = text('SELECT o.id ,o.nomeRequerente, o.cpfDoRequerente, o.telefoneRequerente, o.problema,\
                                                 o.requisicaoOrcamento, o.estadoAtualDoVeiculo, o.custoMecanico, o.valorTodal,\
                                                 o.respostaCliente, c.placa as placa_veiculo, c.telefone as telefone_veiculo ,f.nome as mecanico\
-                                            FROM ordemDeServico AS o\
-                                            LEFT JOIN carro c on c.id = o.id\
+                                            FROM ordemDeServico AS o, carro AS c\
                                             LEFT JOIN funcionario f on f.id = o.mecanico \
-                                            '+ whereSQL)
+                                            '+ whereSQL + ' AND c.id = o.carro')
 
     sql_registroDaOS = text('SELECT strftime("%d/%m/%Y %H:%M",r.data) as data_alteracao, r.novoStatus as status, f.nome as funcionario, r.problema  FROM ordemDeServico AS o\
                                 LEFT JOIN registroDaOS r ON r.ordemServico = o.id\
@@ -371,6 +365,7 @@ def relatorio_ordemDeServico():
             "Servicos": consultaSqlServico_dict
             }}), 200
     except Exception as e:
+        print(e)
         return jsonify({'msg': 'Não foi encontrado', 'dados': {}}), 500
 
 
@@ -441,43 +436,77 @@ def populate_dict(cursor, schema):
     return schema
 
 
-def total_ordemDeServico_status():
+def total_ordemDeServico_status(funcionario):
     resp = request.get_json()
     competencia = resp['competencia']  
     competenciaTratada = calcula_intervalo_mes(competencia=competencia)
     try:
+        sql_totalos = ''
+        if funcionario.tipoFuncionario.name == 'GERENTE' or funcionario.tipoFuncionario.name == 'ATENDENTE':
+            sql_totalos = text(f"SELECT DISTINCT o.status as status_os, COUNT(DISTINCT o.id) as total_os FROM ordemDeServico as o\
+                                    INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
+                                    WHERE \
+                                        rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}'\
+                                    GROUP BY\
+                                        O.status\
+                                    HAVING o.status IN ('FINALIZADA', 'EMATENDIMENTO', 'EMABERTO', 'ACEITA', 'AGUARDANDOAPROVACAO', 'APROVADA',\
+                                    'AGUARDANDOPAGAMENTO', 'CANCELADO')\
+                                    ")
+        elif funcionario.tipoFuncionario.name == 'MECANICO':
+            sql_totalos = text(f"SELECT DISTINCT o.status as status_os, COUNT(DISTINCT o.id) as total_os FROM ordemDeServico as o\
+                                    INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
+                                    WHERE \
+                                        rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND o.mecanico = {funcionario.id} OR o.mecanico is null\
+                                    GROUP BY\
+                                        O.status\
+                                    HAVING o.status IN ('FINALIZADA', 'EMATENDIMENTO', 'EMABERTO', 'ACEITA', 'AGUARDANDOAPROVACAO', 'APROVADA',\
+                                    'AGUARDANDOPAGAMENTO', 'CANCELADO')\
+                                    ")
 
-        sql_totalos = text(f"SELECT DISTINCT o.status as status_os, COUNT(DISTINCT o.id) as total_os FROM ordemDeServico as o\
-                                INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
-                                WHERE \
-                                    rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}'\
-                                GROUP BY\
-                                    O.status\
-                                HAVING o.status IN ('FINALIZADA', 'EMATENDIMENTO', 'EMABERTO', 'ACEITA', 'AGUARDANDOAPROVACAO', 'APROVADA',\
-                                'AGUARDANDOPAGAMENTO', 'CANCELADO')\
-                                ")
 
         consultatotalOS = db.session.execute(sql_totalos).fetchall()
         consultatotalOS_dict = [dict(u) for u in consultatotalOS]
         return jsonify(consultatotalOS_dict), 200
     except Exception as e:
         db.session.rollback()
+        print(e)
         return jsonify({'msg': 'Não foi possível efetuar a busca', 'dados': {}, 'error': str(e)}), 401
 
 
-def busca_os_status_home():
+def busca_os_status_home(funcionario):
     resp = request.get_json()
     competencia = resp['competencia']
     status = resp['status']
     competenciaTratada = calcula_intervalo_mes(competencia=competencia)
+    print(funcionario.tipoFuncionario.name)
     try:
-        sql_totalos = text(f"SELECT o.id, c.placa, o.nomeRequerente, o.telefoneRequerente FROM ordemDeServico o\
-                            INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
-                            INNER JOIN carro c on c.id = o.carro\
-                            WHERE o.status = '{status}' AND rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}'\
-                            GROUP BY\
-                                o.id\
-                                ")
+        if funcionario.tipoFuncionario.name == 'GERENTE' or funcionario.tipoFuncionario.name == 'ATENDENTE':
+            sql_totalos = text(f"SELECT o.id, c.placa, o.nomeRequerente, o.telefoneRequerente FROM ordemDeServico o\
+                                INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
+                                INNER JOIN carro c on c.id = o.carro\
+                                WHERE o.status = '{status}' AND rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}'\
+                                GROUP BY\
+                                    o.id\
+                                    ")
+        elif funcionario.tipoFuncionario.name == 'MECANICO':
+            if status == 'EMABERTO':
+                sql_totalos = text(f"SELECT o.id, c.placa, o.nomeRequerente, o.telefoneRequerente FROM ordemDeServico o\
+                                    INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
+                                    INNER JOIN carro c on c.id = o.carro\
+                                    WHERE o.status = '{status}' AND rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND o.mecanico is null\
+                                    GROUP BY\
+                                        o.id\
+                                        ")
+            else:
+                sql_totalos = text(f"SELECT o.id, c.placa, o.nomeRequerente, o.telefoneRequerente FROM ordemDeServico o\
+                                    INNER JOIN registroDaOS rDO on rDO.ordemServico = o.id\
+                                    INNER JOIN carro c on c.id = o.carro\
+                                    WHERE o.status = '{status}' AND rDO.data BETWEEN '{competenciaTratada[0]}' AND '{competenciaTratada[1]}' AND o.mecanico = {funcionario.id}\
+                                    GROUP BY\
+                                        o.id\
+                                        ")
+            
+            
 
         consultatotalOS = db.session.execute(sql_totalos).fetchall()
         consultatotalOS_dict = [dict(u) for u in consultatotalOS]

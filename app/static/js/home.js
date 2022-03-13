@@ -11,6 +11,15 @@ $(document).ready(function (){
         atualizaHome(competenciaHome);
     });
 
+
+    if ($('#acessoFuncionario').val() === "MECANICO"){
+        window.onload = function() {
+            if(!window.location.hash) {
+                window.location = window.location + '#carregar';
+                window.location.reload();
+            }
+        }
+    }
 });
 
 function chamaModal(event){
@@ -67,9 +76,20 @@ function atualizaTableHome(competencia, status){
         "competencia": competencia,
         "status": status
     }
+
+    var nomeBtn = ''
+
+    if (status === 'EMABERTO'){
+        nomeBtn = "Aceitar"
+    }else if (status === 'ACEITA'){        
+        nomeBtn = "Registrar Orçamento"
+    }else{
+        nomeBtn = "Visualizar"
+    }
+
+
     Envia(entry, '/OrdemDeServico/Home/BuscaOS', 'POST')
-    .then((dados) => {
-        
+    .then((dados) => {        
         $('#tbodyBuscaDadosHome tr').remove();  
         $(dados).each(function (){
             $('#tbodyBuscaDadosHome').append(
@@ -83,7 +103,7 @@ function atualizaTableHome(competencia, status){
                     this.telefoneRequerente +
                 '</td><td>'+
                     '<button class="btn btn-secondary" onclick="abreOS('+this.id+');">'+
-                    'Abrir'+
+                        nomeBtn +
                     '</button>'+
                 '</td></tr>'
             );

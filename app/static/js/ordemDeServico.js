@@ -1,9 +1,13 @@
 var estadoAtualDoVeiculoOs;
 
+const urlParams = new URLSearchParams(window.location.search);
+var IdOS_Home = urlParams.get('OS');
+
 $(document).ready(() => {
     const urlParams = new URLSearchParams(window.location.search);
     var IdOS_Home = urlParams.get('OS');
-    console.log(IdOS_Home);
+    console.log(IdOS_Home)
+
 
     // função carrega OS da HOME
     entry = {
@@ -43,9 +47,9 @@ $(document).ready(() => {
                     "nomeRequerente": '',
                     "status": ''
                 }
-                Envia(auxa, 'OrdemDeServico/BuscaPersonalizada', 'POST')
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
                     .then((data_aceita) => {
-                        console.log(data_aceita['dados'][0]['status'])
+                        console.log("Nova Consulta os: ",data_aceita['dados'][0]['status'])
                         if (data_aceita['dados'][0]['status'] == "ACEITA") {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                             document.getElementById("custoMecanico").style.visibility = "visible";
