@@ -53,11 +53,11 @@
                         </a>
                         <ul class="dropdown-menu bg-dark" aria-labelledby="downMenuCadastro">
                             {% if current_user.tipoFuncionario.name == 'GERENTE': %}
-                                <li><a id="crud-func" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
-                                        data-bs-target="#ModalCrudFuncionario">Funcionário</a></li>
-                                <li>
-                                    <hr class="dropdown-divider text-light">
-                            {% endif %}
+                            <li><a id="crud-func" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#ModalCrudFuncionario">Funcionário</a></li>
+                            <li>
+                                <hr class="dropdown-divider text-light">
+                                {% endif %}
                             </li>
                             <li><a id="crud-veic" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
                                     data-bs-target="#ModalCrudVeiculos">Veículo</a></li>
@@ -81,8 +81,8 @@
                             <li>
                                 <hr class="dropdown-divider text-light">
                             </li>
-                                <li><a class="dropdown-item text-light" data-bs-toggle="modal"
-                                        data-bs-target="#RelatorioFinanceiro" id="btnChamaFinanceiro">Financeiro</a></li>
+                            <li><a class="dropdown-item text-light" data-bs-toggle="modal"
+                                    data-bs-target="#RelatorioFinanceiro" id="btnChamaFinanceiro">Financeiro</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -683,9 +683,15 @@
                                 </div>
                             </div>
                             <div class="col">
+                                <button id="btnPesquisarFunc" type="button" class="btn btn-dark"
+                                    style="margin-right: 10px;">Pesquisar</button>
+                            </div>
+                            <!-- 
+                            <div class="col">
                                 <button id="btnPesquisarFuncStatus" type="button" class="btn btn-dark"
                                     style="margin-right: 10px;">Pesquisar</button>
                             </div>
+                             -->
                         </div>
                         <!-- Pesquisar Nome -->
                         <div class="row">
@@ -693,10 +699,10 @@
                                 <input id="inp_pesquisaFuncNome" type="text" class="form-control complete-input"
                                     placeholder="Nome do funcionario" aria-label="First name">
                             </div>
-                            <div class="col">
+                            <!-- <div class="col">
                                 <button type="button" id="btnPesquisaFuncNome" class="btn btn-dark"
                                     style="margin-right: 10px;">Pesquisar</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
