@@ -1,107 +1,101 @@
-:root{
-    --color-background: #131418;
-    --color-background2: rgba(255, 255, 255, 0.356);
-    --color-font: rgb(243, 241, 241);
-    --font-default: 'Roboto', sans-serif;
-    --color-background-focus: #4b4e5a;
-    
+:root {
+  --color-background: #131418;
+  --color-background2: rgba(255, 255, 255, 0.356);
+  --color-font: rgb(243, 241, 241);
+  --font-default: "Roboto", sans-serif;
+  --color-background-focus: #4b4e5a;
 }
-.form-control:disabled{
- background: #6e6e6e;   
+.form-control:disabled {
+  background: #6e6e6e;
 }
-.form-select:disabled{
-    background: #6e6e6e;
+.form-select:disabled {
+  background: #6e6e6e;
 }
 
 input::placeholder {
-    color: var(--color-font);
+  color: var(--color-font);
 }
 
-.complete-container{
-    background-color: var(--color-background);
-    font-family: var(--font-default);
-    box-shadow: 0 0 1em black;
+.complete-container {
+  background-color: var(--color-background);
+  font-family: var(--font-default);
+  box-shadow: 0 0 1em black;
 }
 
-.complete-nav{
-    color: var(--color-font);    
+.complete-nav {
+  color: var(--color-font);
 }
-.complete-nav-down{
-    display: block;
+.complete-nav-down {
+  display: block;
 }
-.nav-down{
-    background-color: var(--color-background);
-    color: var(--color-font);
-}
-
-section{
-    background-color: var(--color-background);
+.nav-down {
+  background-color: var(--color-background);
+  color: var(--color-font);
 }
 
-section input:disabled{
-    background : #6e6e6e;
+section {
+  background-color: var(--color-background);
 }
 
-.complete-modal{
-    background-color: var(--color-background);
+section input:disabled {
+  background: #6e6e6e;
 }
 
-.complete-input{
-    background-color: var(--color-background);
-    border: none;
-    border-bottom: 1px solid wheat;
-    color: var(--color-font);
-}
-.complete-input:focus{
-    background-color: transparent;
-    color: var(--color-font);
+.complete-modal {
+  background-color: var(--color-background);
 }
 
-.complete-textarea{
-    background-color: var(--color-background2);
-    border: 1px solid var(--color-font);
+.complete-input {
+  background-color: var(--color-background);
+  border: none;
+  border-bottom: 1px solid wheat;
+  color: var(--color-font);
 }
-.complete-textarea:focus{
-    
-    background-color: var(--color-background2);
-    border: 1px solid var(--color-font);
-}
-.focus-table{
-    background-color: var(--color-font);
+.complete-input:focus {
+  background-color: transparent;
+  color: var(--color-font);
 }
 
-
-.section{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+.complete-textarea {
+  background-color: var(--color-background2);
+  border: 1px solid var(--color-font);
+}
+.complete-textarea:focus {
+  background-color: var(--color-background2);
+  border: 1px solid var(--color-font);
+}
+.focus-table {
+  background-color: var(--color-font);
 }
 
-.complete-modal{
-    background-color: var(--color-background);
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.complete-input{
-    background-color: var(--color-background);
-    border: none;
-    border-bottom: 1px solid wheat;
-    color: var(--color-font);
-}
-.complete-input:focus{
-    background-color: transparent;
+.complete-modal {
+  background-color: var(--color-background);
 }
 
-.complete-textarea{
-    background-color: var(--color-background2);
-    border: 1px solid var(--color-font);
+.complete-input {
+  background-color: var(--color-background);
+  border: none;
+  border-bottom: 1px solid wheat;
+  color: var(--color-font);
 }
-.complete-textarea:focus{
-    
-    background-color: var(--color-background2);
-    border: 1px solid var(--color-font);
-}
-.focus-table{
-    background-color: var(--color-font);
+.complete-input:focus {
+  background-color: transparent;
 }
 
-
+.complete-textarea {
+  background-color: var(--color-background2);
+  border: 1px solid var(--color-font);
+}
+.complete-textarea:focus {
+  background-color: var(--color-background2);
+  border: 1px solid var(--color-font);
+}
+.focus-table {
+  background-color: var(--color-font);
+}

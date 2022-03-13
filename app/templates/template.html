@@ -53,11 +53,11 @@
                         </a>
                         <ul class="dropdown-menu bg-dark" aria-labelledby="downMenuCadastro">
                             {% if current_user.tipoFuncionario.name == 'GERENTE': %}
-                                <li><a id="crud-func" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
-                                        data-bs-target="#ModalCrudFuncionario">Funcionário</a></li>
-                                <li>
-                                    <hr class="dropdown-divider text-light">
-                            {% endif %}
+                            <li><a id="crud-func" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#ModalCrudFuncionario">Funcionário</a></li>
+                            <li>
+                                <hr class="dropdown-divider text-light">
+                                {% endif %}
                             </li>
                             <li><a id="crud-veic" class="dropdown-item text-light" href="#" data-bs-toggle="modal"
                                     data-bs-target="#ModalCrudVeiculos">Veículo</a></li>
@@ -81,8 +81,8 @@
                             <li>
                                 <hr class="dropdown-divider text-light">
                             </li>
-                                <li><a class="dropdown-item text-light" data-bs-toggle="modal"
-                                        data-bs-target="#RelatorioFinanceiro" id="btnChamaFinanceiro">Financeiro</a></li>
+                            <li><a class="dropdown-item text-light" data-bs-toggle="modal"
+                                    data-bs-target="#RelatorioFinanceiro" id="btnChamaFinanceiro">Financeiro</a></li>
                             {% endif %}
                         </ul>
                     </li>
@@ -542,30 +542,31 @@
                     <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="d-flex flex-row w-100"> 
 
-                        <div class="col">
-                            <button id="btnNovoVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
-                                type="button" class="btn btn-dark">Novo</button>
-                        </div>
-                        <div class="col">
+                        
+                        <button id="btnNovoVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
+                            type="button" class="btn btn-dark">Novo</button>
+                    
+                    
+                        <button id="btnEditarVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
+                            type="button" class="btn btn-dark" style="margin-left: 1%;">Alterar</button>
+                    
+                    
+                        <button id="btnExcluirVei" type="button" class="btn btn-danger" style="margin-left: 1%;">Excluir</button>
+                    <div class="d-flex justify-content-end w-100" >
+                        <div class="w-25">
                             <input id="inp_pesquisaPlaca" type="text" class="form-control complete-input"
-                                placeholder="Placa do Carro" aria-label="First name">
+                                placeholder="Placa do Carro" aria-label="First name" style="margin-left: 2%;">
                         </div>
 
-                        <div class="col">
-                            <button type="button" id="btnPesquisaVeiculoCad" class="btn btn-dark"
-                                style="margin-right: 10px;">Pesquisar</button>
-                        </div>
-
-                        <div class="col">
-                            <button id="btnEditarVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
-                                type="button" class="btn btn-dark">Alterar</button>
-                        </div>
-                        <div class="col">
-                            <button id="btnExcluirVei" type="button" class="btn btn-danger">Excluir</button>
-                        </div>
+                    
+                        <button type="button" id="btnPesquisaVeiculoCad" class="btn btn-dark"
+                            style="margin-left: 2%;">Pesquisar</button>
                     </div>
+                    
+
+                </div>
                     <a id="auxIdVeiculo" hidden></a>
                     <a id="auxPlaca" hidden></a>
                     <a id="auxTelefone" hidden></a>
@@ -631,23 +632,14 @@
                     <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-
-                        <div class="col">
-                            <button id="btnNovoFuncionario" data-bs-toggle="modal"
+                    <div class="container-fluid">
+                        <button id="btnNovoFuncionario" data-bs-toggle="modal"
                                 data-bs-target="#ModalCadastrarFuncionario" type="button"
                                 class="btn btn-dark">Novo</button>
-                        </div>
-
-                        <div class="col">
-                            <button id="btnEditar" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                data-bs-target="#ModalCadastrarFuncionario" style="margin-right: 10px;">Editar</button>
-                        </div>
-
-                        <div class="col">
-                            <button id="btnAlterarStatus" type="button" class="btn btn-danger"
-                                style="margin-right: 10px;">Alterar Status</button>
-                        </div>
+                        <button id="btnEditar" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                data-bs-target="#ModalCadastrarFuncionario" style="margin-right: 1px;">Editar</button>
+                        <button id="btnAlterarStatus" type="button" class="btn btn-secondary"
+                                style="margin-right: 10px;">Ativar/Inativar Funcionario</button>
                     </div>
 
                     <a class="#" id="auxIdFuncionario" hidden></a>
@@ -663,42 +655,43 @@
                     <div class="modal-header">
                     </div>
                     <!--  -->
-                    <div class="row">
+            
                         <!-- Pesquisar Status -->
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="form-floating" style="max-width: 200px;">
-                                        <select class="form-select complete-input infoFuncionarios"
-                                            id="selectStatusFuncionario" aria-label="select label">
-                                            <option value="-1" style="background-color: #131418; color: white">
-                                                Seleciona o status</option>
-                                            <option value="0" style="background-color: #131418; color: white">Inativo
-                                            </option>
-                                            <option value="1" style="background-color: #131418; color: white">Ativo
-                                            </option>
-                                        </select>
-                                        <label for="selectStatusFuncionario" style="margin-left: 10px;">Tipo:</label>
-                                    </div>
-                                </div>
+                        <div class="d-flex flex-row ">
+                            <div class="w-75 align-self-end " style="margin-right: 2%;">       
+                                <input id="inp_pesquisaFuncNome" type="text" class="form-control complete-input"
+                                        placeholder="Nome do funcionario" aria-label="First name">
                             </div>
+                                    <div class="form-floating " style="max-width: 200px;min-width: 20%; ; margin-right: 2%;">
+                                            <select class="form-select complete-input infoFuncionarios"
+                                                id="selectStatusFuncionario" aria-label="select label">
+                                                <option value="-1" style="background-color: #131418; color: white">
+                                                    Seleciona o status</option>
+                                                <option value="0" style="background-color: #131418; color: white">Inativo
+                                                </option>
+                                                <option value="1" style="background-color: #131418; color: white">Ativo
+                                                </option>
+                                            </select>
+                                            <label for="selectStatusFuncionario" style="margin-left: 10px;">Tipo:</label>
+                                    </div>
+                                    <div class="align-self-end">
+                                        <button id="btnPesquisarFunc" type="button" class="btn btn-dark"
+                                            style="margin-right: 10px;">Pesquisar</button>
+                                    </div>
+                        </div>
+                            <!-- 
                             <div class="col">
                                 <button id="btnPesquisarFuncStatus" type="button" class="btn btn-dark"
                                     style="margin-right: 10px;">Pesquisar</button>
                             </div>
-                        </div>
+                             -->
+                       
                         <!-- Pesquisar Nome -->
-                        <div class="row">
-                            <div class="col">
-                                <input id="inp_pesquisaFuncNome" type="text" class="form-control complete-input"
-                                    placeholder="Nome do funcionario" aria-label="First name">
-                            </div>
-                            <div class="col">
+                            <!-- <div class="col">
                                 <button type="button" id="btnPesquisaFuncNome" class="btn btn-dark"
                                     style="margin-right: 10px;">Pesquisar</button>
-                            </div>
-                        </div>
-                    </div>
+                            </div> -->
+                    
 
                     <!--  -->
                     <table class="table table-dark " id="tblFuncionario" style="margin-top: 15px; cursor: pointer;">
@@ -818,24 +811,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col">
+                        <div class="d-flex flex-row " style="padding-left: 0px;">
                             <button id="btnNovoItem" data-bs-toggle="modal" data-bs-target="#ModalCadastrarItemOrca"
                                 type="button" class="btn btn-dark">Novo</button>
-                        </div>
                         <!-- <div class="col">
                             <input id="inp_pesquisaItem" type="text" class="form-control complete-input"
                                 placeholder="Pesquisar nome" aria-label="First name">
                             <button type="button" id="btnPesquisaVeiculoCad" class="btn btn-dark"
                                 style="margin-right: 10px;">Pesquisar</button>
                         </div> -->
-
-                        <div class="col">
                             <button id="btnEditarItem" data-bs-toggle="modal" data-bs-target="#ModalCadastrarItemOrca"
-                                type="button" class="btn btn-dark">Alterar</button>
-                        </div>
-                        <div class="col">
-                            <button id="btnExcluirItem" type="button" class="btn btn-danger">Excluir</button>
-                        </div>
+                                type="button" class="btn btn-dark" style="margin-left: 1%;">Alterar</button>
+                            <button id="btnExcluirItem" type="button" class="btn btn-danger" style="margin-left: 1%;">Excluir</button>
+                    </div>
                         <a id="auxIdItem" hidden></a>
                         <a id="auxNome" hidden></a>
                         <a id="auxValor" hidden></a>

@@ -4,10 +4,19 @@ const urlParams = new URLSearchParams(window.location.search);
 var IdOS_Home = urlParams.get('OS');
 
 $(document).ready(() => {
+
     const urlParams = new URLSearchParams(window.location.search);
     var IdOS_Home = urlParams.get('OS');
     console.log(IdOS_Home)
 
+    document.getElementById("btnEstadoVeiculo").disabled = true;
+    document.querySelector("#PlacaOSf").disabled = true;
+    document.querySelector("#nomeRequerente").disabled = true;
+    document.querySelector("#CPFR").disabled = true;
+    document.querySelector("#TELR").disabled = true;
+    document.querySelector("#floatingSelect").disabled = true;
+    document.querySelector("#exampleFormControlTextarea1").disabled = true;
+    document.querySelector("#btn-salvar").disabled = true;
 
     // função carrega OS da HOME
     entry = {
@@ -38,6 +47,7 @@ $(document).ready(() => {
                 document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
                 document.querySelector("#exampleFormControlTextarea1").disabled = true;
                 document.querySelector("#btn-salvar").disabled = true;
+                document.getElementById("btnEstadoVeiculo").disabled = false;
 
                 var statusOs = response[0]['status'];
 
@@ -49,12 +59,23 @@ $(document).ready(() => {
                 }
                 Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
                     .then((data_aceita) => {
-                        console.log("Nova Consulta os: ",data_aceita['dados'][0]['status'])
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
                         if (data_aceita['dados'][0]['status'] == "ACEITA") {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#exampleFormControlTextarea1").disabled = false;
                             document.querySelector("#btn-salvar").disabled = false;
+                        }
+                    });
+                    Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                    .then((data_aceita) => {
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO") {
+                            document.getElementById("selectAprovado").style.display = "block"
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#btn-salvar").disabled = false;
+                            document.getElementById()
                         }
                     });
                 console.log(statusOs)
@@ -153,7 +174,7 @@ $(document).ready(() => {
     $('#btn-novo').click(function () {
         document.getElementById("btnFazerOrcamento").style.visibility = "hidden";
         document.getElementById("custoMecanico").style.visibility = "hidden";
-
+        document.getElementById("btnEstadoVeiculo").disabled = false;
         IdOS_Home = null;
         console.log('botão acionado');
         $('#formulario input ').val('');
@@ -236,7 +257,7 @@ $(document).ready(() => {
         document.querySelector("#floatingSelect").disabled = false;
         document.querySelector("#exampleFormControlTextarea1").disabled = false;
         document.querySelector("#btn-salvar").disabled = false;
-        
+
         // cancelar disabled
 
         document.getElementById("pinturaEstado").disabled = false;
@@ -262,7 +283,7 @@ $(document).ready(() => {
 
         document.getElementById("funcionamentoEstado").disabled = false;
         document.getElementById("funcionamentoObs").disabled = false;
-        
+
         // limpar estado do veiculo
 
         document.getElementById("pinturaEstado").value = "EXCELENTE";
@@ -395,21 +416,23 @@ function Envia(entry, url, method) {
 
 function salvarOrdemDeServico() {
     var placa = document.getElementById("PlacaOSf").value;
-        var nomerequerente = document.getElementById("nomeRequerente").value;
-        var cpfRequerente = document.getElementById("CPFR").value;
-        var telRequerente = document.getElementById("TELR").value;
-        var reqOrcamento = document.getElementById("floatingSelect").value;
-        var problema = document.getElementById("exampleFormControlTextarea1").value;
+    var nomerequerente = document.getElementById("nomeRequerente").value;
+    var cpfRequerente = document.getElementById("CPFR").value;
+    var telRequerente = document.getElementById("TELR").value;
+    var reqOrcamento = document.getElementById("floatingSelect").value;
+    var problema = document.getElementById("exampleFormControlTextarea1").value;
+    var custoMecanico = document.getElementById("custoMecanico").value;
 
-        if (reqOrcamento == 1) {
-            reqOrcamento = true;
-        } else {
-            reqOrcamento = false;
-        }
 
-        var idPlaca = $('#idVeiculo').val();
+    if (reqOrcamento == 1) {
+        reqOrcamento = true;
+    } else {
+        reqOrcamento = false;
+    }
 
-    if(IdOS_Home == null){
+    var idPlaca = $('#idVeiculo').val();
+
+    if (IdOS_Home == null) {
 
         dados = {
             "nomeRequerente": nomerequerente,
@@ -425,7 +448,7 @@ function salvarOrdemDeServico() {
 
         EnviaOrdemDeServico(dados, '/OrdemDeServico/Abertura', 'POST')
 
-    } else{
+    } else {
         entry = {
             "id": IdOS_Home,
             "nomeRequerente": '',
@@ -438,67 +461,71 @@ function salvarOrdemDeServico() {
                 var statusAtual = response[0]['status']
                 switch (statusAtual) {
                     case 'ACEITA':
-                        dados = {
-                            
+                        delete listaItemBanco.idItemtbl;
+                        delete listaItemBanco.nomeItem;
+                        console.log(listaItemBanco);
+                        dadosOrc = {
+                            "problema": problema,
+                            "custoMecanico": parseFloat(custoMecanico),
+                            "quant_item": listaItemBanco
                         }
-                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                        delete listaItemBanco.idItemtbl;
+                        delete listaItemBanco.nomeItem;
+                        console.log(listaItemBanco);
+                        console.log(dadosOrc);
+                        Envia(dadosOrc, '/OrdemDeServico/RegistraOrcamento/' + response[0]['id_os'], 'POST');
 
-                        //
-                        // Função que muda o status da OS:
-                        //
-                        
-                        //Envia({}, '/OrdemDeServico/RegistraOrcamento/' + response[0]['id_os'], 'POST');
                         break;
 
                     case 'AGUARDANDOAPROVACAO':
                         dados = {
-                            
+
                         }
                         EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
-                        
+
                         //
                         // Função que muda o status da OS:
                         //
-                        
+
                         //Envia({}, '/OrdemDeServico/Avaliar/' + response[0]['id_os'], 'POST');
                         break;
 
                     case 'APROVADA':
                         dados = {
-                            
+
                         }
                         EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
-                        
+
                         //
                         // Função que muda o status da OS:
                         //
-                        
+
                         //Envia({}, '/OrdemDeServico/Atender/' + response[0]['id_os'], 'POST');
                         break;
 
                     case 'EMATENDIMENTO':
                         dados = {
-                            
+
                         }
                         EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
-                        
+
                         //
                         // Função que muda o status da OS:
                         //
-                        
+
                         //Envia({}, '/OrdemDeServico/Concluir/' + response[0]['id_os'], 'POST');
                         break;
 
                     case 'AGUARDANDOPAGAMENTO':
                         dados = {
-                            
+
                         }
                         EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
-                        
+
                         //
                         // Função que muda o status da OS:
                         //
-                        
+
                         //Envia({}, '/OrdemDeServico/Finalizar/' + response[0]['id_os'], 'POST');
                         break;
 
@@ -539,6 +566,7 @@ $('#btn_pesquisarOs').click(() => {
 
         });
 
+
 });
 
 function selectTableOs(event) {
@@ -549,7 +577,6 @@ function selectTableOs(event) {
 
     var id = $(event).children('#identificador')[0]['innerText'];
     $('#osAux').val(id);
-
 
 }
 
@@ -579,6 +606,7 @@ $('#btnSelecionarOs').click(() => {
             document.getElementById("exampleFormControlTextarea1").value = response[0]['problema']
             document.querySelector("#exampleFormControlTextarea1").disabled = true;
             document.querySelector("#btn-salvar").disabled = true;
+            document.getElementById("btnEstadoVeiculo").disabled = false;
 
             var dadosEstado = response[0]['estadoAtualDoVeiculo'];
             console.log(dadosEstado)
@@ -718,41 +746,41 @@ $('#btnSalvarEstado').click(() => {
 
 
 
-function EnviaOrdemDeServico(entry, url, method){
-    return new Promise((resolve, reject)=>{
+function EnviaOrdemDeServico(entry, url, method) {
+    return new Promise((resolve, reject) => {
         $.ajax({
             url: url,
             type: method,
             data: JSON.stringify(entry),
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
-            statusCode:{
-                201: function(){
-                    $('#alerta_sucesso').css({"display": "block"});
-                    $('#title_alerta').text("Sucesso");              
+            statusCode: {
+                201: function () {
+                    $('#alerta_sucesso').css({ "display": "block" });
+                    $('#title_alerta').text("Sucesso");
                     $('#body_alerta').text("Executado com sucesso!");
-                    
+
                     $('.toast').toast('show');
                 },
-                200: function(){
-                    $('#alerta_sucesso').css({"display": "block"});
-                    $('#title_alerta').text("Sucesso");              
+                200: function () {
+                    $('#alerta_sucesso').css({ "display": "block" });
+                    $('#title_alerta').text("Sucesso");
                     $('#body_alerta').text("Executado com sucesso!");
-                    
+
                     $('.toast').toast('show');
                 },
-                401: function(){
-                    $('#alerta_advertencia').css({"display": "block"});
-                    $('#title_alerta').text("Atenção");              
+                401: function () {
+                    $('#alerta_advertencia').css({ "display": "block" });
+                    $('#title_alerta').text("Atenção");
                     $('#body_alerta').text("Não foi possível concluir a requisição");
-                    
+
                     $('.toast').toast('show');
                 },
-                500: function(){
-                    $('#alerta_error').css({"display": "block"});
-                    $('#title_alerta').text("Erro ");              
+                500: function () {
+                    $('#alerta_error').css({ "display": "block" });
+                    $('#title_alerta').text("Erro ");
                     $('#body_alerta').text("Não foi possível Salvar o registro");
-                    
+
                     $('.toast').toast('show');
                 },
             },
@@ -765,3 +793,112 @@ function EnviaOrdemDeServico(entry, url, method){
         });
     });
 }
+
+
+var listaItemBanco = {
+    "itens": [],
+    "quantidade": [],
+    "nomeItem": [],
+    "idItemtbl": []
+}
+
+
+
+
+$('#btnAdcionarItem').click(() => {
+
+
+    var qtdItem = document.getElementById("qtdItem").value;
+    var itens = document.getElementById("selectItemValor").value;
+    var nomeItem = document.getElementById("selectItemValor");
+    var auxIdItemS = document.getElementById("auxItemS").value;
+    if (auxIdItemS == '') {
+        auxIdItemS = '0';
+    }
+    var text = nomeItem.options[nomeItem.selectedIndex].text;
+
+
+    listaItemBanco['itens'].push(parseInt(itens));
+    listaItemBanco['quantidade'].push(parseFloat(qtdItem));
+    listaItemBanco['nomeItem'].push(text);
+    listaItemBanco['idItemtbl'].push(auxIdItemS);
+    var count = Object.keys(listaItemBanco['itens']).length;
+
+    auxIdItemS++;
+
+
+    $('#auxItemS').val(auxIdItemS);
+
+    $('#tbodyBuscaIOO tr').remove();
+
+    for (i = 0; i < count; i++) {
+        $('#tbodyBuscaIOO').append(
+            '<tr onclick=' + "selectTblItemR(this);" + '>'
+            +
+            '<td id="IdItemtbl" hidden>' + listaItemBanco['idItemtbl'][i] +
+            '</td><th id="tblNomeItemR" scope="row">' +
+            listaItemBanco['nomeItem'][i] +
+            '</th><td id="tblValorItemR" scope="row">' +
+            listaItemBanco['quantidade'][i] +
+            '</td></tr>'
+        )
+    }
+
+
+    console.log(listaItemBanco);
+    console.log(itens);
+    console.log(qtdItem);
+
+
+})
+function selectTblItemR(event) {
+    let idI = $(event).children('#IdItemtbl')[0]['innerText'];
+
+    $('#tableBuscaItemO #tbodyBuscaIOO tr').removeClass('table-light');
+    $(event).addClass('table-light');
+
+    $('#auxIdItemR').val(idI);
+    console.log("id ao clicar no elemento: ")
+    console.log(idI);
+
+
+}
+
+$('#btnExcluirItemR').click(() => {
+    var id = document.getElementById('auxIdItemR').value;
+    console.log("id que chegou no botão excluir: ")
+    console.log(id);
+
+    $('#tbodyBuscaIOO tr').remove();
+
+    listaItemBanco['itens'].splice(id, 1);
+    listaItemBanco['quantidade'].splice(id, 1);
+    listaItemBanco['nomeItem'].splice(id, 1);
+    listaItemBanco['idItemtbl'].splice(id, 1);
+
+    var count = Object.keys(listaItemBanco['itens']).length;
+
+    for (i = id; i < count; i++) {
+        listaItemBanco['idItemtbl'][i]--
+    }
+
+
+    for (i = 0; i < count; i++) {
+        $('#tbodyBuscaIOO').append(
+            '<tr onclick=' + "selectTblItemR(this);" + '>'
+            +
+            '<td id="IdItemtbl" hidden>' + listaItemBanco['idItemtbl'][i] +
+            '</td><th id="tblNomeItemR" scope="row">' +
+            listaItemBanco['nomeItem'][i] +
+            '</th><td id="tblValorItemR" scope="row">' +
+            listaItemBanco['quantidade'][i] +
+            '</td></tr>'
+        )
+    }
+    $('#auxItemS').val(listaItemBanco['idItemtbl'][count]);
+
+    console.log(listaItemBanco);
+
+})
+
+

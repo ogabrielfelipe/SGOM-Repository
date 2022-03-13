@@ -10,7 +10,7 @@ const FUNCIONARIO_DEL_PATH = `/Carro/Excluir/`;
 const FUNCIONARIO_LIST_PATH = `/Funcionario/BuscaFuncionaios`;
 const FUNCIONARIO_BUSC_ID_PATH = `/Funcionario/Busca/`;
 const FUNCIONARIO_BUSC_NOME_PATH = `/Funcionario/BuscaUsername/`;
-const FUNCIONARIO_BUSC_STATUS_PATH = `/Funcionario/BuscarFuncionarioPersonalizado`;
+const FUNCIONARIO_BUSC_PERSO_PATH = `/Funcionario/BuscarFuncionarioPersonalizado`;
 const FUNCIONARIO_INATIVAR_PATH = `/Funcionario/Inativar/`;
 const FUNCIONARIO_ATIVAR_PATH = `/Funcionario/Ativar/`;
 //================================================================================
@@ -500,9 +500,9 @@ $(document).ready(() => {
             $('#tbodyListVeiculos').empty();
             setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
         } else if (placa.length < 7) {
-            console.log('Placa Inválida');
+            alert('Placa Inválida');
         } else if (placa.length > 7) {
-            console.log('Placa Inválida');
+            alert('Placa Inválida');
         } else {
             console.log(placa.toUpperCase())
             Envia({}, `/Carro/Busca/${placa.toUpperCase()}`, 'POST').then((data) => {
@@ -528,66 +528,87 @@ $(document).ready(() => {
         }
 
     });
-    $('#btnPesquisaFuncNome').click(() => {
+    // $('#btnPesquisaFuncNome').click(() => {
+    //     const nome = $('#inp_pesquisaFuncNome').val();
+    //     const resp = Envia({}, FUNCIONARIO_BUSC_NOME_PATH + nome, `POST`);
+    //     if (nome.length === 0) {
+    //         zerarCamposModel(modalCrudFuncionario);
+    //         zerarCamposModel(modalCadastrarFuncinoario);
+    //         $('#tbodyListFuncionarios tr').remove();
+    //         setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+    //         return;
+    //     } 
+    //     (resp.then((data) => {
+    //         func = data['dados'];
+    //         if (Object.keys(func).length === 0) {
+    //             alert('Funcionario não encontrado');
+    //             return;
+    //         } else {
+    //             $('#tbodyListFuncionarios tr').remove();
+    //             setTableFuncionarios(resp);
+    //             // $('#tbodyListFuncionarios').append(
+    //             //     '<tr onclick=' + "selectTblFuncionarios(this)" + '>'
+    //             //     +
+    //             //     '<td id="tblIdFuncionario" hidden>' + func['id'] +
+    //             //     '</td>'
+    //             //     +
+    //             //     '<td id="tdTipoFuncionario" hidden>' + func['tipoFuncionario'] +
+    //             //     '</td>'
+    //             //     +
+    //             //     '<td id="tdStatus" hidden>' + filtrarStatus(func['status']) +
+    //             //     '</td>'
+    //             //     +
+    //             //     '<th id="tdNome" scope="row">' + func['nome'] + '</th>' +
+    //             //     '<th id="tdCpf" scope="row">' + func['cpf'] + '</th>' +
+    //             //     '<th id="tdTelefone" scope="row">' + func['telefone'] + '</th>' +
+    //             //     '<th id="tdDataDeAdimissao" scope="row">' + func['dataDeAdmissao'] + '</th>' +
+    //             //     '<th scope="row">' + filtrarTipoFuncionario(func['tipoFuncionario']) + '</th>' +
+    //             //     '<th id="tdUsuario" scope="row">' + func['usuario'] + '</th>' +
+    //             //     '<th scope="row">' + filtrarStatus(func['status']) + '</th>' +
+    //             //     +
+    //             //     '</tr>'
+    //             // );
+    //         }
+    //     }));
+    // });
+    $('#btnPesquisarFunc').click(()=>{
+        let status = Number($('#selectStatusFuncionario').val());
         const nome = $('#inp_pesquisaFuncNome').val();
-        const resp = Envia({}, FUNCIONARIO_BUSC_NOME_PATH + nome, `POST`);
-        if (nome.length === 0) {
+        if(status > -1 && nome.length > 0){
+            alert('Somente ')
             zerarCamposModel(modalCrudFuncionario);
             zerarCamposModel(modalCadastrarFuncinoario);
             $('#tbodyListFuncionarios tr').remove();
             setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
-            return;
+        } else {
+            if(status === -1){
+                status = "";
+            }
+            const pesqFunc = {
+                "nome": nome,
+                "status": status
+            };
+            $('#tbodyListFuncionarios tr').remove();
+            setTableFuncionarios(Envia(pesqFunc,FUNCIONARIO_BUSC_PERSO_PATH,`POST`));
         }
-        (resp.then((data) => {
-            func = data['dados'];
-            if (Object.keys(func).length === 0) {
-                alert('Funcionario não encontrado');
-                return;
-            } else {
-                $('#tbodyListFuncionarios tr').remove();
-                setTableFuncionarios(resp);
-                // $('#tbodyListFuncionarios').append(
-                //     '<tr onclick=' + "selectTblFuncionarios(this)" + '>'
-                //     +
-                //     '<td id="tblIdFuncionario" hidden>' + func['id'] +
-                //     '</td>'
-                //     +
-                //     '<td id="tdTipoFuncionario" hidden>' + func['tipoFuncionario'] +
-                //     '</td>'
-                //     +
-                //     '<td id="tdStatus" hidden>' + filtrarStatus(func['status']) +
-                //     '</td>'
-                //     +
-                //     '<th id="tdNome" scope="row">' + func['nome'] + '</th>' +
-                //     '<th id="tdCpf" scope="row">' + func['cpf'] + '</th>' +
-                //     '<th id="tdTelefone" scope="row">' + func['telefone'] + '</th>' +
-                //     '<th id="tdDataDeAdimissao" scope="row">' + func['dataDeAdmissao'] + '</th>' +
-                //     '<th scope="row">' + filtrarTipoFuncionario(func['tipoFuncionario']) + '</th>' +
-                //     '<th id="tdUsuario" scope="row">' + func['usuario'] + '</th>' +
-                //     '<th scope="row">' + filtrarStatus(func['status']) + '</th>' +
-                //     +
-                //     '</tr>'
-                // );
-            }
-        }));
     });
-    $('#btnPesquisarFuncStatus').click(()=>{
-        const status = Number($('#selectStatusFuncionario').val());
-        console.log(typeof status +'    '+ status);
-        if(status === -1){
-            zerarCamposModel(modalCrudFuncionario);
-            zerarCamposModel(modalCadastrarFuncinoario);
-            $('#tbodyListFuncionarios tr').remove();
-            setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
-        } else{
-                const pesqFunc = {
-                    "nome": "",
-                    "status": status
-                };
-                $('#tbodyListFuncionarios tr').remove();
-                setTableFuncionarios(Envia(pesqFunc,FUNCIONARIO_BUSC_STATUS_PATH,`POST`));
-            }
-    });
+    // $('#btnPesquisarFuncStatus').click(()=>{
+    //     const status = Number($('#selectStatusFuncionario').val());
+    //     console.log(typeof status +'    '+ status);
+    //     if(status === -1){
+    //         zerarCamposModel(modalCrudFuncionario);
+    //         zerarCamposModel(modalCadastrarFuncinoario);
+    //         $('#tbodyListFuncionarios tr').remove();
+    //         setTableFuncionarios(Envia({}, FUNCIONARIO_LIST_PATH, `POST`));
+    //     } else{
+    //             const pesqFunc = {
+    //                 "nome": "",
+    //                 "status": status
+    //             };
+    //             $('#tbodyListFuncionarios tr').remove();
+    //             setTableFuncionarios(Envia(pesqFunc,FUNCIONARIO_BUSC_PERSO_PATH,`POST`));
+    //         }
+    // });
 });
 
 
