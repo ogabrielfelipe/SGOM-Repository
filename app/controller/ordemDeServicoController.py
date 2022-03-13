@@ -332,10 +332,9 @@ def relatorio_ordemDeServico():
     sql_ordemDeServico = text('SELECT o.id ,o.nomeRequerente, o.cpfDoRequerente, o.telefoneRequerente, o.problema,\
                                                 o.requisicaoOrcamento, o.estadoAtualDoVeiculo, o.custoMecanico, o.valorTodal,\
                                                 o.respostaCliente, c.placa as placa_veiculo, c.telefone as telefone_veiculo ,f.nome as mecanico\
-                                            FROM ordemDeServico AS o\
-                                            LEFT JOIN carro c on c.id = o.id\
+                                            FROM ordemDeServico AS o, carro AS c\
                                             LEFT JOIN funcionario f on f.id = o.mecanico \
-                                            '+ whereSQL)
+                                            '+ whereSQL + ' AND c.id = o.carro')
 
     sql_registroDaOS = text('SELECT strftime("%d/%m/%Y %H:%M",r.data) as data_alteracao, r.novoStatus as status, f.nome as funcionario, r.problema  FROM ordemDeServico AS o\
                                 LEFT JOIN registroDaOS r ON r.ordemServico = o.id\
@@ -366,6 +365,7 @@ def relatorio_ordemDeServico():
             "Servicos": consultaSqlServico_dict
             }}), 200
     except Exception as e:
+        print(e)
         return jsonify({'msg': 'Não foi encontrado', 'dados': {}}), 500
 
 

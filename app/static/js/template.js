@@ -138,89 +138,94 @@ $(document).ready(()=>{
         entry = {
             "codigo": codigo
         }
-        Envia(entry, '/OrdemDeServico/Relatorio/OrdemDeServico', 'POST')
-        .then((dados) => {
-            dadosOrdemDeServico = dados['dados']['OrdemDeServico']
-            dadosRegistroDeServico = dados['dados']['RegistroOS']
-            dadosServicos = dados['dados']['Servicos']
-            if (dadosOrdemDeServico === {} || dadosRegistroDeServico === []){
-                console.log('Nenhum dado encontrado')
-            }else{
-                $('#NOS').text('');
-                $('#nomeR').text('');
-                $('#cpfR').text('');                
-                $('#telR').text('');            
-                $('#placaCarroRel').text('');        
-                $('#telPlacaRel').text('');                           
-                $('#dataA').text('');
-                $('#custoM').text('');
-                $('#problema').text('');
-                $('#dataF').text('');
-                $('#valT').text('');
-                $('#mecanicoRel').text('');
+        if (codigo === ''){
+            console.log('Código da OS vazio');
+        }else{ 
+            Envia(entry, '/OrdemDeServico/Relatorio/OrdemDeServico', 'POST')
+            .then((dados) => {
+                dadosOrdemDeServico = dados['dados']['OrdemDeServico']
+                dadosRegistroDeServico = dados['dados']['RegistroOS']
+                dadosServicos = dados['dados']['Servicos']
 
-                $('#NOS').text(dadosOrdemDeServico['id']);
-                $('#nomeR').text(dadosOrdemDeServico['nomeRequerente']);
-                $('#cpfR').text(dadosOrdemDeServico['cpfDoRequerente']);                
-                $('#telR').text(dadosOrdemDeServico['telefoneRequerente']);            
-                $('#placaCarroRel').text(dadosOrdemDeServico['placa_veiculo']);        
-                $('#telPlacaRel').text(dadosOrdemDeServico['telefone_veiculo']);       
-                $('#mecanicoRel').text(dadosOrdemDeServico['mecanico']);                
-                
-                for(var i = 0; i < dadosRegistroDeServico.length; i++){      
-                    let valAuxStatus = dadosRegistroDeServico[i]['status']  
-                    if (valAuxStatus === 'EMABERTO'){                            
-                        $('#dataA').text(dadosRegistroDeServico[i]['data_alteracao']);
-                    }                    
-                }
-                
-                $('#custoM').text(dadosOrdemDeServico['custoMecanico']);
-                $('#problema').text(dadosOrdemDeServico['problema']);
-                
-                for(var i = 0; i < dadosRegistroDeServico.length; i++){      
-                    let valAuxStatus = dadosRegistroDeServico[i]['status']         
-                    if (valAuxStatus === 'FINALIZADA'){   
-                        $('#dataF').text(dadosRegistroDeServico[i]['data_alteracao']);   
-                    }                    
-                }
+                console.log(dadosOrdemDeServico, dadosRegistroDeServico, dadosServicos)
+
+                if (dadosOrdemDeServico === {} || dadosRegistroDeServico === []){
+                    console.log('Nenhum dado encontrado')
+                }else{
+                    $('#NOS').text('');
+                    $('#nomeR').text('');
+                    $('#cpfR').text('');                
+                    $('#telR').text('');            
+                    $('#placaCarroRel').text('');        
+                    $('#telPlacaRel').text('');                           
+                    $('#dataA').text('');
+                    $('#custoM').text('');
+                    $('#problema').text('');
+                    $('#dataF').text('');
+                    $('#valT').text('');
+                    $('#mecanicoRel').text('');
+
+                    $('#NOS').text(dadosOrdemDeServico['id']);
+                    $('#nomeR').text(dadosOrdemDeServico['nomeRequerente']);
+                    $('#cpfR').text(dadosOrdemDeServico['cpfDoRequerente']);                
+                    $('#telR').text(dadosOrdemDeServico['telefoneRequerente']);            
+                    $('#placaCarroRel').text(dadosOrdemDeServico['placa_veiculo']);        
+                    $('#telPlacaRel').text(dadosOrdemDeServico['telefone_veiculo']);       
+                    $('#mecanicoRel').text(dadosOrdemDeServico['mecanico']);                
+                    
+                    for(var i = 0; i < dadosRegistroDeServico.length; i++){      
+                        let valAuxStatus = dadosRegistroDeServico[i]['status']  
+                        if (valAuxStatus === 'EMABERTO'){                            
+                            $('#dataA').text(dadosRegistroDeServico[i]['data_alteracao']);
+                        }                    
+                    }
+                    
+                    $('#custoM').text(dadosOrdemDeServico['custoMecanico']);
+                    $('#problema').text(dadosOrdemDeServico['problema']);
+                    
+                    for(var i = 0; i < dadosRegistroDeServico.length; i++){      
+                        let valAuxStatus = dadosRegistroDeServico[i]['status']         
+                        if (valAuxStatus === 'FINALIZADA'){   
+                            $('#dataF').text(dadosRegistroDeServico[i]['data_alteracao']);   
+                        }                    
+                    }
 
 
-                $('#tbodytableRelServicos tr').remove();                
-                $(dadosServicos).each( function(){                    
-                    $('#tbodytableRelServicos').append(
-                        '<tr><td>'+ 
-                            this.nome_item+
-                        '</td><td>'+
-                            this.quant_item+
-                        '</td><td>'+
-                            this.valor_item +
-                        '</td><td>'+
-                            this.valor_item*this.quant_item +
-                        '</td></tr>'
-                    );
-                });
-                
-                $('#tbodytableRelRegisOS tr').remove();
-                $(dadosRegistroDeServico).each(function () {
-                    $('#tbodytableRelRegisOS').append(
-                        '<tr><td>'+ 
-                                this.data_alteracao+
+                    $('#tbodytableRelServicos tr').remove();                
+                    $(dadosServicos).each( function(){                    
+                        $('#tbodytableRelServicos').append(
+                            '<tr><td>'+ 
+                                this.nome_item+
                             '</td><td>'+
-                                this.status+
+                                this.quant_item+
                             '</td><td>'+
-                                this.funcionario +
+                                this.valor_item +
                             '</td><td>'+
-                                this.problema +
+                                this.valor_item*this.quant_item +
                             '</td></tr>'
-                    )
-                });
-                $('#valT').text(dadosOrdemDeServico['valorTodal']);
-                $('#ModalResultadoRelatorioOs').modal('show');
-            }
-        });
+                        );
+                    });
+                    
+                    $('#tbodytableRelRegisOS tr').remove();
+                    $(dadosRegistroDeServico).each(function () {
+                        $('#tbodytableRelRegisOS').append(
+                            '<tr><td>'+ 
+                                    this.data_alteracao+
+                                '</td><td>'+
+                                    convertStatus(this.status) +
+                                '</td><td>'+
+                                    this.funcionario +
+                                '</td><td>'+
+                                    this.problema +
+                                '</td></tr>'
+                        )
+                    });
+                    $('#valT').text(dadosOrdemDeServico['valorTodal']);
+                    $('#ModalResultadoRelatorioOs').modal('show');
+                }
+            });
+        }
     });
-
-
 
     //Funcionalidades Relatório Financiero
 
@@ -312,6 +317,27 @@ $(document).ready(()=>{
 });
 
 
+function convertStatus(status){
+    var statusAux = '';
+    if (status === 'ACEITA'){
+        statusAux = 'Aceito'
+    }else if (status === 'EMABERTO'){
+        statusAux = 'Em Aberto'
+    }else if (status === 'AGUARDANDOAPROVACAO') {
+        statusAux = 'Aguardando Aprovação'
+    }else if (status === 'APROVADA') {
+        statusAux = 'Aprovado'
+    }else if (status === 'EMATENDIMENTO') {
+        statusAux = 'Em Atendimento'
+    }else if (status === 'AGUARDANDOPAGAMENTO') {
+        statusAux = 'Aguardando Pagamento'
+    }else if (status === 'FINALIZADA') {
+        statusAux = 'Finalizado'
+    }else if (status === 'CANCELADO') {
+        statusAux = 'Cancelado'
+    }
+    return statusAux
+}
 
 function selectTablePlaca(event){
     var id = $(event).children('#identificador')[0]['innerText'];
