@@ -57,13 +57,17 @@ Ordem de Serviço
         </div>
     </div>
     <div class="col d-flex justify-content-center align-items-md-center">
-        <button data-bs-toggle="modal" data-bs-target="#ModalEstadoVeiculo" type="button"
+        <button data-bs-toggle="modal" id="btnEstadoVeiculo" data-bs-target="#ModalEstadoVeiculo" type="button"
             class="btn btn-dark btn-lg">Estado do Veículo</button>
         <button id="btnFazerOrcamento" style="margin-left: 50px; visibility: hidden;" data-bs-toggle="modal"
             data-bs-target="#ModalOrcamento" type="button" class="btn btn-dark btn-lg">Fazer Orçamento</button>
-        <input type="text" class="form-control complete-input text-white" placeholder="Custo do mecanico" style="max-width: 200px;margin-left: 50px; visibility: hidden;"
-               id="custoMecanico">
-            
+    </div>
+    <div class="form-floating"  style="max-width: 200px">
+        <select class="form-select complete-input" id="selectAprovado" style="display: none;" aria-label="select label" >
+            <option value="0" style="background-color: #131418;">Não</option>
+            <option value="1" style="background-color: #131418;">Sim</option>
+        </select>
+        <label for="floatingSelect" class="text-white" style="margin-left: 10px;">Aprovado:</label>
     </div>
 
     <div class="row" style="margin-top: 15px;">
@@ -367,18 +371,32 @@ Ordem de Serviço
                     <div class="col" style="max-width: 200px">
                         <div class="form-floating">
                             <select class="form-select complete-input" id="selectItemValor" aria-label="select label">
-                                
+
                             </select>
                             <label for="selectItemValor" class="text-white" style="margin-left: 10px;">Item:</label>
                         </div>
                     </div>
 
-                    <div class="col" style="max-width: 200px">
-                        <input type="text" id="quantidadeItem" class="form-control complete-input text-white"
+                    <input type="hidden" id="auxIdItemR" value="">
+                    <input type="hidden" id="auxNomeR" value="">
+                    <input type="hidden" id="auxValorR" value="">
+                    <input type="hidden" id="auxItemS" value="0">
+
+
+                    <div class="col" style="max-width: 300px">
+                        <input type="text" id="qtdItem" class="form-control complete-input text-white"
                             placeholder="Quantidade" aria-label="First name">
+                    </div>
+                    <div class="col" style="max-width: 400px">
+                        <input type="text" class="form-control complete-input text-white"
+                            placeholder="Custo do mecanico" style="visibility: hidden;" id="custoMecanico">
+
                     </div>
                     <div class="col" style="max-width: 200px">
                         <button type="button" class="btn btn-dark" id="btnAdcionarItem">Adicionar </button>
+                    </div>
+                    <div class="col" style="max-width: 200px">
+                        <button type="button" class="btn btn-dark" id="btnExcluirItemR">Excluir </button>
                     </div>
                 </div>
                 <table class="table table-dark " id="tableBuscaItemO" style="margin-top: 15px; cursor: pointer;">
