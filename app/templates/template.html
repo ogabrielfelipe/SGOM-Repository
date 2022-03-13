@@ -542,30 +542,31 @@
                     <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="d-flex flex-row w-100"> 
 
-                        <div class="col">
-                            <button id="btnNovoVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
-                                type="button" class="btn btn-dark">Novo</button>
-                        </div>
-                        <div class="col">
+                        
+                        <button id="btnNovoVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
+                            type="button" class="btn btn-dark">Novo</button>
+                    
+                    
+                        <button id="btnEditarVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
+                            type="button" class="btn btn-dark" style="margin-left: 1%;">Alterar</button>
+                    
+                    
+                        <button id="btnExcluirVei" type="button" class="btn btn-danger" style="margin-left: 1%;">Excluir</button>
+                    <div class="d-flex justify-content-end w-100" >
+                        <div class="w-25">
                             <input id="inp_pesquisaPlaca" type="text" class="form-control complete-input"
-                                placeholder="Placa do Carro" aria-label="First name">
+                                placeholder="Placa do Carro" aria-label="First name" style="margin-left: 2%;">
                         </div>
 
-                        <div class="col">
-                            <button type="button" id="btnPesquisaVeiculoCad" class="btn btn-dark"
-                                style="margin-right: 10px;">Pesquisar</button>
-                        </div>
-
-                        <div class="col">
-                            <button id="btnEditarVei" data-bs-toggle="modal" data-bs-target="#ModalCadastrarVeiculo"
-                                type="button" class="btn btn-dark">Alterar</button>
-                        </div>
-                        <div class="col">
-                            <button id="btnExcluirVei" type="button" class="btn btn-danger">Excluir</button>
-                        </div>
+                    
+                        <button type="button" id="btnPesquisaVeiculoCad" class="btn btn-dark"
+                            style="margin-left: 2%;">Pesquisar</button>
                     </div>
+                    
+
+                </div>
                     <a id="auxIdVeiculo" hidden></a>
                     <a id="auxPlaca" hidden></a>
                     <a id="auxTelefone" hidden></a>
@@ -810,24 +811,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col">
+                        <div class="d-flex flex-row " style="padding-left: 0px;">
                             <button id="btnNovoItem" data-bs-toggle="modal" data-bs-target="#ModalCadastrarItemOrca"
                                 type="button" class="btn btn-dark">Novo</button>
-                        </div>
                         <!-- <div class="col">
                             <input id="inp_pesquisaItem" type="text" class="form-control complete-input"
                                 placeholder="Pesquisar nome" aria-label="First name">
                             <button type="button" id="btnPesquisaVeiculoCad" class="btn btn-dark"
                                 style="margin-right: 10px;">Pesquisar</button>
                         </div> -->
-
-                        <div class="col">
                             <button id="btnEditarItem" data-bs-toggle="modal" data-bs-target="#ModalCadastrarItemOrca"
-                                type="button" class="btn btn-dark">Alterar</button>
-                        </div>
-                        <div class="col">
-                            <button id="btnExcluirItem" type="button" class="btn btn-danger">Excluir</button>
-                        </div>
+                                type="button" class="btn btn-dark" style="margin-left: 1%;">Alterar</button>
+                            <button id="btnExcluirItem" type="button" class="btn btn-danger" style="margin-left: 1%;">Excluir</button>
+                    </div>
                         <a id="auxIdItem" hidden></a>
                         <a id="auxNome" hidden></a>
                         <a id="auxValor" hidden></a>

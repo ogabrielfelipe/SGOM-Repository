@@ -500,9 +500,9 @@ $(document).ready(() => {
             $('#tbodyListVeiculos').empty();
             setTableVeiculos(Envia({}, VEICULO_LIST_PATH, `POST`));
         } else if (placa.length < 7) {
-            console.log('Placa Inválida');
+            alert('Placa Inválida');
         } else if (placa.length > 7) {
-            console.log('Placa Inválida');
+            alert('Placa Inválida');
         } else {
             console.log(placa.toUpperCase())
             Envia({}, `/Carro/Busca/${placa.toUpperCase()}`, 'POST').then((data) => {
