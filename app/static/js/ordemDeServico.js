@@ -109,6 +109,20 @@ $(document).ready(() => {
                             document.querySelector("#exampleFormControlTextarea1").disabled = true;
                         }
                     });
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                    .then((data_aceita) => {
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "AGUARDANDOPAGAMENTO") {
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                            document.querySelector("#btn-salvar").disabled = false;
+                            document.getElementById("aprovacaoOrc").style.display = "none";
+                            document.getElementById("valorTotLabel").style.visibility = "hidden";
+                            document.querySelector("#btn-salvar").innerText = "Pagamento Efetuado";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                        }
+                    });
                 console.log(statusOs)
 
 
@@ -576,11 +590,8 @@ function salvarOrdemDeServico() {
                         }
                         EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
 
-                        //
-                        // Função que muda o status da OS:
-                        //
-
-                        //Envia({}, '/OrdemDeServico/Finalizar/' + response[0]['id_os'], 'POST');
+                       
+                        Envia({}, '/OrdemDeServico/Finalizar/' + response[0]['id_os'], 'POST');
                         break;
 
                     default:
@@ -589,6 +600,8 @@ function salvarOrdemDeServico() {
             });
     }
 }
+
+
 
 $('#btn_pesquisarOs').click(() => {
     console.log("cloquei")
