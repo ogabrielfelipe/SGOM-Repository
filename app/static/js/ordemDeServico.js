@@ -66,6 +66,9 @@ $(document).ready(() => {
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#exampleFormControlTextarea1").disabled = false;
                             document.querySelector("#btn-salvar").disabled = false;
+                            document.querySelector("#btn-salvar").innerText = "Salvar";
+                            document.getElementById("valorTotLabel").style.visibility = "hidden";
+                            document.getElementById("aprovacaoOrc").style.display = "none";
                         }
                     });
                 Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
@@ -77,7 +80,9 @@ $(document).ready(() => {
                             document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#btn-salvar").disabled = false;
+                            document.querySelector("#btn-salvar").innerText = "Salvar";
                             document.getElementById("aprovacaoOrc").style.display = "block";
+                            document.getElementById("valorTotLabel").style.visibility = "visible";
                             document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
                         }
                     });
@@ -100,6 +105,7 @@ $(document).ready(() => {
                         console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
                         if (data_aceita['dados'][0]['status'] == "EMATENDIMENTO") {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#exampleFormControlTextarea1").disabled = false;
                             document.querySelector("#btn-salvar").disabled = false;
@@ -114,14 +120,49 @@ $(document).ready(() => {
                         console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
                         if (data_aceita['dados'][0]['status'] == "AGUARDANDOPAGAMENTO") {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#exampleFormControlTextarea1").disabled = false;
                             document.querySelector("#btn-salvar").disabled = false;
                             document.getElementById("aprovacaoOrc").style.display = "none";
-                            document.getElementById("valorTotLabel").style.visibility = "hidden";
+                            document.getElementById("valorTotLabel").style.visibility = "visible";
                             document.querySelector("#btn-salvar").innerText = "Pagamento Efetuado";
                             document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                            document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
                         }
+                    });
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                    .then((data_aceita) => {
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "FINALIZADA") {
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                            document.querySelector("#btn-salvar").disabled = false;
+                            document.getElementById("aprovacaoOrc").style.display = "none";
+                            document.getElementById("valorTotLabel").style.visibility = "visible";
+                            document.querySelector("#btn-salvar").innerText = "Voltar";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                            document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
+                        }
+                    });
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                    .then((data_aceita) => {
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "CANCELADO") {
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                            document.querySelector("#btn-salvar").disabled = false;
+                            document.getElementById("aprovacaoOrc").style.display = "none";
+                            document.getElementById("valorTotLabel").style.visibility = "visible";
+                            document.querySelector("#btn-salvar").innerText = "Voltar";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                            document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
+                        }
+
                     });
                 console.log(statusOs)
 
@@ -440,9 +481,11 @@ $(document).ready(() => {
                 });
                 if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO" ||
                     data_aceita['dados'][0]['status'] == "APROVADA" ||
-                    data_aceita['dados'][0]['status'] == "EMATENDIMENTO") {
-                        document.getElementById("orcamentoForm").style.display = "none";
-                        document.getElementById("btnSalvarOrcamento").disabled = true;
+                    data_aceita['dados'][0]['status'] == "EMATENDIMENTO" ||
+                    data_aceita['dados'][0]['status'] == "AGUARDANDOPAGAMENTO") {
+                    document.getElementById("orcamentoForm").style.display = "none";
+                    document.getElementById("btnSalvarOrcamento").disabled = true;
+                    document.getElementById("btnSalvarEstado").disabled = true;
                 }
             });
 
@@ -538,11 +581,11 @@ function salvarOrdemDeServico() {
                             "custoMecanico": parseFloat(custoMecanico),
                             "quant_item": listaItemBanco
                         }
-                        
+
                         console.log(listaItemBanco);
                         console.log(dadosOrc);
-                        Envia(dadosOrc, '/OrdemDeServico/RegistraOrcamento/' + response[0]['id_os'], 'POST');
-
+                        EnviaOrdemDeServico(dadosOrc, '/OrdemDeServico/RegistraOrcamento/' + response[0]['id_os'], 'POST');
+                        
                         break;
 
                     case 'AGUARDANDOAPROVACAO':
@@ -550,24 +593,27 @@ function salvarOrdemDeServico() {
                         var respC = document.getElementById("selectAprovado").value;
 
                         dadosAguard = {
-                            "respC" : respC
+                            "respC": respC
                         }
 
-                        if(respC==0){
-                            Envia(dadosAguard, '/OrdemDeServico/Cancelar/' + response[0]['id_os'], 'POST');
-                        } else{
-                            Envia(dadosAguard, '/OrdemDeServico/Avaliar/' + response[0]['id_os'], 'POST');
+                        if (respC == 0) {
+                            EnviaOrdemDeServico(dadosAguard, '/OrdemDeServico/Cancelar/' + response[0]['id_os'], 'POST');
+                            
+                        } else {
+                            EnviaOrdemDeServico(dadosAguard, '/OrdemDeServico/Avaliar/' + response[0]['id_os'], 'POST');
+                            
                         }
 
                         break;
 
                     case 'APROVADA':
-                        Envia({}, '/OrdemDeServico/Atender/' + response[0]['id_os'], 'POST');
+                        EnviaOrdemDeServico({}, '/OrdemDeServico/Atender/' + response[0]['id_os'], 'POST');
+                        
                         break;
 
                     case 'EMATENDIMENTO':
 
-                        if(alterarOSListener == true){
+                        if (alterarOSListener == true) {
                             delete listaItemBanco.idItemtbl;
                             delete listaItemBanco.nomeItem;
                             console.log(listaItemBanco);
@@ -576,22 +622,27 @@ function salvarOrdemDeServico() {
                                 "custoMecanico": parseFloat(custoMecanico),
                                 "quant_item": listaItemBanco
                             }
-                            EnviaOrdemDeServico(dadosAtendimento, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                            EnviaOrdemDeServicoOrdemDeServico(dadosAtendimento, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
                             alterarOSListener = false;
-                        }else{
-                            Envia({}, '/OrdemDeServico/Concluir/' + response[0]['id_os'], 'POST');
+                            
+                        } else {
+                            EnviaOrdemDeServico({}, '/OrdemDeServico/Concluir/' + response[0]['id_os'], 'POST');
+                            
                         }
 
                         break;
 
                     case 'AGUARDANDOPAGAMENTO':
-                        dados = {
+                        EnviaOrdemDeServico({}, '/OrdemDeServico/Finalizar/' + response[0]['id_os'], 'POST');
+                        
+                        break;
 
-                        }
-                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                    case 'FINALIZADA':
+                        window.location.assign("http://127.0.0.1:5000/Home");
+                        break;
 
-                       
-                        Envia({}, '/OrdemDeServico/Finalizar/' + response[0]['id_os'], 'POST');
+                    case 'CANCELADO':
+                        window.location.assign("http://127.0.0.1:5000/Home");
                         break;
 
                     default:
@@ -730,13 +781,116 @@ $('#btnSelecionarOs').click(() => {
             document.getElementById("funcionamentoEstado").disabled = true;
             document.getElementById("funcionamentoObs").disabled = true;
 
-            var statusOs = response[0]['status'];
-            if (statusOs === "ACEITA") {
-                document.getElementById("btnFazerOrcamento").style.visibility = "visible";
-                document.getElementById("custoMecanico").style.visibility = "visible";
-                document.querySelector("#exampleFormControlTextarea1").disabled = false;
-                document.querySelector("#btn-salvar").disabled = false;
+            var auxa = {
+                "id": response[0]['id_os'],
+                "nomeRequerente": '',
+                "status": ''
             }
+            Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                .then((data_aceita) => {
+                    console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                    if (data_aceita['dados'][0]['status'] == "ACEITA") {
+                        document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                        document.getElementById("custoMecanico").style.visibility = "visible";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                        document.querySelector("#btn-salvar").disabled = false;
+                        document.querySelector("#btn-salvar").innerText = "Salvar";
+                        document.getElementById("valorTotLabel").style.visibility = "hidden";
+                        document.getElementById("aprovacaoOrc").style.display = "none";
+                    }
+                });
+            Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                .then((data_aceita) => {
+                    console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                    if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO") {
+                        document.getElementById("selectAprovado").style.display = "block"
+                        document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                        document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                        document.getElementById("custoMecanico").style.visibility = "visible";
+                        document.querySelector("#btn-salvar").disabled = false;
+                        document.querySelector("#btn-salvar").innerText = "Salvar";
+                        document.getElementById("aprovacaoOrc").style.display = "block";
+                        document.getElementById("valorTotLabel").style.visibility = "visible";
+                        document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
+                    }
+                });
+            Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                .then((data_aceita) => {
+                    console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                    if (data_aceita['dados'][0]['status'] == "APROVADA") {
+                        document.getElementById("selectAprovado").style.display = "block"
+                        document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                        document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                        document.getElementById("custoMecanico").style.visibility = "visible";
+                        document.querySelector("#btn-salvar").disabled = false;
+                        document.getElementById("aprovacaoOrc").style.display = "none";
+                        document.getElementById("valorTotLabel").style.visibility = "hidden";
+                        document.querySelector("#btn-salvar").innerText = "Atender";
+                    }
+                });
+            Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                .then((data_aceita) => {
+                    console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                    if (data_aceita['dados'][0]['status'] == "EMATENDIMENTO") {
+                        document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                        document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                        document.getElementById("custoMecanico").style.visibility = "visible";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                        document.querySelector("#btn-salvar").disabled = false;
+                        document.getElementById("aprovacaoOrc").style.display = "none";
+                        document.getElementById("valorTotLabel").style.visibility = "hidden";
+                        document.querySelector("#btn-salvar").innerText = "Concluir";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                    }
+                });
+            Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                .then((data_aceita) => {
+                    console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                    if (data_aceita['dados'][0]['status'] == "AGUARDANDOPAGAMENTO") {
+                        document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                        document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                        document.getElementById("custoMecanico").style.visibility = "visible";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                        document.querySelector("#btn-salvar").disabled = false;
+                        document.getElementById("aprovacaoOrc").style.display = "none";
+                        document.getElementById("valorTotLabel").style.visibility = "visible";
+                        document.querySelector("#btn-salvar").innerText = "Pagamento Efetuado";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                        document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
+                    }
+                });
+            Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                .then((data_aceita) => {
+                    console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                    if (data_aceita['dados'][0]['status'] == "FINALIZADA") {
+                        document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                        document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                        document.getElementById("custoMecanico").style.visibility = "visible";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                        document.querySelector("#btn-salvar").disabled = false;
+                        document.getElementById("aprovacaoOrc").style.display = "none";
+                        document.getElementById("valorTotLabel").style.visibility = "visible";
+                        document.querySelector("#btn-salvar").innerText = "Voltar";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                        document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
+                    }
+                });
+            Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                .then((data_aceita) => {
+                    console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                    if (data_aceita['dados'][0]['status'] == "CANCELADO") {
+                        document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                        document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                        document.getElementById("custoMecanico").style.visibility = "visible";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                        document.querySelector("#btn-salvar").disabled = false;
+                        document.getElementById("aprovacaoOrc").style.display = "none";
+                        document.getElementById("valorTotLabel").style.visibility = "visible";
+                        document.querySelector("#btn-salvar").innerText = "Voltar";
+                        document.querySelector("#exampleFormControlTextarea1").disabled = true;
+                        document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
+                    }
+                });
         });
 })
 
