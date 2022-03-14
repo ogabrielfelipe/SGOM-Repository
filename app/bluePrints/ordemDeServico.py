@@ -15,7 +15,8 @@ from ..controller.ordemDeServicoController import (
     relatorio_financeiro,
     altera_orcamento_ordemDeServico, 
     total_ordemDeServico_status, 
-    busca_os_status_home
+    busca_os_status_home,
+    cancelar_ordemDeServico
 )
 
 ordem = Blueprint('ordem', __name__)
@@ -51,6 +52,12 @@ def regis_ordemDeServico(codigo):
         return registra_orcamento(codigo, current_user.id)
     else:
         return jsonify({'msg': "Usuário sem permissão"}), 401
+
+
+@ordem.route('/OrdemDeServico/Cancelar/<int:codigo>', methods=['POST'])
+@login_required
+def regis_ordemDeServico(codigo):
+    return cancelar_ordemDeServico(codigo, current_user.id)
 
 
 @ordem.route('/OrdemDeServico/Avaliar/<int:codigo>', methods=['POST'])
