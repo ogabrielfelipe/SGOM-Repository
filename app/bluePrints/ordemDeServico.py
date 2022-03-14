@@ -56,7 +56,7 @@ def regis_ordemDeServico(codigo):
 
 @ordem.route('/OrdemDeServico/Cancelar/<int:codigo>', methods=['POST'])
 @login_required
-def regis_ordemDeServico(codigo):
+def cancelar_ordemDeServico_route(codigo):
     return cancelar_ordemDeServico(codigo, current_user.id)
 
 
