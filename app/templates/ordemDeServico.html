@@ -62,7 +62,7 @@ Ordem de Serviço
         <button id="btnFazerOrcamento" style="margin-left: 50px; visibility: hidden;" data-bs-toggle="modal"
             data-bs-target="#ModalOrcamento" type="button" class="btn btn-dark btn-lg">Fazer Orçamento</button>
     </div>
-    <div class="form-floating"  style="max-width: 200px">
+    <div id="aprovacaoOrc" class="form-floating"  style="display: none; max-width: 200px">
         <select class="form-select complete-input" id="selectAprovado" style="display: none;" aria-label="select label" >
             <option value="0" style="background-color: #131418;">Não</option>
             <option value="1" style="background-color: #131418;">Sim</option>
@@ -367,7 +367,7 @@ Ordem de Serviço
                 <button type="button" class="btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <div class="row" style="max-width: 600px">
+                <div id="orcamentoForm" class="row" style="max-width: 600px">
                     <div class="col" style="max-width: 200px">
                         <div class="form-floating">
                             <select class="form-select complete-input" id="selectItemValor" aria-label="select label">
@@ -426,9 +426,15 @@ Ordem de Serviço
     {%endblock%}
 
     {%block footer%}
-    <div class="container-fluid d-flex justify-content-end" style="margin-bottom: 15px;">
-        <button id="btn-cancelar" type="button" class="btn btn-dark" style="margin-right: 25px;">Cancelar</button>
-        <button type="button" class="btn btn-dark" style="margin-right: 10px;" id="btn-salvar"
-            onclick=salvarOrdemDeServico()>Salvar</button>
+    <div class="container-fluid d-flex justify-content-between" style="margin-bottom: 15px;">
+        <div id="valorTotLabel" class="bg-secondary d-flex justify-content-center align-items-center" style="color: white; font-size: 32pt; margin-left: 25px; width: 300px; height: 50px"> 
+            <span>R$&nbsp</span>
+            <span id="valorTotalOSS"></span>
+        </div>
+        <div>
+            <button id="btn-cancelar" type="button" class="btn btn-dark" style="margin-right: 25px;">Cancelar</button>
+            <button type="button" class="btn btn-dark" style="margin-right: 10px;" id="btn-salvar"
+                onclick=salvarOrdemDeServico()>Salvar</button>
+        </div>
     </div>
     {%endblock%}
