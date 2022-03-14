@@ -19,6 +19,7 @@ from ..controller.ordemDeServicoController import (
     cancelar_ordemDeServico
 )
 
+
 ordem = Blueprint('ordem', __name__)
 
 

@@ -33,9 +33,12 @@
 -->
 
 <body style="background-color: #131418; align-items: end;">
-    <header class="d-flex justify-content-end complete-container " style="z-index: 10; align-items: flex-end;">
-        <nav class="navbar navbar-expand-lg navbar-dark complete-nav">
-            <div class="container-fluid">
+    <header class="d-flex justify-content-between complete-container " style="z-index: 10;">
+        <div class="container-sm text-white d-flex justify-content-start" style="max-width: 350px; text-align: center; align-items: center; font-size: 18pt;">
+            Bem vindo, {{current_user.nome}}!
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark complete-nav">            
+            <div class="container-fluid">                
                 <ul class="navbar-nav me-auto navbar-nav-scroll my-2 my-lg-0">
                     <li class="nav-item">
                         <a href="{{url_for('root')}}" class="nav-link active">Home</a>
@@ -43,9 +46,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{url_for('root_ordemDeServico')}}">Ordem de Serviço</a>
                     </li>
-
-
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="downMenuCadastro"
                             data-bs-toggle="dropdown" aria-expanded="false">
