@@ -67,7 +67,19 @@ $(document).ready(() => {
                             document.querySelector("#btn-salvar").disabled = false;
                         }
                     });
-                    Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                    .then((data_aceita) => {
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO") {
+                            document.getElementById("selectAprovado").style.display = "block"
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#btn-salvar").disabled = false;
+                            document.getElementById("aprovacaoOrc").style.display = "block";
+                        }
+                    });
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
                     .then((data_aceita) => {
                         console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
                         if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO") {
@@ -75,7 +87,7 @@ $(document).ready(() => {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#btn-salvar").disabled = false;
-                            document.getElementById()
+                            document.getElementById("aprovacaoOrc").style.display = "block";
                         }
                     });
                 console.log(statusOs)
