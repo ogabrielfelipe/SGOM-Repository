@@ -482,7 +482,9 @@ $(document).ready(() => {
                 if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO" ||
                     data_aceita['dados'][0]['status'] == "APROVADA" ||
                     data_aceita['dados'][0]['status'] == "EMATENDIMENTO" ||
-                    data_aceita['dados'][0]['status'] == "AGUARDANDOPAGAMENTO") {
+                    data_aceita['dados'][0]['status'] == "AGUARDANDOPAGAMENTO" ||
+                    data_aceita['dados'][0]['status'] == "CANCELADO" ||
+                    data_aceita['dados'][0]['status'] == "FINALIZADO") {
                     document.getElementById("orcamentoForm").style.display = "none";
                     document.getElementById("btnSalvarOrcamento").disabled = true;
                     document.getElementById("btnSalvarEstado").disabled = true;
@@ -585,7 +587,7 @@ function salvarOrdemDeServico() {
                         console.log(listaItemBanco);
                         console.log(dadosOrc);
                         EnviaOrdemDeServico(dadosOrc, '/OrdemDeServico/RegistraOrcamento/' + response[0]['id_os'], 'POST');
-                        
+                        LimparEBloquearTodosOsCampos()
                         break;
 
                     case 'AGUARDANDOAPROVACAO':
@@ -598,17 +600,17 @@ function salvarOrdemDeServico() {
 
                         if (respC == 0) {
                             EnviaOrdemDeServico(dadosAguard, '/OrdemDeServico/Cancelar/' + response[0]['id_os'], 'POST');
-                            
+                            LimparEBloquearTodosOsCampos()
                         } else {
                             EnviaOrdemDeServico(dadosAguard, '/OrdemDeServico/Avaliar/' + response[0]['id_os'], 'POST');
-                            
+                            LimparEBloquearTodosOsCampos()
                         }
 
                         break;
 
                     case 'APROVADA':
                         EnviaOrdemDeServico({}, '/OrdemDeServico/Atender/' + response[0]['id_os'], 'POST');
-                        
+                        LimparEBloquearTodosOsCampos()
                         break;
 
                     case 'EMATENDIMENTO':
@@ -624,17 +626,17 @@ function salvarOrdemDeServico() {
                             }
                             EnviaOrdemDeServicoOrdemDeServico(dadosAtendimento, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
                             alterarOSListener = false;
-                            
+                            LimparEBloquearTodosOsCampos()
                         } else {
                             EnviaOrdemDeServico({}, '/OrdemDeServico/Concluir/' + response[0]['id_os'], 'POST');
-                            
+                            LimparEBloquearTodosOsCampos()
                         }
 
                         break;
 
                     case 'AGUARDANDOPAGAMENTO':
                         EnviaOrdemDeServico({}, '/OrdemDeServico/Finalizar/' + response[0]['id_os'], 'POST');
-                        
+                        LimparEBloquearTodosOsCampos()
                         break;
 
                     case 'FINALIZADA':
@@ -1129,3 +1131,78 @@ $('#btn-alterar').click(() => {
     document.querySelector("#exampleFormControlTextarea1").disabled = false;
     alterarOSListener = true;
 });
+
+function LimparEBloquearTodosOsCampos() {
+
+    document.getElementById("btnFazerOrcamento").style.visibility = "hidden";
+    document.getElementById("custoMecanico").style.visibility = "hidden";
+    document.getElementById("btnEstadoVeiculo").disabled = true;
+    IdOS_Home = null;
+    console.log('botão acionado');
+    $('#formulario input ').val('');
+    $('#formulario textarea ').val('');
+    $('#formulario select ').val(0);
+    document.querySelector("#button-addon2").disabled = true;
+    document.querySelector("#nomeRequerente").disabled = true;
+    document.querySelector("#CPFR").disabled = true;
+    document.querySelector("#TELR").disabled = true;
+    document.querySelector("#floatingSelect").disabled = true;
+    document.querySelector("#exampleFormControlTextarea1").disabled = true;
+    document.querySelector("#btn-salvar").disabled = true;
+    document.getElementById("valorTotLabel").style.visibility = "hidden";
+    document.getElementById("aprovacaoOrc").style.display = "none";
+
+    //
+    // limpar estado do veiculo
+    //
+    document.getElementById("pinturaEstado").value = "EXCELENTE";
+    document.getElementById("pinturaObs").value = "";
+
+    document.getElementById("latariaEstado").value = "EXCELENTE";
+    document.getElementById("latariaObs").value = "";
+
+    document.getElementById("pneuEstado").value = "EXCELENTE";
+    document.getElementById("pneuObs").value = "";
+
+    document.getElementById("vidroEstado").value = "EXCELENTE";
+    document.getElementById("vidroObs").value = "";
+
+    document.getElementById("parachoqueEstado").value = "EXCELENTE";
+    document.getElementById("parachoqueObs").value = "";
+
+    document.getElementById("lanternaEstado").value = "EXCELENTE";
+    document.getElementById("lanternaObs").value = "";
+
+    document.getElementById("interiorEstado").value = "EXCELENTE";
+    document.getElementById("interiorObs").value = "";
+
+    document.getElementById("funcionamentoEstado").value = "EXCELENTE";
+    document.getElementById("funcionamentoObs").value = "";
+
+    //
+    // disabled estado veiculo
+    //
+    document.getElementById("pinturaEstado").disabled = true;
+    document.getElementById("pinturaObs").disabled = true;
+
+    document.getElementById("latariaEstado").disabled = true;
+    document.getElementById("latariaObs").disabled = true;
+
+    document.getElementById("pneuEstado").disabled = true;
+    document.getElementById("pneuObs").disabled = true;
+
+    document.getElementById("vidroEstado").disabled = true;
+    document.getElementById("vidroObs").disabled = true;
+
+    document.getElementById("parachoqueEstado").disabled = true;
+    document.getElementById("parachoqueObs").disabled = true;
+
+    document.getElementById("lanternaEstado").disabled = true;
+    document.getElementById("lanternaObs").disabled = true;
+
+    document.getElementById("interiorEstado").disabled = true;
+    document.getElementById("interiorObs").disabled = true;
+
+    document.getElementById("funcionamentoEstado").disabled = true;
+    document.getElementById("funcionamentoObs").disabled = true;
+}
