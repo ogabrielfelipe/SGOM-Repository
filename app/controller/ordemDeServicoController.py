@@ -135,6 +135,23 @@ def aceita_ordemDeServico(id, mecanico):
         return jsonify({'msg': 'Ordem de Serviço não encontrada'}), 404
 
 
+def cancelar_ordemDeServico(id, funcionario):
+    ordem = OrdemDeServico.query.get(id)
+    statusAnterior = ordem.status
+    if ordem:
+        try:
+            ordem.status = 7
+            regis = RegistroDaOS(data=datetime.datetime.now().astimezone(datetime.timezone(datetime.timedelta(hours=-3))), 
+                        statusA=statusAnterior, novoS=1, valorTotal=0, problema=ordem.problema, mecanico=funcionario, ordemDeServico=id)
+            db.session.commit()
+            db.session.add(regis)
+            db.session.commit()
+            return jsonify({'msg': 'Ordem de Serviço Cancelado com sucesso'}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'msg': 'Não foi possível cancelar'}), 500
+            
+
 def registra_orcamento(id, mecanico):
     ordem = OrdemDeServico.query.get(id)
     resp = request.get_json()
