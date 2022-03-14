@@ -406,14 +406,25 @@ def busca_personalizada_ordemDeServico():
         "o.nomeRequerente": resp['nomeRequerente'],
         "o.status": resp['status']
     }   
-    sql = text('SELECT o.id as id_os, o.nomeRequerente, o.cpfDoRequerente, o.telefoneRequerente, o.problema, o.requisicaoOrcamento,\
+    sql_os = text('SELECT o.id as id_os, o.nomeRequerente, o.cpfDoRequerente, o.telefoneRequerente, o.problema, o.requisicaoOrcamento,\
        o.estadoAtualDoVeiculo, o.custoMecanico, o.valorTodal, o.respostaCliente, c.placa as carro, c.id as id_carro,\
        o.mecanico, o.status FROM ordemDeServico o\
-                INNER JOIN carro c on c.id = o.carro '+convertPesquisa(['='], entry))
+                LEFT JOIN carro c on c.id = o.carro '+convertPesquisa(['='], entry))
+    
+    sql_servicos_os = text('SELECT s.id as id_servico, s.ordemDeServico as id_OS, s.quantidade as quantidade, iO.id as id_itemOrcamento,\
+                                iO.nome as nome_itemOrcamento, iO.valor as valor_itemOrcamento\
+                                FROM servicos as s\
+                            INNER JOIN itemOrcamento iO on iO.id = s.itemOrcamento\
+                            INNER JOIN ordemDeServico o on o.id = s.ordemDeServico\
+                             '+ convertPesquisa(['='], entry))
+
+
     try:        
-        os = db.session.execute(sql).fetchall()
+        os = db.session.execute(sql_os).fetchall()
+        servicos = db.session.execute(sql_servicos_os).fetchall()
         os_dict = [dict(u) for u in os]
-        return jsonify({'msg': 'Busca Efetuada com sucesso', 'dados': os_dict}), 200
+        os_servicos_dict = [dict(u) for u in servicos]
+        return jsonify({'msg': 'Busca Efetuada com sucesso', 'dados': os_dict, 'servicos': os_servicos_dict}), 200
     except Exception as e:
         db.session.rollback()
         return jsonify({'msg': 'Busca não efetuada', 'dados': str(e)}), 500
