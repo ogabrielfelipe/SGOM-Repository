@@ -61,6 +61,19 @@ $(document).ready(() => {
                 Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
                     .then((data_aceita) => {
                         console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "EMABERTO") {
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                            document.querySelector("#btn-salvar").disabled = false;
+                            document.querySelector("#btn-salvar").innerText = "Salvar";
+                            document.getElementById("valorTotLabel").style.visibility = "hidden";
+                            document.getElementById("aprovacaoOrc").style.display = "none";
+                        }
+                    });
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                    .then((data_aceita) => {
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
                         if (data_aceita['dados'][0]['status'] == "ACEITA") {
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
                             document.getElementById("custoMecanico").style.visibility = "visible";
@@ -559,9 +572,9 @@ function salvarOrdemDeServico() {
 
         }
         console.log(dados)
-
         EnviaOrdemDeServico(dados, '/OrdemDeServico/Abertura', 'POST')
-
+        LimparEBloquearTodosOsCampos()
+        
     } else {
         entry = {
             "id": IdOS_Home,
