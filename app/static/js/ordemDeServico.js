@@ -2,6 +2,7 @@ var estadoAtualDoVeiculoOs;
 
 const urlParams = new URLSearchParams(window.location.search);
 var IdOS_Home = urlParams.get('OS');
+var alterarOSListener = false;
 
 $(document).ready(() => {
 
@@ -77,17 +78,35 @@ $(document).ready(() => {
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#btn-salvar").disabled = false;
                             document.getElementById("aprovacaoOrc").style.display = "block";
+                            document.getElementById("valorTotalOSS").innerText = data_aceita['dados'][0]['valorTodal'];
                         }
                     });
                 Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
                     .then((data_aceita) => {
                         console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
-                        if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO") {
+                        if (data_aceita['dados'][0]['status'] == "APROVADA") {
                             document.getElementById("selectAprovado").style.display = "block"
                             document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("btnFazerOrcamento").innerText = "Orçamento";
                             document.getElementById("custoMecanico").style.visibility = "visible";
                             document.querySelector("#btn-salvar").disabled = false;
-                            document.getElementById("aprovacaoOrc").style.display = "block";
+                            document.getElementById("aprovacaoOrc").style.display = "none";
+                            document.getElementById("valorTotLabel").style.visibility = "hidden";
+                            document.querySelector("#btn-salvar").innerText = "Atender";
+                        }
+                    });
+                Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+                    .then((data_aceita) => {
+                        console.log("Nova Consulta os: ", data_aceita['dados'][0]['status'])
+                        if (data_aceita['dados'][0]['status'] == "EMATENDIMENTO") {
+                            document.getElementById("btnFazerOrcamento").style.visibility = "visible";
+                            document.getElementById("custoMecanico").style.visibility = "visible";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = false;
+                            document.querySelector("#btn-salvar").disabled = false;
+                            document.getElementById("aprovacaoOrc").style.display = "none";
+                            document.getElementById("valorTotLabel").style.visibility = "hidden";
+                            document.querySelector("#btn-salvar").innerText = "Concluir";
+                            document.querySelector("#exampleFormControlTextarea1").disabled = true;
                         }
                     });
                 console.log(statusOs)
@@ -388,6 +407,31 @@ $(document).ready(() => {
                 })
             })
 
+        var auxa = {
+            "id": response[0]['id_os'],
+            "nomeRequerente": '',
+            "status": ''
+        }
+
+        Envia(auxa, '/OrdemDeServico/BuscaPersonalizada', 'POST')
+            .then((data_aceita) => {
+                $('#tbodyBuscaIOO tr').remove();
+                response = data_aceita['servicos']
+                $(response).each(function () {
+                    $('#tbodyBuscaIOO').append(
+                        '<tr><td>' + this.nome_itemOrcamento +
+                        '</td><td>' + this.quantidade +
+                        '</td></tr>'
+                    );
+                });
+                if (data_aceita['dados'][0]['status'] == "AGUARDANDOAPROVACAO" ||
+                    data_aceita['dados'][0]['status'] == "APROVADA" ||
+                    data_aceita['dados'][0]['status'] == "EMATENDIMENTO") {
+                        document.getElementById("orcamentoForm").style.display = "none";
+                        document.getElementById("btnSalvarOrcamento").disabled = true;
+                }
+            });
+
     });
 
 });
@@ -480,8 +524,7 @@ function salvarOrdemDeServico() {
                             "custoMecanico": parseFloat(custoMecanico),
                             "quant_item": listaItemBanco
                         }
-                        delete listaItemBanco.idItemtbl;
-                        delete listaItemBanco.nomeItem;
+                        
                         console.log(listaItemBanco);
                         console.log(dadosOrc);
                         Envia(dadosOrc, '/OrdemDeServico/RegistraOrcamento/' + response[0]['id_os'], 'POST');
@@ -489,42 +532,42 @@ function salvarOrdemDeServico() {
                         break;
 
                     case 'AGUARDANDOAPROVACAO':
-                        dados = {
 
+                        var respC = document.getElementById("selectAprovado").value;
+
+                        dadosAguard = {
+                            "respC" : respC
                         }
-                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
 
-                        //
-                        // Função que muda o status da OS:
-                        //
+                        if(respC==0){
+                            Envia(dadosAguard, '/OrdemDeServico/Cancelar/' + response[0]['id_os'], 'POST');
+                        } else{
+                            Envia(dadosAguard, '/OrdemDeServico/Avaliar/' + response[0]['id_os'], 'POST');
+                        }
 
-                        //Envia({}, '/OrdemDeServico/Avaliar/' + response[0]['id_os'], 'POST');
                         break;
 
                     case 'APROVADA':
-                        dados = {
-
-                        }
-                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
-
-                        //
-                        // Função que muda o status da OS:
-                        //
-
-                        //Envia({}, '/OrdemDeServico/Atender/' + response[0]['id_os'], 'POST');
+                        Envia({}, '/OrdemDeServico/Atender/' + response[0]['id_os'], 'POST');
                         break;
 
                     case 'EMATENDIMENTO':
-                        dados = {
 
+                        if(alterarOSListener == true){
+                            delete listaItemBanco.idItemtbl;
+                            delete listaItemBanco.nomeItem;
+                            console.log(listaItemBanco);
+                            dadosAtendimento = {
+                                "problema": problema,
+                                "custoMecanico": parseFloat(custoMecanico),
+                                "quant_item": listaItemBanco
+                            }
+                            EnviaOrdemDeServico(dadosAtendimento, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
+                            alterarOSListener = false;
+                        }else{
+                            Envia({}, '/OrdemDeServico/Concluir/' + response[0]['id_os'], 'POST');
                         }
-                        EnviaOrdemDeServico(dados, '/OrdemDeServico/Alterar/' + response[0]['id_os'], 'POST');
 
-                        //
-                        // Função que muda o status da OS:
-                        //
-
-                        //Envia({}, '/OrdemDeServico/Concluir/' + response[0]['id_os'], 'POST');
                         break;
 
                     case 'AGUARDANDOPAGAMENTO':
@@ -912,4 +955,10 @@ $('#btnExcluirItemR').click(() => {
 
 })
 
-
+$('#btn-alterar').click(() => {
+    document.querySelector("#btn-salvar").innerText = "Salvar";
+    document.getElementById("orcamentoForm").style.display = "block";
+    document.getElementById("btnSalvarOrcamento").disabled = false;
+    document.querySelector("#exampleFormControlTextarea1").disabled = false;
+    alterarOSListener = true;
+});
