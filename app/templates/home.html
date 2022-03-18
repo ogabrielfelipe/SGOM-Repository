@@ -8,147 +8,204 @@ Home
 
 <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
 <!-- <link rel="stylesheet" href="{{url_for('static', filename='js/template.js')}}"> -->
+<script src="{{url_for('static', filename='js/jquery-timer/jquery.timer.js')}}"></script>
 <script src="{{url_for('static', filename='js/home.js')}}"></script>
-{% endblock %} <script src="{{url_for('static', filename='js/home.js')}}"></script> {%block script%}
-
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/flipclock/dist/flipclock.min.js"></script>
+<script src="{{url_for('static', filename='js/jquery-timer/jquery.timer.js')}}"></script>
+<script src="{{url_for('static', filename='js/home.js')}}"></script>
+{%block script%}
 
 {%endblock%}
 
 {%block section%}
-<div class="pesquisa">
-   <input type="text" name="data-filtro" id="dataIdFiltroHome">
-   <button type="submit" id="btn_filtro_home">Filtro Pesquisa</button>
+<div class="container d-flex justify-content-between">
+  <div class="mb-3 row" style="min-width: 350px;">
+    <input type="text" name="data-filtro" class="form-control bg-dark text-white "
+      style="max-width: 100px; border: none;" id="dataIdFiltroHome">
+    <div class="col-sm-6">
+      <button type="submit" class="btn btn-dark" id="btn_filtro_home">Filtro Pesquisa</button>
+    </div>
+  </div>
+
+
+  <div>
+    <button type="button" class="btn btn-secondary" id="btn_atualiza">
+      Atualizar
+      <span class="badge bg-dark" id="contador_atualiza"></span>
+    </button>
+  </div>
 </div>
 
 <div id="dashboard">
-      <input type="hidden" id="acessoFuncionario" value="{{current_user.tipoFuncionario.name}}">
+  <input type="hidden" id="acessoFuncionario" value="{{current_user.tipoFuncionario.name}}">
 
-      <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aguardando_aprovacao_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-        <div class="card-body">
-          <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aguardando_aprovacao_dashboard">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-            </svg>
-          </div>
-          <h5 class="card-title">Aguardando Aprovação</h5>
-          
-            <span class="contador" id="cont_aguardando_aprovacao">
-              0
-            </span>
-        </div>
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative"
+    id="aguardando_aprovacao_dashboard" onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_aguardando_aprovacao_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
       </div>
-  
-    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="finalizadas_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-      <div class="card-body">
-        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_finalizadas_dashboard">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-          </svg>
-        </div>
-        <h5 class="card-title">Finalizadas</h5>
-        
-          <span class="contador" id="cont_finalizadas">
-            0
-          </span>
-      </div>
+      <h5 class="card-title">Aguardando Aprovação</h5>
+
+      <span class="contador" id="cont_aguardando_aprovacao">
+        0
+      </span>
     </div>
+  </div>
 
-    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aguardando_pagamento_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-      <div class="card-body">
-        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aguardando_pagamento_dashboard">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-          </svg>
-        </div>
-        <h5 class="card-title">Aguardando Pagamento</h5>
-        
-          <span class="contador" id="cont_aguardando_pagamento">
-            0
-          </span>
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="finalizadas_dashboard"
+    onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_finalizadas_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
       </div>
+      <h5 class="card-title">Finalizadas</h5>
+
+      <span class="contador" id="cont_finalizadas">
+        0
+      </span>
     </div>
+  </div>
 
-    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aguardando_atendimento_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-      <div class="card-body">
-        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aguardando_atendimento_dashboard">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-          </svg>
-        </div>
-        <h5 class="card-title">Aguardando Atendimento</h5>
-        
-          <span class="contador" id="cont_aguardando_atendimento">
-            0
-          </span>
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative"
+    id="aguardando_pagamento_dashboard" onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_aguardando_pagamento_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
       </div>
+      <h5 class="card-title">Aguardando Pagamento</h5>
+
+      <span class="contador" id="cont_aguardando_pagamento">
+        0
+      </span>
     </div>
+  </div>
 
-    {% if current_user.tipoFuncionario.name == 'GERENTE' or current_user.tipoFuncionario.name == 'MECANICO': %}
-      <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aceita_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-        <div class="card-body">
-          <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aceita_dashboard">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-            </svg>
-          </div>
-          <h5 class="card-title">Ordens de Serviços Aceitas</h5>
-          
-            <span class="contador" id="cont_aceita">
-              0
-            </span>
-        </div>
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative"
+    id="aguardando_atendimento_dashboard" onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_aguardando_atendimento_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
       </div>
-    {% endif %}
+      <h5 class="card-title">Aguardando Atendimento</h5>
 
-
-    <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aprovadas_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-      <div class="card-body">
-        <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_aprovadas_dashboard">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-          </svg>
-        </div>
-        <h5 class="card-title">Ordens de Serviços Aprovadas</h5>
-        
-          <span class="contador" id="cont_aprovadas">
-            0
-          </span>
-      </div>
+      <span class="contador" id="cont_aguardando_atendimento">
+        0
+      </span>
     </div>
+  </div>
 
-    {% if current_user.tipoFuncionario.name == 'GERENTE' or current_user.tipoFuncionario.name == 'MECANICO': %}
-      <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="ematendimento_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-        <div class="card-body">
-          <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_ematendimento_dashboard">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-            </svg>
-          </div>
-          <h5 class="card-title">Ordens de Serviços Em Atendimento</h5>
-          
-            <span class="contador" id="cont_ematendimento">
-              0
-            </span>
-        </div>
+  {% if current_user.tipoFuncionario.name == 'GERENTE' or current_user.tipoFuncionario.name == 'MECANICO': %}
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aceita_dashboard"
+    onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_aceita_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
       </div>
-    {% endif %}
+      <h5 class="card-title">Ordens de Serviços Aceitas</h5>
 
-    {% if current_user.tipoFuncionario.name == 'GERENTE': %}
-      <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="canceladas_dashboard" onclick="chamaModal(this)" style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
-        <div class="card-body">
-          <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;" id="bell_canceladas_dashboard">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow" class="bi bi-bell-fill" viewBox="0 0 16 16">
-              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-            </svg>
-          </div>
-          <h5 class="card-title">Ordens de Serviços Canceladas</h5>
-          
-            <span class="contador" id="cont_canceladas">
-              0
-            </span>
-        </div>
+      <span class="contador" id="cont_aceita">
+        0
+      </span>
+    </div>
+  </div>
+  {% endif %}
+
+
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="aprovadas_dashboard"
+    onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_aprovadas_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
       </div>
-    {% endif %}
+      <h5 class="card-title">Ordens de Serviços Aprovadas</h5>
+
+      <span class="contador" id="cont_aprovadas">
+        0
+      </span>
+    </div>
+  </div>
+
+  {% if current_user.tipoFuncionario.name == 'GERENTE' or current_user.tipoFuncionario.name == 'MECANICO': %}
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="ematendimento_dashboard"
+    onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_ematendimento_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
+      </div>
+      <h5 class="card-title">Ordens de Serviços Em Atendimento</h5>
+
+      <span class="contador" id="cont_ematendimento">
+        0
+      </span>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if current_user.tipoFuncionario.name == 'GERENTE': %}
+  <div class="card bg-dark text-white d-flex justify-content-center position-relative" id="canceladas_dashboard"
+    onclick="chamaModal(this)"
+    style="width: 18rem; border-radius: 15px; text-align: center; margin: 15px; cursor: pointer;">
+    <div class="card-body">
+      <div class="position-absolute top-0 end-0" style="display: none; justify-content: flex-end;"
+        id="bell_canceladas_dashboard">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="yellow"
+          class="bi bi-bell-fill" viewBox="0 0 16 16">
+          <path
+            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+        </svg>
+      </div>
+      <h5 class="card-title">Ordens de Serviços Canceladas</h5>
+
+      <span class="contador" id="cont_canceladas">
+        0
+      </span>
+    </div>
+  </div>
+  {% endif %}
 
 
 </div>
@@ -162,38 +219,38 @@ Home
 
 <!-- Aguardando Aprovação -->
 <div class="modal fade" id="modal_dashboard">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content complete-modal text-white" style="background-color: #131418;">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title" id="title_Model_Home"></h4>
-          <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
-        </div>
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content complete-modal text-white" style="background-color: #131418;">
 
-        <div class="modal-body">
-            <table class="table table-dark " id="tableBuscaDadosHome" style="margin-top: 15px; cursor: pointer;">
-                <thead>
-                  <tr>
-                    <th scope="col">Código da OS</th>
-                    <th scope="col">Placa</th>
-                    <th scope="col">Nome do Requerente</th>
-                    <th scope="col">Telefone do Requerente</th>
-                    <th scope="col">&nbsp;&nbsp;</th>
-                  </tr>
-                </thead>
-                <tbody id="tbodyBuscaDadosHome">
-                                  
-                </tbody>
-              </table>
-        </div>
-  
-        <div class="modal-footer">
-          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
-        </div>
-  
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="title_Model_Home"></h4>
+        <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
       </div>
+
+      <div class="modal-body">
+        <table class="table table-dark " id="tableBuscaDadosHome" style="margin-top: 15px; cursor: pointer;">
+          <thead>
+            <tr>
+              <th scope="col">Código da OS</th>
+              <th scope="col">Placa</th>
+              <th scope="col">Nome do Requerente</th>
+              <th scope="col">Telefone do Requerente</th>
+              <th scope="col">&nbsp;&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyBuscaDadosHome">
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fechar</button>
+      </div>
+
     </div>
+  </div>
 </div>
 
 {%endblock%}

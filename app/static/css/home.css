@@ -2,7 +2,7 @@
     margin: 15px;
 }
 
-#dataIdFiltroHome{
+/* #dataIdFiltroHome{
     position: relative;
     width: 70px;
     height: 29px;
@@ -17,10 +17,10 @@
 }
 #dataIdFiltroHome:focus{
     outline: none;
-}
+} */
 
 
-#btn_filtro_home{
+/* #btn_filtro_home{
     position: relative;
     width: 123px;
     height: 29px;
@@ -40,7 +40,7 @@
     position: relative;
     width: 120px;
     height: 25px;
-}
+} */
 
 #dashboard{
     display: flex;
