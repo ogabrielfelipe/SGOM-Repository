@@ -228,15 +228,44 @@ $(document).ready(()=>{
     });
 
     //Funcionalidades Relatório Financiero
+    var buscRel = null
+    $('#dataIRelFinanceiro').mask('99/99/9999');
+    $('#dataFRelFinanceiro').mask('99/99/9999');
 
+    $('#modoRel').click(function(){
+        if($('#modoRel').prop('checked')){
+          console.log('Checked')
+    
+          $('#divInterDateRelFinanceiro').css({
+            "display": "flex"
+          })
+          $('#divCompRelFinanceiro').css({
+            "display": "none"
+          })
+          
+          buscRel = true
+        }else{
+          $('#divInterDateRelFinanceiro').css({
+            "display": "none"
+          })
+          $('#divCompRelFinanceiro').css({
+            "display": "flex"
+          })
+          buscRel = false
+        }
+      });
+  
     $('#competenciaRelFinanciero').mask('99/9999');
     $('#btnImprimirRelatorioFinanceiro').click(() => {
         var competencia = $('#competenciaRelFinanciero').val();
-        if (competencia == ''){
+        if (competencia == '' && buscRel == false){
             console.log('Competencia em Branco');
         }else {
             entry = {
-                'competencia': competencia
+                'competencia': competencia,
+                'dataI': $('#dataIRelFinanceiro').val(),
+                'dataF': $('#dataFRelFinanceiro').val(),
+                'busca': buscRel
             }
             Envia(entry, '/OrdemDeServico/Relatorio/Financeiro', 'POST')
             .then((dados) => {

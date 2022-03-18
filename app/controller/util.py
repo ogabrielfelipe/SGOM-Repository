@@ -15,6 +15,25 @@ def calcula_intervalo_mes(competencia):
     return dataInicio, dataFim
 
 
+def convert_inter_str_date(datai, dataf):
+    ddi = int(datai.split('/')[0])
+    mmi = int(datai.split('/')[1])
+    yyi = int(datai.split('/')[2])
+
+    ddf = int(dataf.split('/')[0])
+    mmf = int(dataf.split('/')[1])
+    yyf = int(dataf.split('/')[2])
+
+    ini =  str(yyi)+'-'+str(mmi)+'-'+str(ddi)
+    fim =  str(yyf)+'-'+str(mmf)+'-'+str(ddf)
+
+    
+    dataInicio = datetime.strptime(ini, '%Y-%m-%d').date()
+    dataFim = datetime.strptime(fim, '%Y-%m-%d').date()
+
+    return dataInicio, dataFim
+
+
 def convertPesquisa(operadores, dict):
     cont = 0
     quant = 0

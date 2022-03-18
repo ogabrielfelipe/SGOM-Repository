@@ -1,7 +1,7 @@
 var contadorID = null;
 $(document).ready(function () {
   atualizaHome(false);
-
+  
   $("#btn_filtro_home").click(() => {
     atualizaHome(false);
   });

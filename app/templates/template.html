@@ -452,7 +452,7 @@
 
     <!-- Relatório Financeiro-->
     <div class="modal fade" id="RelatorioFinanceiro">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 250px;">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 350px;">
             <div class="modal-content complete-modal text-white" style="background-color: #131418;">
 
                 <!-- Modal Header -->
@@ -463,11 +463,42 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <div class="input-group mb-3" style="max-width: 160px;">
+                            <div class="input-group mb-3" style="max-width: 200px;">
+                                <input class="form-check-input bg-dark me-3" type="checkbox" name="modoRel"
+                                    id="modoRel">
+                                <label for="modoRel">Filtrar por Data</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" id="divInterDateRelFinanceiro" style="display: none;">
+                        <div class="col">
+                            <input type="text" class="form-control complete-input text-white" style="width: 110px;" placeholder=""
+                                id="dataIRelFinanceiro" aria-label="" aria-describedby="button-addon2">
+                        </div>
+                        <div class="col">
+                            <span>&nbsp;Até&nbsp;</span>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control complete-input text-white" style="width: 110px;" placeholder=""
+                                id="dataFRelFinanceiro" aria-label="" aria-describedby="button-addon2">
+                        </div>
+                            
+                    </div>
+
+
+
+                    <div class="row" id="divCompRelFinanceiro">
+                        <div class="col">
+                            <div class="input-group mb-3" style="max-width: 200px;">
+                                <label for="competenciaRelFinanciero">Competência:&nbsp;</label>
                                 <input type="text" class="form-control complete-input text-white" placeholder=""
                                     id="competenciaRelFinanciero" aria-label="" aria-describedby="button-addon2">
                             </div>
                         </div>
+
+
                     </div>
 
                 </div>
